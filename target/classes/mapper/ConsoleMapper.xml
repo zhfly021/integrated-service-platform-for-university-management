@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhfly021.mapper.ConsoleMapper">
+
+    <select id="countZhcpOfStatus" resultType="int">
+        SELECT count(*) FROM zhcpDataReview LEFT JOIN student ON zhcpDataReview.stuNo = student.stuNo WHERE 1 = 1
+        <if test="status != null"> and evaStatus = #{status}  </if>
+        <if test="faculty != null"> and faculty = #{faculty}  </if>
+        <if test="stuClass != null"> and zhcpDataReview.stuClass = #{stuClass}  </if>
+    </select>
+
+    <select id="countBbtxDataOfStatus" resultType="int">
+        SELECT count(*) FROM bbtxData WHERE 1 = 1
+        <if test="status != null"> and evaStatus = #{status}  </if>
+        <if test="faculty != null"> and stuFaculty = #{faculty}  </if>
+        <if test="stuClass != null"> and stuClass = #{stuClass}  </if>
+    </select>
+
+    <select id="countBjtz" resultType="int">
+        SELECT count(*) FROM bjtz LEFT JOIN student ON bjtz.publisherNo = student.stuNo WHERE 1 = 1
+        <if test="faculty != null"> and faculty = #{faculty}  </if>
+        <if test="stuClass != null"> and publisherClass = #{stuClass}  </if>
+    </select>
+
+    <select id="countBjjsOfStatus" resultType="int">
+        SELECT count(*) FROM bjjs LEFT JOIN student ON bjjs.sendNo = student.stuNo WHERE 1 = 1
+        <if test="status != null"> and status = #{status}  </if>
+        <if test="faculty != null"> and faculty = #{faculty}  </if>
+        <if test="stuClass != null"> and sendClass = #{stuClass}  </if>
+    </select>
+
+    <select id="countBwgzOfStatus" resultType="int">
+        SELECT count(*) FROM bwgz LEFT JOIN student ON bwgz.sendNo = student.stuNo WHERE 1 = 1
+        <if test="status != null"> and status = #{status}  </if>
+        <if test="faculty != null"> and faculty = #{faculty}  </if>
+        <if test="stuClass != null"> and sendClass = #{stuClass}  </if>
+    </select>
+
+    <select id="countBwmydcpDataOfStatus" resultType="int">
+        SELECT count(*) FROM bwmydcpData LEFT JOIN student ON bwmydcpData.stuNo = student.stuNo WHERE 1 = 1
+        <if test="status != null"> and evaStatus = #{status}  </if>
+        <if test="faculty != null"> and faculty = #{faculty}  </if>
+        <if test="stuClass != null"> and bwmydcpData.stuClass = #{stuClass}  </if>
+    </select>
+
+    <select id="countResumeOfStatus" resultType="int">
+        SELECT count(*) FROM resume WHERE 1 = 1
+        <if test="status != null"> and status = #{status}  </if>
+        <if test="faculty != null"> and stuFaculty = #{faculty}  </if>
+        <if test="stuClass != null"> and stuClass = #{stuClass}  </if>
+    </select>
+
+    <select id="countEvidenceOfStatus" resultType="int">
+        SELECT count(*) FROM evidence WHERE 1 = 1
+        <if test="status != null"> and status = #{status}  </if>
+        <if test="faculty != null"> and stuFaculty = #{faculty}  </if>
+        <if test="stuClass != null"> and stuClass = #{stuClass}  </if>
+    </select>
+
+    <select id="countBjjsOfDean" resultType="integer">
+        select count(*) from bjjs,student where 1=1  and student.stuNo = bjjs.sendNo
+        <if test="faculty != null"> and faculty = #{faculty}  </if>
+        <if test="sendClass != null"> and sendClass = #{sendClass}</if>
+        <if test="time != null"> and sendTime like '${time}%'  </if>
+    </select>
+
+    <select id="countBwgzOfDean" resultType="integer">
+        select count(*) from bwgz,student where 1=1  and student.stuNo = bwgz.sendNo
+        <if test="faculty != null"> and faculty = #{faculty}</if>
+        <if test="sendClass != null"> and sendClass = #{sendClass}</if>
+        <if test="time != null"> and sendTime like '${time}%'  </if>
+    </select>
+
+    <select id="bwgzFeedBack" resultType="com.zhfly021.entity.BwgzCount">
+        select feedback,count(*) as count from bwgz  where 1=1
+        <if test="sendClass != null"> and sendClass = #{sendClass}</if>
+         group by feedback
+    </select>
+
+
+</mapper>

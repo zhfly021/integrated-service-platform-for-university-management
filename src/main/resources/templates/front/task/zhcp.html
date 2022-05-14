@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>综合测评任务</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/template.css" media="all">
+</head>
+<body>
+
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card" style="padding-top: 5px">
+          <!-- 搜索条件开始 -->
+          <fieldset class="layui-elem-field layui-field-title">
+            <legend>查询条件</legend>
+          </fieldset>
+          <div class="layui-form">
+              <div class="layui-form-item">
+                  <div class="layui-inline layui-col-lg6 layui-col-xs11">
+                      <label class="layui-form-label">测评项目:</label>
+                      <div class="layui-input-block">
+                          <select name="project" >
+                              <option value="">不限</option>
+                              <option th:each="project:${zhcpListProjectOfStu}" th:value="${project}">[[${project}]]</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="layui-inline">
+                      <label class="layui-form-label">测评状态:</label>
+                      <div class="layui-input-block">
+                          <select name="evaStatus">
+                              <option value="">不限</option>
+                              <option value="未提交">未提交</option>
+                              <option value="已暂存">已暂存</option>
+                              <option value="待审核">待审核</option>
+                              <option value="已驳回">已驳回</option>
+                              <option value="审核中">审核中</option>
+                              <option value="已过审">已过审</option>
+                              <option value="待复核">待复核</option>
+                              <option value="已完成">已完成</option>
+                          </select>
+                      </div>
+                  </div>
+              </div>
+              <div class="layui-form-item">
+                  <div class="layui-input-block">
+                      <button class="layui-btn layuiadmin-btn-admin layui-btn-normal layui-btn-sm layui-icon layui-icon-search" lay-submit lay-filter="bwmydcp-search">查询</button>
+<!--                      <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" id="bjjs-reset" onclick="">重置</button>-->
+                  </div>
+              </div>
+          </div>
+          <!-- 搜索条件结束 -->
+
+
+          <div class="layui-card-body">
+            <table class="layui-hide" id="bwmydcpTable" lay-filter="bwmydcp"></table>
+<!--            <blockquote class="layui-elem-quote">备注信息：待拓展（可填写相关班级建设意见的填写指导等）</blockquote>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display: none" id="bwgzfkToolBar">
+<!--    <a th:href="@{/bwmydcp/stu/addBwmydcpList}"><button class="layui-btn ">ceshi</button></a>-->
+<!--    <button class="layui-btn layuiadmin-btn-admin" data-type="add">班委工作反馈入口</button>-->
+<!--    <button class="layui-btn layuiadmin-btn-admin" data-type="batchDelete">批量删除</button>-->
+  </div>
+  <div id="bwmydcpBar" style="display: none;">
+      {{# if(d.zhcpData.evaStatus == '未提交' || d.zhcpData.evaStatus == '已暂存'){ }}
+      <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="add">测评</a>
+      {{#  } }}
+      {{# if(d.zhcpData.evaStatus == '已驳回'){ }}
+      <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">修改</a>
+      {{#  } }}
+      {{# if(d.zhcpData.evaStatus == '待审核' || d.zhcpData.evaStatus == '审核中' || d.zhcpData.evaStatus == '已过审' || d.zhcpData.evaStatus == '待复核' || d.zhcpData.evaStatus == '已完成'){ }}
+<!--      <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">请审核通过后再次操作</a>-->
+      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="detail">查看</a>
+      {{#  } }}
+      {{# if(d.zhcpData.evaStatus == '已过审'){ }}
+      <a class="layui-btn layui-btn-xs" lay-event="confirm">确认</a>
+      <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="review">复核</a>
+      {{#  } }}
+  </div>
+
+  <div id="statusBar" style="display: none;">
+      {{# if(d.zhcpData.evaStatus == '未提交'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-danger">未提交</button>
+      {{#  } }}
+      {{# if(d.zhcpData.evaStatus == '已暂存'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-danger">已暂存</button>
+      {{#  } }}
+      {{# if(d.zhcpData.evaStatus == '待审核'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-primary">待审核</button>
+      {{#  } }}
+      {{# if(d.zhcpData.evaStatus == '已驳回'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-normal">已驳回</button>
+      {{#  } }}
+      {{# if(d.zhcpData.evaStatus == '审核中'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-primary">审核中</button>
+      {{#  } }}
+      {{# if(d.zhcpData.evaStatus == '已过审'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-normal">已过审</button>
+      {{#  } }}
+      {{# if(d.zhcpData.evaStatus == '待复核'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-primary">待复核</button>
+      {{#  } }}
+      {{# if(d.zhcpData.evaStatus == '已完成'){ }}
+      <button class="layui-btn layui-btn-xs">已完成</button>
+      {{#  } }}
+
+      {{# if(d.zhcpData.evaStatus == '已结束'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-warm">已结束</button>
+      {{#  } }}
+  </div>
+
+  <script src="../../layuiadmin/layui/layui.js"></script>
+  <script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'jquery', 'table', 'form', 'layer', 'laydate'], function(){
+    var $ = layui.$
+    ,table = layui.table
+    ,form = layui.form
+    ,layer = layui.layer
+    ,laydate = layui.laydate;
+
+    //方法级渲染
+    table.render({
+      elem: '#bwmydcpTable'
+      ,id: 'bwmydcpTable'
+      ,url: '/zhcp/stu/queryZhcpList'
+      ,title: '综合测评任务表'
+      ,toolbar: '#bwgzfkToolBar'
+      ,cellMinWidth:100
+      ,page: true
+      ,limit: 10
+      ,height: 'full-221'
+      ,cols: [
+              [
+        {checkbox: true, fixed: true}
+        ,{type:'numbers', field:'no',title: '序号', width:70, fixed: 'left',align:"center"}
+        ,{field:'releaseTime', title: '发布时间', width:150, sort: true}
+        ,{field:'releaser',title: '发布人', width:90,align:'center'}
+        ,{field:'project', title: '测评项目'}
+        ,{field:'zcObject',title: '测评对象', width:90,align:'center'}
+        ,{field:'remarks', title: '备注'}
+        ,{field:'deadline', title: '截止时间', width:150, sort: true}
+        // ,{field:'bwmydcpData.idd', title: '号', width:50}   // 无法输出，但是请求头中可以找到该数据
+        ,{field:'zhcpData.evaStatus', toolbar:'#statusBar',title: '测评状态', width:90,align:'center'}
+        ,{title: '操作', toolbar:'#bwmydcpBar', width:180, align:'center'}
+        ]
+      ]
+      ,parseData: function (res) {
+            return {
+                "code": 0,
+                "msg": res.msg,
+                "data": res.payload.content,
+                "count": res.payload.total
+            }
+            // console.log(bwmydcpData)
+        }
+
+    });
+
+      //监听行工具事件
+      table.on('tool(bwmydcp)', function(obj) {
+
+          var data = obj.data;
+          var id = data.id;
+
+          if (obj.event === 'confirm') {
+              layer.confirm('我已确认本次综合测评信息无误', function (index) {
+                  $.ajax({
+                      url: '/zhcp/stu/toConfirm',
+                      dataType: 'text',
+                      data: {id: id},
+                      success: function (res) {
+                          if (res.code == 200) {
+                              layer.msg(res.msg,{time:1000,icon:5})
+                          }else if(res.code == 201){
+                              layer.msg(res.msg,{time:1000,icon:5})
+                          }
+                          else{
+                              layer.msg('信息确认成功', {
+                                  time: 1000, icon: 6
+                              })
+                              location.reload()
+                          }
+                      },
+                      error:function (data) {
+                          layer.msg("确认综合测评信息时发生错误，请重试...",{time:1000,icon:7})
+                          return false;
+                      }
+                  })
+                  // obj.del();
+                  layer.close(index);
+              });
+
+          }else if (obj.event === 'review') {
+              //编辑教师信息
+              layer.open({
+                  type: 2,
+                  title: '综合测评复审申请页面',
+                  maxmin: true,
+                  // area: ['860px', '520px'],
+                  shadeClose: true, //点击遮罩关闭
+                  content: '/zhcp/stu/toZhcpReview/' + id,
+                  area: screen() < 1 ? ['90%', '450px'] : ['760px', '600px']
+                  ,btn: ['提交', '取消']
+                  ,yes: function(index, layero){
+                      var iframeWindow = window['layui-layer-iframe'+ index]
+                          ,submitID = 'submit'
+                          ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                      //监听提交
+                      iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                          var field = data.field; //获取提交的字段
+                          // console.log(field)
+                          //提交 Ajax 成功后，静态更新表格中的数据
+                          //$.ajax({});
+                          $.ajax({
+                              //几个参数需要注意一下
+                              type: "POST",               //方法类型
+                              url: "/zhcp/stu/reviewZhcpData",       //url
+                              dataType: 'JSON',
+                              async: false,
+                              data: field,
+                              success: function (res) {
+                                  if (res.code === 200) {
+                                      layer.msg(res.msg,{time:1000,icon:5})
+                                  } else {
+                                      layer.msg('综合测评复核申请提交成功!', {icon: 6, time: 2000,end: function f() {
+                                              var index = parent.layer.getFrameIndex(window.name);
+                                              parent.layer.close(index)
+                                          }})
+                                  }
+                              },
+                              error:function (data) {
+                                  layer.msg("提交复核申请时发生错误，请重试...",{time:1000,icon:7})
+                              }
+                          });
+
+                          table.reload('bwmydcpTable'); //数据刷新
+                          table.reload('bwmydcpTable'); //数据刷新
+                          layer.close(index); //关闭弹层
+                      });
+                      submit.trigger('click');
+                  }
+              })
+          } else if (obj.event === 'add') {
+              //编辑教师信息
+              layer.open({
+                  type: 2,
+                  title: '填报综合测评信息',
+                  maxmin: true,
+                  // area: ['860px', '520px'],
+                  shadeClose: true, //点击遮罩关闭
+                  content: '/zhcp/stu/toZhcpEdit/' + id,
+                  area: screen() < 1 ? ['90%', '450px'] : ['760px', '600px']
+                  ,btn: ['提交', '暂存']
+                  ,yes: function(index, layero){
+                      var iframeWindow = window['layui-layer-iframe'+ index]
+                          ,submitID = 'submit'
+                          ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                      //监听提交
+                      iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                          var field = data.field; //获取提交的字段
+                          // console.log(field)
+                          //提交 Ajax 成功后，静态更新表格中的数据
+                          //$.ajax({});
+                          $.ajax({
+                              //几个参数需要注意一下
+                              type: "POST",               //方法类型
+                              url: "/zhcp/stu/addZhcpData",       //url
+                              dataType: 'JSON',
+                              async: false,
+                              data: field,
+                              success: function (res) {
+                                  if (res.code === 200) {
+                                      layer.msg(res.msg,{time:1000,icon:5})
+                                  } else {
+                                      layer.msg('综合测评任务提交成功!', {icon: 6, time: 2000,end: function f() {
+                                              var index = parent.layer.getFrameIndex(window.name);
+                                              parent.layer.close(index)
+                                          }})
+                                  }
+                              },
+                              error:function (data) {
+                                  layer.msg("提交综合测评任务时发生错误，请重试...",{time:1000,icon:7})
+                              }
+                          });
+
+                          table.reload('bwmydcpTable'); //数据刷新
+                          table.reload('bwmydcpTable'); //数据刷新
+                          layer.close(index); //关闭弹层
+                      });
+                      submit.trigger('click');
+                  }
+                  ,btn2: function(index, layero){
+                      var iframeWindow = window['layui-layer-iframe'+ index]
+                          ,submitID = 'submit'
+                          ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                      //监听提交
+                      iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                          var field = data.field; //获取提交的字段
+                          // console.log(field)
+                          //提交 Ajax 成功后，静态更新表格中的数据
+                          //$.ajax({});
+                          $.ajax({
+                              //几个参数需要注意一下
+                              type: "POST",               //方法类型
+                              url: "/zhcp/stu/storageZhcpData",       //url
+                              dataType: 'JSON',
+                              async: false,
+                              data: field,
+                              success: function (res) {
+                                  if (res.code === 200) {
+                                      layer.msg(res.msg,{time:1000,icon:5})
+                                  } else {
+                                      layer.msg('综合测评任务暂存成功!', {icon: 6, time: 2000,end: function f() {
+                                              var index = parent.layer.getFrameIndex(window.name);
+                                              parent.layer.close(index)
+                                          }})
+                                  }
+                              },
+                              error:function (data) {
+                                  layer.msg("提交综合测评任务时发生错误，请重试...",{time:1000,icon:7})
+                              }
+                          });
+
+                          table.reload('bwmydcpTable'); //数据刷新
+                          table.reload('bwmydcpTable'); //数据刷新
+                          layer.close(index); //关闭弹层
+                      });
+                      submit.trigger('click');
+                  }
+              })
+          }else if (obj.event === 'edit') {
+              //编辑教师信息
+              layer.open({
+                  type: 2,
+                  title: '修改综合测评信息',
+                  maxmin: true,
+                  // area: ['860px', '520px'],
+                  shadeClose: true, //点击遮罩关闭
+                  content: '/zhcp/stu/toZhcpEdit/' + id,
+                  area: screen() < 1 ? ['90%', '450px'] : ['760px', '600px']
+                  ,btn: ['提交', '暂存']
+                  ,yes: function(index, layero){
+                      var iframeWindow = window['layui-layer-iframe'+ index]
+                          ,submitID = 'submit'
+                          ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                      //监听提交
+                      iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                          var field = data.field; //获取提交的字段
+                          // console.log(field)
+                          //提交 Ajax 成功后，静态更新表格中的数据
+                          //$.ajax({});
+                          $.ajax({
+                              //几个参数需要注意一下
+                              type: "POST",               //方法类型
+                              url: "/zhcp/stu/addZhcpData",       //url
+                              dataType: 'JSON',
+                              async: false,
+                              data: field,
+                              success: function (res) {
+                                  if (res.code === 200) {
+                                      layer.msg(res.msg,{time:1000,icon:5})
+                                  } else {
+                                      layer.msg('综合测评任务提交成功!', {icon: 6, time: 2000,end: function f() {
+                                              var index = parent.layer.getFrameIndex(window.name);
+                                              parent.layer.close(index)
+                                          }})
+                                  }
+                              },
+                              error:function (data) {
+                                  layer.msg("提交综合测评任务时发生错误，请重试...",{time:1000,icon:7})
+                              }
+                          });
+
+                          table.reload('bwmydcpTable'); //数据刷新
+                          table.reload('bwmydcpTable'); //数据刷新
+                          layer.close(index); //关闭弹层
+                      });
+                      submit.trigger('click');
+                  }
+                  ,btn2: function(index, layero){
+                      var iframeWindow = window['layui-layer-iframe'+ index]
+                          ,submitID = 'submit'
+                          ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                      //监听提交
+                      iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                          var field = data.field; //获取提交的字段
+                          // console.log(field)
+                          //提交 Ajax 成功后，静态更新表格中的数据
+                          //$.ajax({});
+                          $.ajax({
+                              //几个参数需要注意一下
+                              type: "POST",               //方法类型
+                              url: "/zhcp/stu/storageZhcpData",       //url
+                              dataType: 'JSON',
+                              async: false,
+                              data: field,
+                              success: function (res) {
+                                  if (res.code === 200) {
+                                      layer.msg(res.msg,{time:1000,icon:5})
+                                  } else {
+                                      layer.msg('综合测评任务暂存成功!', {icon: 6, time: 2000,end: function f() {
+                                              var index = parent.layer.getFrameIndex(window.name);
+                                              parent.layer.close(index)
+                                          }})
+                                  }
+                              },
+                              error:function (data) {
+                                  layer.msg("提交综合测评任务时发生错误，请重试...",{time:1000,icon:7})
+                              }
+                          });
+
+                          table.reload('bwmydcpTable'); //数据刷新
+                          table.reload('bwmydcpTable'); //数据刷新
+                          layer.close(index); //关闭弹层
+                      });
+                      submit.trigger('click');
+                  }
+              })
+          }
+          /*else if (obj.event === 'detail') {
+              //编辑教师信息
+              layer.open({
+                  type: 2,
+                  title: '修改综合测评信息',
+                  maxmin: true,
+                  // area: ['860px', '520px'],
+                  shadeClose: true, //点击遮罩关闭
+                  content: '/zhcp/stu/toDetail/' + id,
+                  area: screen() < 1 ? ['90%', '450px'] : ['760px', '600px']
+                  ,btn: ['确认无误', '申请复核']
+                  ,yes: function(index, layero){
+                      var iframeWindow = window['layui-layer-iframe'+ index]
+                          ,submitID = 'submit'
+                          ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                      //监听提交
+                      iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                          var field = data.field; //获取提交的字段
+                          // console.log(field)
+                          //提交 Ajax 成功后，静态更新表格中的数据
+                          //$.ajax({});
+                          $.ajax({
+                              //几个参数需要注意一下
+                              type: "POST",               //方法类型
+                              url: "/zhcp/stu/addZhcpData",       //url
+                              dataType: 'JSON',
+                              async: false,
+                              data: field,
+                              success: function (res) {
+                                  if (res.code === 200) {
+                                      layer.msg(res.msg,{time:1000,icon:5})
+                                  } else {
+                                      layer.msg('综合测评数据确认成功!', {icon: 6, time: 2000,end: function f() {
+                                              var index = parent.layer.getFrameIndex(window.name);
+                                              parent.layer.close(index)
+                                          }})
+                                  }
+                              },
+                              error:function (data) {
+                                  layer.msg("提交时发生错误，请重试...",{time:1000,icon:7})
+                              }
+                          });
+
+                          table.reload('bwmydcpTable'); //数据刷新
+                          table.reload('bwmydcpTable'); //数据刷新
+                          layer.close(index); //关闭弹层
+                      });
+                      submit.trigger('click');
+                  }
+                  ,btn2: function(index, layero){
+                      var iframeWindow = window['layui-layer-iframe'+ index]
+                          ,submitID = 'submit'
+                          ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                      //监听提交
+                      iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                          var field = data.field; //获取提交的字段
+                          // console.log(field)
+                          //提交 Ajax 成功后，静态更新表格中的数据
+                          //$.ajax({});
+                          $.ajax({
+                              //几个参数需要注意一下
+                              type: "POST",               //方法类型
+                              url: "/zhcp/stu/storageZhcpData",       //url
+                              dataType: 'JSON',
+                              async: false,
+                              data: field,
+                              success: function (res) {
+                                  if (res.code === 200) {
+                                      layer.msg(res.msg,{time:1000,icon:5})
+                                  } else {
+                                      layer.msg('综合测评申请复核成功!', {icon: 6, time: 2000,end: function f() {
+                                              var index = parent.layer.getFrameIndex(window.name);
+                                              parent.layer.close(index)
+                                          }})
+                                  }
+                              },
+                              error:function (data) {
+                                  layer.msg("提交时发生错误，请重试...",{time:1000,icon:7})
+                              }
+                          });
+
+                          table.reload('bwmydcpTable'); //数据刷新
+                          table.reload('bwmydcpTable'); //数据刷新
+                          layer.close(index); //关闭弹层
+                      });
+                      submit.trigger('click');
+                  }
+              })
+          }*/
+          else if (obj.event === 'detail') {
+              //编辑教师信息
+              layer.open({
+                  type: 2,
+                  title: '综合测评填报数据',
+                  maxmin: true,
+                  // area: ['860px', '520px'],
+
+                  area: screen() < 1 ? ['90%', '450px'] : ['760px', '495.5px'],
+                  shadeClose: true, //点击遮罩关闭
+                  content: '/zhcp/stu/toDetail/' + id,
+                  end: function (index) {
+                      location.reload()
+                      parent.layer.close(index);
+                  }
+              })
+          }
+      })
+
+
+    var $ = layui.$, active = {
+      reload: function(){
+        var demoReload = $('#test-table-demoReload');
+
+        //执行重载
+        table.reload('bwgzfkTable', {
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          ,where: {
+            key: {
+              id: demoReload.val()
+            }
+          }
+        });
+      }
+    };
+
+    //监听搜索
+      form.on('submit(bwmydcp-search)', function(data){
+          var field = data.field;
+          // var project = $('input[name="project"]');
+          // var status = $('input[name="evaStatus"]:checked');
+          //执行重载
+          table.reload('bwmydcpTable', {
+              method: 'post'
+              ,page: {
+                  curr : 1 //重新从第一页开始
+              }
+              ,where: {
+                  project : field.project
+                  ,status : field.evaStatus
+                  // ,page: 1
+                  // ,limit: 10
+              }
+          });
+
+      });
+
+      // function resetBwgzfk() {
+      //       $("#bjjs-reset").on('click',function () {
+      //           $('input[name="feedback"]').reset();
+      //           $('input[name="letterTitle"]').reset();
+      //           $('input[name="status"]').reset();
+      //       })
+      // }
+
+
+      //判断浏览器大小方法
+      function screen() {
+          //获取当前窗口的宽度
+          var width = $(window).width();
+          if (width > 768) {
+              return 1;   //小屏幕
+          } else {
+              return 0;   //超小屏幕
+          }
+      }
+
+      $('.layui-btn.layuiadmin-btn-admin').on('click', function(){
+          var type = $(this).data('type');
+          active[type] ? active[type].call(this) : '';
+      });
+  });
+  </script>
+</body>
+</html>

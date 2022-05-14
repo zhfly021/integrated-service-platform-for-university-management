@@ -1,0 +1,105 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>班级通知</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card" style="padding-top: 5px">
+          <!-- 搜索条件开始 -->
+          <fieldset class="layui-elem-field layui-field-title">
+            <legend>班级通知</legend>
+          </fieldset>
+
+
+          <div class="layui-card-body">
+            <ul class="layui-timeline" style="margin-top: 20px;">
+              <li class="layui-timeline-item" th:each="bjtz:${bjtzs}">
+                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                <div class="layui-timeline-content layui-text">
+                  <h3 class="layui-timeline-title" th:text="${#dates.format(bjtz.releaseTime,'yyyy-MM-dd HH:mm')}">8月18日</h3>
+                  <h4 class="layui-timeline-title">[[${bjtz.publisherCommittee}]]：[[${bjtz.publisher}]]</h4>
+                  <p th:text="${bjtz.content}">
+                    layui 2.0 的一切准备工作似乎都已到位。发布之弦，一触即发。
+                    <br>不枉近百个日日夜夜与之为伴。因小而大，因弱而强。
+                    <br>无论它能走多远，抑或如何支撑？至少我曾倾注全心，无怨无悔 <i class="layui-icon"></i>
+                  </p>
+                </div>
+                <div th:each="image:${bjtz.getImageList()}" th:if="${'无图片' != bjtz.getImageList()[0]}" style="display: inline-block; width:25vh; margin: 2vh; height: 25vh;">
+                  <img th:src="${image}" style="width: 100%; height: 100%; " onclick="previewImg(this)">
+                </div>
+
+              </li>
+
+              <li class="layui-timeline-item">
+                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                <div class="layui-timeline-content layui-text">
+                  <div class="layui-timeline-title">过去</div>
+                </div>
+              </li>
+            </ul>
+            <blockquote class="layui-elem-quote">默认显示最新的23条班级通知</blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+  <script src="../../layuiadmin/layui/layui.js?t=1"></script>
+
+  <script>
+    // 使用弹出层预览图片
+    // function previewImg(obj) {
+    //   var img = new Image();
+    //   img.src = obj.src;
+    //   // var height = img.height + 50; // 原图片大小
+    //   // var width = img.width; //原图片大小
+    //   // var imgHtml = "<img src='" + obj.src + "' width=width height=height/>";
+    //   var imgHtml = "<img src='" + obj.src + "' width='500px' height='500px'/>";
+    //   //弹出层
+    //   layer.open({
+    //     type: 1,
+    //     shade: 0.8,
+    //     offset: 'auto',
+    //     area: [500 + 'px',550+'px'], // area: [width + 'px',height+'px'] //原图显示
+    //     shadeClose:true,
+    //     scrollbar: false,
+    //     title: "图片预览", //不显示标题
+    //     content: imgHtml, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+    //     cancel: function () {
+    //       //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', { time: 5000, icon: 6 });
+    //     }
+    //   });
+    // }
+
+    //另外打开一个页面显示图片
+    function previewImg(obj) {
+      window.open(obj.src);
+    }
+
+
+  </script>
+
+  <script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'console']);
+  </script>
+</body>
+</html>
+

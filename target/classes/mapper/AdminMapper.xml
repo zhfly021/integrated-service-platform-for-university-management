@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhfly021.mapper.AdminMapper">
+
+    <select id="findAdminByUsername" resultType="com.zhfly021.entity.Admin">
+        select * from admin where username = #{username}
+    </select>
+
+    <select id="findAdminById" resultType="com.zhfly021.entity.Admin">
+        select * from admin where id = #{id}
+    </select>
+
+    <update id="updatePassword" parameterType="String">
+        update admin set password = #{password} where username = #{username}
+    </update>
+
+
+
+
+
+
+    <select id="queryAdminByCommittee" resultType="com.zhfly021.entity.Admin">
+        select * from admin where employer = #{employer}
+          <if test="username != null"> and username like CONCAT('%',#{username},'%') </if>
+    </select>
+
+    <select id="queryAdminByAdministrator" resultType="com.zhfly021.entity.Admin">
+        select * from admin where 1=1
+          <if test="employer != null"> and employer = #{employer} </if>
+          <if test="username != null"> and username like CONCAT('%',#{username},'%') </if>
+    </select>
+
+
+    <select id="queryAdminOfSuper" resultType="com.zhfly021.entity.Admin">
+        select * from admin where 1=1
+        <if test="username != null"> and username like CONCAT('%',#{username},'%') </if>
+        <if test="employer != null"> and employer like CONCAT('%',#{employer},'%') </if>
+        <if test="faculty != null"> and faculty like CONCAT('%',#{faculty},'%') </if>
+    </select>
+
+    <select id="queryAdminOfFaculty" resultType="com.zhfly021.entity.Admin">
+        select * from admin where faculty = #{faculty}
+        <if test="username != null"> and username like CONCAT('%',#{username},'%') </if>
+        <if test="employer != null"> and employer like CONCAT('%',#{employer},'%') </if>
+    </select>
+
+    <select id="queryAdminOfStu" resultType="com.zhfly021.entity.Admin">
+        select * from admin where employer = #{employer}
+        <if test="username != null"> and username like CONCAT('%',#{username},'%') </if>
+    </select>
+
+    <insert id="addAdmin" parameterType="com.zhfly021.entity.Admin">
+        insert into admin(username,password,employer,faculty,roleId)
+         values(#{username},#{password},#{employer},#{faculty},#{roleId})
+    </insert>
+
+    <update id="updateAdmin" parameterType="com.zhfly021.entity.Admin">
+        update admin set  username = #{username}, employer = #{employer}, faculty = #{faculty}, roleId = #{roleId}
+        <if test="password != null"> , password = #{password} </if>
+          where id = #{id} ;
+    </update>
+
+    <delete id="deleteAdmin" parameterType="Integer">
+        delete from admin where id = #{id}
+    </delete>
+
+    <delete id="batchDeleteAdmin" parameterType="Integer">
+        delete from admin where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

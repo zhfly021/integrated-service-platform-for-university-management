@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>学生简历证明材料数据</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/template.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card" style="padding-top: 5px">
+
+                <!-- 搜索条件开始 -->
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>简历附件-查询条件</legend>
+                </fieldset>
+                <div class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">学号:</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="stuNo" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">姓名:</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="stuName" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-inline">
+                            <label class="layui-form-label">状态:</label>
+                            <div class="layui-input-block">
+                                <select name="status">
+                                    <option value="">不限</option>
+                                    <option value="未提交">未提交</option>
+                                    <option value="待审核">待审核</option>
+                                    <option value="已驳回">已驳回</option>
+                                    <option value="已完成">已完成</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="layui-inline"  th:if="${session.adminEmployer} == 0">
+                            <label class="layui-form-label">班级:</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="stuClass" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline"  th:if="${session.adminEmployer} == 1">
+                            <label class="layui-form-label">班级:</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="stuClass" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline"  th:if="${session.adminEmployer} == 0">
+                            <label class="layui-form-label">学院:</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="stuFaculty" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label"></label>
+                            <button class="layui-btn layuiadmin-btn-admin layui-btn-normal layui-btn-sm layui-icon layui-icon-search" lay-submit lay-filter="bwmydcp-search">查询</button>
+                            <!--                      <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" id="bjjs-reset" onclick="">重置</button>-->
+                        </div>
+
+                    </div>
+                    <!--<div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn layuiadmin-btn-admin layui-btn-normal layui-btn-sm layui-icon layui-icon-search" lay-submit lay-filter="bwmydcp-search">查询</button>
+                            <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" id="bjjs-reset" onclick="">重置</button>
+                        </div>
+                    </div>-->
+                </div>
+                <!-- 搜索条件结束 -->
+
+
+                <div class="layui-card-body">
+                    <table class="layui-hide" id="bwmydcpTable" lay-filter="bwmydcp"></table>
+                    <!--            <blockquote class="layui-elem-quote">备注信息：待拓展（可填写相关班级建设意见的填写指导等）</blockquote>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display: none" id="bwgzfkToolBar">
+    <!--    <a th:href="@{/bwmydcp/stu/addBwmydcpList}"><button class="layui-btn ">ceshi</button></a>-->
+    <!--    <button class="layui-btn layuiadmin-btn-admin" data-type="add">填报项目发布入口</button>-->
+    <button class="layui-btn layuiadmin-btn-admin" data-type="batchDelete">批量删除</button>
+</div>
+<div id="bwmydcpBar" style="display: none;">
+    {{# if(d.status == '已驳回' || d.status == '未提交'){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="alert">提醒</a>
+    {{#  } }}
+    {{# if(d.status == '待审核'){ }}
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">审核</a>
+    {{#  } }}
+    {{# if(d.status == '已完成' ){ }}
+    <a class="layui-btn  layui-btn-xs" lay-event="detail">查看</a>
+    {{#  } }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+
+</div>
+
+<div id="statusBar" style="display: none;">
+    {{# if(d.status == '未提交'){ }}
+    <button class="layui-btn layui-btn-xs layui-btn-primary">未提交</button>
+    {{#  } }}
+    {{# if(d.status == '待审核'){ }}
+    <button class="layui-btn layui-btn-xs layui-btn-normal">待审核</button>
+    {{#  } }}
+    {{# if(d.status == '已驳回'){ }}
+    <button class="layui-btn layui-btn-xs layui-btn-danger">已驳回</button>
+    {{#  } }}
+    {{# if(d.status == '已完成'){ }}
+    <button class="layui-btn layui-btn-xs">已完成</button>
+    {{#  } }}
+</div>
+
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '../../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'jquery', 'table', 'form', 'layer', 'laydate'], function(){
+        var $ = layui.$
+            ,table = layui.table
+            ,form = layui.form
+            ,layer = layui.layer
+            ,laydate = layui.laydate;
+
+        //方法级渲染
+        table.render({
+            elem: '#bwmydcpTable'
+            ,id: 'bwmydcpTable'
+            ,url: '/xxwh/admin/queryEvidenceList'
+            ,title: '学生简历附件列表'
+            ,toolbar: '#bwgzfkToolBar'
+            ,cellMinWidth:80
+            ,page: true
+            ,limit: 10
+            ,height: 'full-221'
+            ,cols: [
+                [
+                    {checkbox: true, fixed: true}
+                    ,{type:'numbers', field:'no',title: '序号', width:70, fixed: 'left',align:"center"}
+                    ,{field:'stuNo', title: '学号', width:110,align:'center'}
+                    ,{field:'stuName', title: '姓名', width:100,align:'center'}
+                    ,{field:'submitTime',title: '提交时间', width:150, sort: true}
+                    ,{field:'submitMarks', title: '提交说明'}
+                    ,{field:'verifier', title: '审核人', width:100,align:'center'}
+                    ,{field:'verifyTime', title: '审核时间', width:150, sort: true}
+                    ,{field:'verifyMarks', title: '审核说明'}
+                    ,{field:'status', toolbar:'#statusBar',title: '状态', width:90,align:'center'}
+                    ,{title: '操作', toolbar:'#bwmydcpBar', width:120, align:'center'}
+                ]
+            ]
+            ,parseData: function (res) {
+                return {
+                    "code": 0,
+                    "msg": res.msg,
+                    "data": res.payload.content,
+                    "count": res.payload.total
+                }
+                // console.log(bwmydcpData)
+            }
+
+        });
+
+        //监听行工具事件
+        table.on('tool(bwmydcp)', function(obj) {
+
+            var data = obj.data;
+            console.log(data)
+            var id = data.id;
+
+            if (obj.event === 'alert') {
+                layer.confirm('确定向该用户发送提醒邮件吗？', function (index) {
+                    $.ajax({
+                        url: '',
+                        dataType: 'text',
+                        data: {id: id},
+                        success: function (res) {
+                            if (res.code == 200) {
+                                layer.msg(res.msg,{time:1000,icon:5})
+                            }else{
+                                layer.msg('提醒成功', {
+                                    time: 1000, icon: 6
+                                })
+                                location.reload()
+                            }
+                        },
+                        error:function (data) {
+                            layer.msg("发送邮件时发生错误，请重试...",{time:1000,icon:7})
+                            return false;
+                        }
+                    })
+                    obj.del();
+                    layer.close(index);
+                });
+
+            }else if (obj.event === 'del') {
+                layer.confirm('确定删除该条数据吗？', function (index) {
+                    $.ajax({
+                        url: '/xxwh/admin/deleteEvidenceList',
+                        dataType: 'text',
+                        data: {id: id},
+                        success: function (res) {
+                            if (res.code == 200) {
+                                layer.msg(res.msg,{time:1000,icon:5})
+                            }else{
+                                layer.msg('删除成功', {
+                                    time: 1000, icon: 6
+                                })
+                                location.reload()
+                            }
+                        },
+                        error:function (data) {
+                            layer.msg("删除时发生错误，请重试...",{time:1000,icon:7})
+                            return false;
+                        }
+                    })
+                    obj.del();
+                    layer.close(index);
+                });
+
+            } else if (obj.event === 'edit') {
+                //编辑教师信息
+                layer.open({
+                    type: 2,
+                    title: '审核学生简历',
+                    maxmin: true,
+                    // area: ['860px', '520px'],
+                    shadeClose: true, //点击遮罩关闭
+                    content: '/xxwh/admin/toEvidenceInfoEdit/' + id,
+                    area: screen() < 1 ? ['90%', '450px'] : ['760px', '600px']
+                    ,btn: ['通过','驳回']
+                    ,yes: function(index, layero){
+                        var iframeWindow = window['layui-layer-iframe'+ index]
+                            ,submitID = 'submit'
+                            ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                        //监听提交
+                        iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                            var field = data.field; //获取提交的字段
+                            // console.log(field)
+                            //提交 Ajax 成功后，静态更新表格中的数据
+                            //$.ajax({});
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",               //方法类型
+                                url: "/xxwh/admin/checkXxwhOfReject/已完成",       //url
+                                dataType: 'JSON',
+                                async: false,
+                                data: field,
+                                success: function (res) {
+                                    if (res.code === 200) {
+                                        layer.msg(res.msg,{time:1000,icon:5})
+                                    } else {
+                                        layer.msg('审核成功!', {icon: 6, time: 2000,end: function f() {
+                                                var index = parent.layer.getFrameIndex(window.name);
+                                                parent.layer.close(index)
+                                            }})
+                                    }
+                                },
+                                error:function (data) {
+                                    layer.msg("提交时发生错误，请重试...",{time:1000,icon:7})
+                                }
+                            });
+
+                            table.reload('bwmydcpTable'); //数据刷新
+                            table.reload('bwmydcpTable'); //数据刷新
+                            layer.close(index); //关闭弹层
+                        });
+                        submit.trigger('click');
+                    }
+                    ,btn2: function(index, layero){
+                        var iframeWindow = window['layui-layer-iframe'+ index]
+                            ,submitID = 'reject'
+                            ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                        //监听提交
+                        iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                            var field = data.field; //获取提交的字段
+                            // console.log(field)
+                            //提交 Ajax 成功后，静态更新表格中的数据
+                            //$.ajax({});
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",               //方法类型
+                                url: "/xxwh/admin/checkXxwhOfReject/已驳回",       //url
+                                dataType: 'JSON',
+                                async: false,
+                                data: field,
+                                success: function (res) {
+                                    if (res.code === 200) {
+                                        layer.msg(res.msg,{time:1000,icon:5})
+                                    } else {
+                                        layer.msg('驳回成功!', {icon: 6, time: 2000,end: function f() {
+                                                var index = parent.layer.getFrameIndex(window.name);
+                                                parent.layer.close(index)
+                                            }})
+                                    }
+                                },
+                                error:function (data) {
+                                    layer.msg("提交时发生错误，请重试...",{time:1000,icon:7})
+                                }
+                            });
+
+                            table.reload('bwmydcpTable'); //数据刷新
+                            table.reload('bwmydcpTable'); //数据刷新
+                            layer.close(index); //关闭弹层
+                        });
+                        submit.trigger('click');
+                    }
+                })
+            }else if (obj.event === 'detail') {
+                //编辑教师信息
+                layer.open({
+                    type: 2,
+                    title: '查看学生简历',
+                    maxmin: true,
+                    // area: ['860px', '520px'],
+                    shadeClose: true, //点击遮罩关闭
+                    content: '/xxwh/admin/toEvidenceInfoDetail/' + id,
+                    area: screen() < 1 ? ['90%', '450px'] : ['760px', '600px']
+                    ,btn: ['一键下载','取消']
+                    ,yes: function(index, layero){
+                        var iframeWindow = window['layui-layer-iframe'+ index]
+                            ,submitID = 'submit'
+                            ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                        //监听提交
+                        iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                            var field = data.field; //获取提交的字段
+                            $.ajax({
+                                //几个参数需要注意一下
+                                type: "POST",               //方法类型
+                                url: "/zip/stuDownLoadZipFile",       //url
+                                dataType: 'JSON',
+                                // async: false,
+                                // data: field,
+                                success: function (res) {
+                                    console.log("12344")
+                                    console.log(res)
+                                    if (res.code === 200) {
+                                        layer.msg(res.msg,{time:1000,icon:5})
+                                    } else {
+                                        layer.msg('下载成功!', {icon: 6, time: 2000})
+                                        window.open(res.msg);
+                                    }
+                                },
+                                error:function (data) {
+                                    layer.msg("提交时发生错误，请重试...",{time:1000,icon:7})
+                                }
+                            });
+
+                            table.reload('bwmydcpTable'); //数据刷新
+                            table.reload('bwmydcpTable'); //数据刷新
+                            layer.close(index); //关闭弹层
+                        });
+                        submit.trigger('click');
+                    }
+                })
+            }
+        })
+
+
+
+        //监听搜索
+        form.on('submit(bwmydcp-search)', function(data){
+            var field = data.field;
+            //执行重载
+            table.reload('bwmydcpTable', {
+                method: 'post'
+                ,page: {
+                    curr : 1 //重新从第一页开始
+                }
+                ,where: {
+                    stuNo : field.stuNo
+                    ,stuName : field.stuName
+                    ,status : field.status
+                    ,stuClass : field.stuClass
+                    ,stuFaculty : field.stuFaculty
+                }
+            });
+        });
+
+
+        var active = {
+            batchDelete: function(){
+                var checkStatus = table.checkStatus('bwmydcpTable')
+                    ,checkData = checkStatus.data; //得到选中的数据
+
+                if(checkData.length === 0){
+                    return layer.msg('请选择数据');
+                }
+
+                layer.confirm('确定删除吗？', function(index) {
+                    //执行 Ajax 后重载
+                    var str = "";
+                    for (var i = 0; i < checkData.length; i++) {
+                        if(i + 1 == checkData.length){
+                            str += checkData[i].id;
+                        }else{
+                            str += checkData[i].id + ",";
+                        }
+                    }
+
+                    $.ajax({
+                        url: '/xxwh/admin/bacthDeleteEvidenceList',
+                        type: 'POST',
+                        data: {
+                            "data" : str
+                        },
+                        success: function (res) {
+                            if (res.code == 100) {
+                                ajaxCode = 100;
+                            } else if (res.code == 200) {
+                                if (res.extend.mc_msg != null) {
+                                    layer.msg(res.extend.mc_msg, {time: 2000, icon: 5});
+                                } else {
+                                    ajaxCode = 200;
+                                }
+                            }
+                        },
+                        error: function () {
+                            layer.msg("删除失败，请重试!", {time: 1000, icon: 7});
+                        }
+                    })
+
+                    // table.reload('bjjsTable');
+                    // table.reload('bjjsTable');
+                    location.reload()
+                    layer.msg('已删除');
+                });
+            },
+
+        }
+
+
+        //判断浏览器大小方法
+        function screen() {
+            //获取当前窗口的宽度
+            var width = $(window).width();
+            if (width > 768) {
+                return 1;   //小屏幕
+            } else {
+                return 0;   //超小屏幕
+            }
+        }
+
+        $('.layui-btn.layuiadmin-btn-admin').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+</script>
+</body>
+</html>

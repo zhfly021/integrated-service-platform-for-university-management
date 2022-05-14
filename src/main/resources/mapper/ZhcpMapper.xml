@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhfly021.mapper.ZhcpMapper">
+    <resultMap id="ZhcpListData" type="com.zhfly021.entity.ZhcpListAndData">
+        <id property="id" column="id"></id>
+        <result property="releaseTime" column="releaseTime"></result>
+        <result property="releaser" column="releaser"></result>
+        <result property="releaseNo" column="releaseNo"></result>
+        <result property="releaseClass" column="releaseClass"></result>
+        <result property="releaseCommittee" column="releaseCommittee"></result>
+        <result property="project" column="project"></result>
+        <result property="projectID" column="projectID"></result>
+        <result property="zcObject" column="zcObject"></result>
+        <result property="remarks" column="remarks"></result>
+        <result property="deadline" column="deadline"></result>
+        <result property="status" column="status"></result>
+        <association property="zhcpData" javaType="com.zhfly021.entity.ZhcpData">
+            <result property="evaStatus" column="evaStatus"></result>
+        </association>
+    </resultMap>
+
+<!--    <resultMap id="ZhcpListSummary" type="com.zhfly021.entity.ZhcpListAndSummary">-->
+<!--        <id property="id" column="id"></id>-->
+<!--        <result property="releaseTime" column="releaseTime"></result>-->
+<!--        <result property="releaser" column="releaser"></result>-->
+<!--        <result property="releaseNo" column="releaseNo"></result>-->
+<!--        <result property="releaseClass" column="releaseClass"></result>-->
+<!--        <result property="releaseCommittee" column="releaseCommittee"></result>-->
+<!--        <result property="project" column="project"></result>-->
+<!--        <result property="projectID" column="projectID"></result>-->
+<!--        <result property="zcObject" column="zcObject"></result>-->
+<!--        <result property="remarks" column="remarks"></result>-->
+<!--        <result property="deadline" column="deadline"></result>-->
+<!--        <result property="status" column="status"></result>-->
+<!--        <association property="zhcpSummary" javaType="com.zhfly021.entity.ZhcpSummary">-->
+<!--            <result property="moral" column="moral"></result>-->
+<!--            <result property="evaStatus" column="evaStatus"></result>-->
+<!--            <result property="intellectual" column="intellectual"></result>-->
+<!--            <result property="physical" column="physical"></result>-->
+<!--            <result property="competence" column="competence"></result>-->
+<!--            <result property="summary" column="summary"></result>-->
+<!--            <result property="cultural" column="cultural"></result>-->
+<!--            <result property="comprehensive" column="comprehensive"></result>-->
+<!--            <result property="remarks" column="remarks"></result>-->
+<!--        </association>-->
+<!--    </resultMap>-->
+
+
+    <select id="queryByStu" resultMap="ZhcpListData">
+        select l.*,d.id,d.evaStatus from zhcpList l
+        left join zhcpData d on l.projectID = d.evaProjectID
+        where 1=1 and d.stuNo = #{stuNo}
+        <if test="project != null"> and l.project = #{project} </if>
+        <if test="status != null"> and d.evaStatus = #{status} </if>
+    </select>
+
+<!--    <select id="querySummaryByStu" resultMap="ZhcpListSummary">-->
+<!--        select l.*,s.id,s.evaStatus,s.moral,s.intellectual,s.physical,s.competence,s.summary,s.cultural,s.comprehensive,s.remarks from zhcpList l-->
+<!--        left join zhcpSummary s on l.projectID = s.evaProjectID-->
+<!--        where 1=1 and s.stuNo = #{stuNo}-->
+<!--        <if test="project != null"> and l.project = #{project} </if>-->
+<!--        <if test="status != null"> and s.evaStatus = #{status} </if>-->
+<!--    </select>-->
+
+    <select id="querySummaryByStu" resultType="com.zhfly021.entity.ZhcpSummary">
+        select * from zhcpSummary where 1=1 and stuNo = #{stuNo}
+         <if test="evaProject != null"> and evaProject = #{evaProject} </if>
+         <if test="evaStatus != null"> and evaStatus = #{evaStatus} </if>
+    </select>
+
+    <select id="querySummaryByStuClass" resultType="com.zhfly021.entity.ZhcpSummary">
+        select * from zhcpSummary where evaProjectID = #{evaProjectID} and stuClass = #{stuClass};
+    </select>
+
+    <select id="querySummaryById" resultType="com.zhfly021.entity.ZhcpSummary">
+        select * from zhcpSummary where id = #{id};
+    </select>
+
+    <update id="addZhcpData" parameterType="com.zhfly021.entity.ZhcpData">
+        update zhcpData set evaTime = #{evaTime},evaStatus = #{evaStatus},cultural = #{cultural},evaMarks= #{evaMarks},
+        moral_init = #{moralInit}, moral_add1 = #{moralAdd1}, moral_add2 = #{moralAdd2}, moral_add3 = #{moralAdd3}, moral_add4 = #{moralAdd4}, moral_add5 = #{moralAdd5},
+        moral_add6 = #{moralAdd6}, moral_add7 = #{moralAdd7}, moral_add8 = #{moralAdd8}, moral_minus1 = #{moralMinus1},
+        moral_minus2 = #{moralMinus2}, moral_minus3 = #{moralMinus3}, moral_minus4 = #{moralMinus4}, moral_minus5 = #{moralMinus5}, moral_minus6 = #{moralMinus6},
+        moral_minus7 = #{moralMinus7}, moral_minus8 = #{moralMinus8}, moral_minus9 = #{moralMinus9}, moral_sum = #{moralSum},
+        intellectual_year = #{intellectualYear}, intellectual_credit = #{intellectualCredit}, intellectual_sum = #{intellectualSum},
+        physical_init = #{physicalInit}, physical_add1 = #{physicalAdd1}, physical_add2 = #{physicalAdd2}, physical_add3 = #{physicalAdd3}, physical_add4 = #{physicalAdd4},
+        physical_minus1 = #{physicalMinus1}, physical_minus2 = #{physicalMinus2}, physical_minus3 = #{physicalMinus3}, physical_sum = #{physicalSum},
+        competence_init = #{competenceInit}, competence_add1 = #{competenceAdd1}, competence_add2 = #{competenceAdd2}, competence_add3 = #{competenceAdd3}, competence_add4 = #{competenceAdd4},
+        competence_add5 = #{competenceAdd5}, competence_add6 = #{competenceAdd6}, competence_add7 = #{competenceAdd7},
+        competence_minus1 = #{competenceMinus1}, competence_minus2 = #{competenceMinus2}, competence_minus3 = #{competenceMinus3},
+        competence_sum = #{competenceSum}, summary = #{summary}
+          where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </update>
+
+    <update id="updateZhcpDataReviewByInit" parameterType="com.zhfly021.entity.ZhcpDataReview">
+        update zhcpDataReview set evaTime = #{evaTime},evaStatus = #{evaStatus},evaMarks= #{evaMarks}
+          where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </update>
+
+
+
+    <select id="queryProjectIdByID" resultType="String">
+        select projectID from zhcpList where id = #{id}
+    </select>
+
+    <select id="queryZhcpDataById" resultType="com.zhfly021.entity.ZhcpData">
+        select * from  zhcpData where id = #{id};
+    </select>
+
+
+    <update id="updateDataStatusOfStu" parameterType="String">
+        update zhcpData set evaStatus = #{evaStatus} where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </update>
+
+    <update id="updateDataReviewStatusOfStu" parameterType="String">
+        update zhcpDataReview set evaStatus = #{evaStatus} where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </update>
+
+    <update id="updateSummaryStatusOfStu" parameterType="String">
+        update zhcpSummary set evaStatus = #{evaStatus} where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </update>
+
+    <update id="upadZhcpDataConfirmTime" parameterType="String">
+        update zhcpData set confirmTime = #{confirmTime} where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </update>
+
+    <update id="upadZhcpDataReviewConfirmTime" parameterType="String">
+        update zhcpDataReview set confirmTime = #{confirmTime} where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </update>
+
+    <select id="queryZhcpDataReviewById" resultType="com.zhfly021.entity.ZhcpDataReview">
+        select * from  zhcpDataReview where id = #{id};
+    </select>
+
+    <select id="queryZhcpListByProjectID" resultType="com.zhfly021.entity.ZhcpList">
+        select * from zhcpList where projectID = #{projectID} and releaseClass = #{releaseClass};
+    </select>
+
+
+
+
+
+
+    <select id="queryZhcpList" resultType="com.zhfly021.entity.ZhcpList">
+        select * from zhcpList  where 1=1 and releaseClass = #{releaseClass}
+        <if test="project != null"> and project = #{project}  </if>
+        <if test="status != null"> and status = #{status}</if>
+    </select>
+
+    <insert id="addZhcpList" parameterType="com.zhfly021.entity.ZhcpList">
+        insert into zhcpList(releaseTime,releaser,releaseNo,releaseClass,releaseCommittee,project,projectID,zcObject,remarks,deadline,status)
+          values(#{releaseTime},#{releaser},#{releaseNo},#{releaseClass},#{releaseCommittee},#{project},#{projectID},#{zcObject},#{remarks},#{deadline},#{status})
+    </insert>
+
+    <insert id="addZhcpDataByInit" parameterType="com.zhfly021.entity.ZhcpData">
+        insert into zhcpData(stuNo,stuName,stuClass,evaProject,evaProjectID,evaStatus)
+          values(#{stuNo},#{stuName},#{stuClass},#{evaProject},#{evaProjectID},#{evaStatus})
+    </insert>
+
+    <insert id="addZhcpDataReviewByInit" parameterType="com.zhfly021.entity.ZhcpDataReview">
+        insert into zhcpDataReview(stuNo,stuName,stuClass,evaProject,evaProjectID,evaStatus)
+          values(#{stuNo},#{stuName},#{stuClass},#{evaProject},#{evaProjectID},#{evaStatus})
+    </insert>
+
+    <insert id="addZhcpSummaryByInit" parameterType="com.zhfly021.entity.ZhcpDataReview">
+        insert into zhcpSummary(stuNo,stuName,stuClass,evaProject,evaProjectID,evaStatus)
+          values(#{stuNo},#{stuName},#{stuClass},#{evaProject},#{evaProjectID},#{evaStatus})
+    </insert>
+
+    <update id="updateListStatus" parameterType="String">
+        update zhcpList set status = #{status} where projectID = #{projectID} and releaseClass = #{releaseClass};
+    </update>
+
+    <update id="updateDataStatus" parameterType="String">
+        update zhcpData set evaStatus = #{evaStatus} where evaProjectID = #{evaProjectID} and stuClass = #{stuClass};
+    </update>
+
+    <update id="updateDataReviewStatus" parameterType="String">
+        update zhcpDataReview set evaStatus = #{evaStatus} where evaProjectID = #{evaProjectID} and stuClass = #{stuClass};
+    </update>
+
+    <update id="updateSummaryStatus" parameterType="String">
+        update zhcpSummary set evaStatus = #{evaStatus} where evaProjectID = #{evaProjectID} and stuClass = #{stuClass};
+    </update>
+
+    <update id="updateDataProject" parameterType="String">
+        update zhcpData set evaProject = #{evaProject} where evaProjectID = #{evaProjectID} and stuClass = #{stuClass};
+    </update>
+
+    <update id="updateDataReviewProject" parameterType="String">
+        update zhcpDataReview set evaProject = #{evaProject} where evaProjectID = #{evaProjectID} and stuClass = #{stuClass};
+    </update>
+
+    <update id="updateSummaryProject" parameterType="String">
+        update zhcpSummary set evaProject = #{evaProject} where evaProjectID = #{evaProjectID} and stuClass = #{stuClass};
+    </update>
+
+    <select id="queryZhcpDataByProjectIDAndStuNo" resultType="com.zhfly021.entity.ZhcpData">
+        select * from zhcpData  where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </select>
+
+    <select id="queryZhcpDataReviewByProjectIDAndStuNo" resultType="com.zhfly021.entity.ZhcpDataReview">
+        select * from zhcpDataReview  where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </select>
+
+    <select id="queryZhcpSummaryByProjectIDAndStuNo" resultType="com.zhfly021.entity.ZhcpSummary">
+        select * from zhcpSummary  where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </select>
+
+    <select id="queryZhcpListById" resultType="com.zhfly021.entity.ZhcpList">
+        select * from zhcpList  where id = #{id}
+    </select>
+
+    <update id="updateZhcpList" parameterType="com.zhfly021.entity.ZhcpList">
+        update zhcpList set project = #{project}, zcObject = #{zcObject}, deadline = #{deadline}, remarks = #{remarks}, status = #{status} where id = #{id};
+    </update>
+
+    <delete id="deleteZhcpList" parameterType="Integer">
+        delete from zhcpList where id = #{id}
+    </delete>
+
+    <delete id="batchDelZhcpList" parameterType="Integer">
+        delete from zhcpList where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="delZhcpData" parameterType="String">
+        delete from zhcpData where evaProjectID = #{evaProjectID} and stuClass = #{stuClass};
+    </delete>
+
+    <delete id="delZhcpDataReview" parameterType="String">
+        delete from zhcpDataReview where evaProjectID = #{evaProjectID} and stuClass = #{stuClass};
+    </delete>
+
+    <delete id="delZhcpSummary" parameterType="String">
+        delete from zhcpSummary where evaProjectID = #{evaProjectID} and stuClass = #{stuClass};
+    </delete>
+
+    <select id="queryProjectByClass" resultType="String">
+        select project from zhcpList  where releaseClass = #{releaseClass}
+    </select>
+
+    <select id="queryZhcpData" resultType="com.zhfly021.entity.ZhcpData">
+        select * from zhcpData  where 1=1 and stuClass = #{stuClass}
+        <if test="stuName != null"> and stuName like CONCAT('%',#{stuName},'%') </if>
+        <if test="evaProject != null"> and evaProject = #{evaProject}  </if>
+        <if test="evaStatus != null"> and evaStatus = #{evaStatus}</if>
+    </select>
+
+    <update id="addZhcpDataReview" parameterType="com.zhfly021.entity.ZhcpDataReview">
+        update zhcpDataReview set evaStatus = #{evaStatus},cultural = #{cultural},reviewDescription=#{reviewDescription},
+        reviewNo=#{reviewNo},reviewName=#{reviewName},reviewClass=#{reviewClass},reviewCommittee=#{reviewCommittee},reviewTime=#{reviewTime},reviewRemarks=#{reviewRemarks},
+        moral_init = #{moralInit}, moral_add1 = #{moralAdd1}, moral_add2 = #{moralAdd2}, moral_add3 = #{moralAdd3}, moral_add4 = #{moralAdd4}, moral_add5 = #{moralAdd5},
+        moral_add6 = #{moralAdd6}, moral_add7 = #{moralAdd7}, moral_add8 = #{moralAdd8}, moral_minus1 = #{moralMinus1},
+        moral_minus2 = #{moralMinus2}, moral_minus3 = #{moralMinus3}, moral_minus4 = #{moralMinus4}, moral_minus5 = #{moralMinus5}, moral_minus6 = #{moralMinus6},
+        moral_minus7 = #{moralMinus7}, moral_minus8 = #{moralMinus8}, moral_minus9 = #{moralMinus9}, moral_sum = #{moralSum},
+        intellectual_year = #{intellectualYear}, intellectual_credit = #{intellectualCredit}, intellectual_sum = #{intellectualSum},
+        physical_init = #{physicalInit}, physical_add1 = #{physicalAdd1}, physical_add2 = #{physicalAdd2}, physical_add3 = #{physicalAdd3}, physical_add4 = #{physicalAdd4},
+        physical_minus1 = #{physicalMinus1}, physical_minus2 = #{physicalMinus2}, physical_minus3 = #{physicalMinus3}, physical_sum = #{physicalSum},
+        competence_init = #{competenceInit}, competence_add1 = #{competenceAdd1}, competence_add2 = #{competenceAdd2}, competence_add3 = #{competenceAdd3}, competence_add4 = #{competenceAdd4},
+        competence_add5 = #{competenceAdd5}, competence_add6 = #{competenceAdd6}, competence_add7 = #{competenceAdd7},
+        competence_minus1 = #{competenceMinus1}, competence_minus2 = #{competenceMinus2}, competence_minus3 = #{competenceMinus3},
+        competence_sum = #{competenceSum}, summary = #{summary}
+          where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </update>
+
+    <update id="addZhcpSummary" parameterType="com.zhfly021.entity.ZhcpDataReview">
+        update zhcpSummary set evaTime = #{evaTime},evaStatus = #{evaStatus},cultural = #{cultural},remarks = #{remarks},
+         moral = #{moral},intellectual = #{intellectual},physical = #{physical},competence = #{competence},summary = #{summary}
+          where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </update>
+
+    <delete id="delZhcpDataById" parameterType="Integer">
+        delete from zhcpData where id = #{id}
+    </delete>
+
+    <delete id="batchDelZhcpDataById" parameterType="Integer">
+        delete from zhcpData where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="delZhcpDataReviewByStu" parameterType="String">
+        delete from zhcpDataReview where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </delete>
+
+    <delete id="delZhcpSummaryByStu" parameterType="String">
+        delete from zhcpSummary where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </delete>
+
+    <update id="updateSummaryOfSummary" parameterType="com.zhfly021.entity.ZhcpDataReview">
+        update zhcpSummary set comprehensive = #{comprehensive}, evaStatus = '已结束'
+          where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </update>
+
+    <update id="updateZhcpListOfFinal" parameterType="com.zhfly021.entity.ZhcpList">
+        update zhcpList set finalPerson = #{finalPerson}, finalTime = #{finalTime}
+          where id = #{id}
+    </update>
+
+    <update id="upadteZhcpDataReviewOfStu" parameterType="com.zhfly021.entity.ZhcpDataReview">
+        update zhcpDataReview set reviewsReason = #{reviewsReason}, reviewsSubmit = #{reviewsSubmit} ,evaStatus = #{evaStatus}
+           where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </update>
+
+    <update id="upadteZhcpDataReviewOfAdminOfAccess" parameterType="com.zhfly021.entity.ZhcpDataReview">
+        update zhcpDataReview set evaStatus = #{evaStatus},cultural = #{cultural},reviewDescription=#{reviewDescription},
+        reviewsNo = #{reviewsNo}, reviewsName = #{reviewsName}, reviewsClass = #{reviewsClass},reviewsCommittee = #{reviewsCommittee},reviewsTime = #{reviewsTime},reviewsRemarks = #{reviewsRemarks},
+        moral_init = #{moralInit}, moral_add1 = #{moralAdd1}, moral_add2 = #{moralAdd2}, moral_add3 = #{moralAdd3}, moral_add4 = #{moralAdd4}, moral_add5 = #{moralAdd5},
+        moral_add6 = #{moralAdd6}, moral_add7 = #{moralAdd7}, moral_add8 = #{moralAdd8}, moral_minus1 = #{moralMinus1},
+        moral_minus2 = #{moralMinus2}, moral_minus3 = #{moralMinus3}, moral_minus4 = #{moralMinus4}, moral_minus5 = #{moralMinus5}, moral_minus6 = #{moralMinus6},
+        moral_minus7 = #{moralMinus7}, moral_minus8 = #{moralMinus8}, moral_minus9 = #{moralMinus9}, moral_sum = #{moralSum},
+        intellectual_year = #{intellectualYear}, intellectual_credit = #{intellectualCredit}, intellectual_sum = #{intellectualSum},
+        physical_init = #{physicalInit}, physical_add1 = #{physicalAdd1}, physical_add2 = #{physicalAdd2}, physical_add3 = #{physicalAdd3}, physical_add4 = #{physicalAdd4},
+        physical_minus1 = #{physicalMinus1}, physical_minus2 = #{physicalMinus2}, physical_minus3 = #{physicalMinus3}, physical_sum = #{physicalSum},
+        competence_init = #{competenceInit}, competence_add1 = #{competenceAdd1}, competence_add2 = #{competenceAdd2}, competence_add3 = #{competenceAdd3}, competence_add4 = #{competenceAdd4},
+        competence_add5 = #{competenceAdd5}, competence_add6 = #{competenceAdd6}, competence_add7 = #{competenceAdd7},
+        competence_minus1 = #{competenceMinus1}, competence_minus2 = #{competenceMinus2}, competence_minus3 = #{competenceMinus3},
+        competence_sum = #{competenceSum}, summary = #{summary}
+          where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </update>
+
+    <update id="upadteZhcpDataReviewOfAdminOfReject" parameterType="com.zhfly021.entity.ZhcpDataReview">
+        update zhcpDataReview set reviewsNo = #{reviewsNo}, reviewsName = #{reviewsName}, reviewsClass = #{reviewsClass},
+        reviewsCommittee = #{reviewsCommittee},reviewsTime = #{reviewsTime},reviewsRemarks = #{reviewsRemarks} ,evaStatus = #{evaStatus}
+           where evaProjectID = #{evaProjectID} and stuNo = #{stuNo};
+    </update>
+
+
+</mapper>

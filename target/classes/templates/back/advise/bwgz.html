@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>班级建设意见</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/template.css" media="all">
+</head>
+<body>
+
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card" style="padding-top: 5px">
+          <!-- 搜索条件开始 -->
+          <fieldset class="layui-elem-field layui-field-title">
+            <legend>查询条件</legend>
+          </fieldset>
+          <div class="layui-form">
+              <div class="layui-form-item">
+                  <div class="layui-inline layui-col-lg4 layui-col-xs11">
+                      <label class="layui-form-label">信件标题:</label>
+                      <div class="layui-input-block">
+                          <input type="text" name="letterTitle" autocomplete="off" class="layui-input">
+                      </div>
+                  </div>
+                  <div class="layui-inline" th:if="${session.adminEmployer}=='4'">
+                      <label class="layui-form-label">反馈对象：</label>
+                      <div class="layui-input-block">
+                          <select name="feedback" id="feedback">
+                              <option value="">请选择班委</option>
+                              <option value="团支书">团支书</option>
+                              <option value="班长">班长</option>
+                              <option value="组织委员">组织委员</option>
+                              <option value="宣传委员">宣传委员</option>
+                              <option value="权益委员">权益委员</option>
+                              <option value="学习委员">学习委员</option>
+                              <option value="生活委员">生活委员</option>
+                              <option value="科创委员">科创委员</option>
+                              <option value="心理委员">心理委员</option>
+                              <option value="文艺委员">文艺委员</option>
+                              <option value="体育委员">体育委员</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="layui-inline">
+                      <label class="layui-form-label">信件状态:</label>
+                      <div class="layui-input-block">
+                          <select name="status" id="status">
+                              <option value="">不限</option>
+                              <option value="未回复">未回复</option>
+                              <option value="已回复">已回复</option>
+                              <option value="已评价">已评价</option>
+                          </select>
+<!--                          <input type="radio" name="status" value="未回复" title="未回复" checked="">-->
+<!--                          <input type="radio" name="status" value="已回复" title="已回复">-->
+<!--                          <input type="radio" name="status" value="已评价" title="已评价">-->
+                      </div>
+                  </div>
+              </div>
+              <div class="layui-form-item">
+                  <div class="layui-input-block">
+                      <button class="layui-btn layuiadmin-btn-admin layui-btn-normal layui-btn-sm layui-icon layui-icon-search" lay-submit lay-filter="bwgzfk-search">查询</button>
+<!--                      <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" id="bjjs-reset" onclick="">重置</button>-->
+                  </div>
+              </div>
+          </div>
+          <!-- 搜索条件结束 -->
+
+
+          <div class="layui-card-body">
+            <table class="layui-hide" id="bwgzfkTable" lay-filter="bwgzfk"></table>
+<!--            <blockquote class="layui-elem-quote">备注信息：待拓展（可填写相关班级建设意见的填写指导等）</blockquote>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display: none" id="bwgzfkToolBar">
+<!--    <button class="layui-btn layuiadmin-btn-admin" data-type="add">班委工作反馈入口</button>-->
+    <button class="layui-btn layuiadmin-btn-admin" data-type="batchDelete">批量删除</button>
+  </div>
+  <div id="bwgzfkBar" style="display: none;">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">回复</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </div>
+
+  <div id="statusBar" style="display: none;">
+      {{# if(d.status == '未回复'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-danger">未回复</button>
+      {{#  } }}
+      {{# if(d.status == '已回复'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-normal">已回复</button>
+      {{#  } }}
+      {{# if(d.status == '已评价'){ }}
+      <button class="layui-btn layui-btn-xs">已评价</button>
+      {{# } }}
+  </div>
+
+  <script src="../../layuiadmin/layui/layui.js"></script>
+  <script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'jquery', 'table', 'form', 'layer', 'laydate'], function(){
+    var $ = layui.$
+    ,table = layui.table
+    ,form = layui.form
+    ,layer = layui.layer
+    ,laydate = layui.laydate;
+
+    //方法级渲染
+    table.render({
+      elem: '#bwgzfkTable'
+      ,id: 'bwgzfkTable'
+      ,url: '/bwgzfk/queryBwgzfk'
+      ,title: '班级建设意见表'
+      ,toolbar: '#bwgzfkToolBar'
+      ,cellMinWidth:200
+      ,page: true
+      ,limit: 10
+      ,height: 'full-221'
+      ,cols: [
+              [
+        {checkbox: true, fixed: true}
+        ,{type:'numbers', field:'no',title: '序号', width:70, fixed: 'left',align:"center"}
+        ,{field:'feedback',title: '反馈对象', width:100,align:'center'}
+        ,{field:'letterTitle', title: '信件标题'}
+        ,{field:'sender', title: '发送人', width:120, sort: true, align:'center'}
+        ,{field:'sendTime', title: '发送时间', width:200, sort: true}
+        ,{field:'responseTime', title: '回复时间', width:200, sort: true}
+        ,{field:'status', toolbar:'#statusBar',title: '信件状态', width:100,align:'center'}
+        ,{title: '操作', toolbar:'#bwgzfkBar', width:200, align:'center'}
+        ]
+      ]
+      ,parseData: function (res) {
+            return {
+                "code": 0,
+                "msg": res.msg,
+                "data": res.payload.content,
+                "count": res.payload.total
+            }
+        }
+
+    });
+
+      //监听行工具事件
+      table.on('tool(bwgzfk)', function(obj) {
+
+          var data = obj.data;
+          var id = data.id;
+
+          if (obj.event === 'del') {
+              layer.confirm('真的要删除这一行么', function (index) {
+                  $.ajax({
+                      url: '/bwgzfk/stu/deleteBwgzfk',
+                      dataType: 'text',
+                      data: {id: id},
+                      success: function (res) {
+                          if (res.code == 200) {
+                              layer.msg(res.msg,{time:1000,icon:5})
+                          }else{
+                              layer.msg('删除成功', {
+                                  time: 1000, icon: 6
+                              })
+                              location.reload()
+                          }
+                      },
+                      error:function (data) {
+                          layer.msg("删除班级建设意见时发生错误，请重试...",{time:1000,icon:7})
+                          return false;
+                      }
+                  })
+                  obj.del();
+                  layer.close(index);
+              });
+
+          } else if (obj.event === 'edit') {
+              //编辑教师信息
+              layer.open({
+                  type: 2,
+                  title: '回复班委工作反馈',
+                  maxmin: true,
+                  // area: ['860px', '520px'],
+                  shadeClose: true, //点击遮罩关闭
+                  content: '/bjlyb/admin/bwgzfk/toBwgzfkResponse/' + id,
+                  area: screen() < 1 ? ['90%', '450px'] : ['760px', '549px']
+                  ,btn: ['修改', '取消']
+                  ,yes: function(index, layero){
+                  var iframeWindow = window['layui-layer-iframe'+ index]
+                      ,submitID = 'submit'
+                      ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                      //监听提交
+                      iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                          var field = data.field; //获取提交的字段
+                          // console.log(field)
+                          //提交 Ajax 成功后，静态更新表格中的数据
+                          //$.ajax({});
+                          $.ajax({
+                              //几个参数需要注意一下
+                              type: "POST",               //方法类型
+                              url: "/bwgzfk/admin/responseBwgzfk",       //url
+                              dataType: 'JSON',
+                              async: false,
+                              data: field,
+                              success: function (res) {
+                                  if (res.code === 200) {
+                                      layer.msg(res.msg,{time:1000,icon:5})
+                                  } else {
+                                      layer.msg('班委工作反馈回复成功!', {icon: 6, time: 2000,end: function f() {
+                                              var index = parent.layer.getFrameIndex(window.name);
+                                              parent.layer.close(index)
+                                          }})
+                                  }
+                              },
+                              error:function (data) {
+                                  layer.msg("回复班委工作反馈时发生错误，请重试...",{time:1000,icon:7})
+                              }
+                          });
+
+                          table.reload('bwgzfkTable'); //数据刷新
+                          table.reload('bwgzfkTable'); //数据刷新
+                          layer.close(index); //关闭弹层
+                      });
+                      submit.trigger('click');
+                  }
+              })
+          } else if (obj.event === 'detail') {
+              //编辑教师信息
+              layer.open({
+                  type: 2,
+                  title: '班委工作反馈回复',
+                  maxmin: true,
+                  // area: ['860px', '520px'],
+                  area: screen() < 1 ? ['90%', '450px'] : ['760px', '495.5px'],
+                  shadeClose: true, //点击遮罩关闭
+                  content: '/bjlyb/admin/bjjs/toBwgzfkResponseDetail/' + id,
+                  end: function (index) {
+                      location.reload()
+                      parent.layer.close(index);
+                  }
+              })
+          }
+      })
+
+
+    var $ = layui.$, active = {
+      reload: function(){
+        var demoReload = $('#test-table-demoReload');
+
+        //执行重载
+        table.reload('bwgzfkTable', {
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          ,where: {
+            key: {
+              id: demoReload.val()
+            }
+          }
+        });
+      }
+    };
+
+    //监听搜索
+      form.on('submit(bwgzfk-search)', function(data){
+          var field = data.field;
+          var feedback = $('#feedback option:selected');
+          var letterTitle = $('input[name="letterTitle"]');
+          var status = $('#status option:selected');
+          //执行重载
+          table.reload('bwgzfkTable', {
+              method: 'post'
+              ,page: {
+                  curr : 1 //重新从第一页开始
+              }
+              ,where: {
+                  feedback : feedback.val()
+                  ,letterTitle : letterTitle.val()
+                  ,status : status.val()
+                  // ,page: 1
+                  // ,limit: 10
+              }
+          });
+
+      });
+
+      function resetBwgzfk() {
+            $("#bjjs-reset").on('click',function () {
+                $('input[name="feedback"]').reset();
+                $('input[name="letterTitle"]').reset();
+                $('input[name="status"]').reset();
+            })
+      }
+
+      //事件        处理水平工具栏事件
+      var active = {
+          batchDelete: function(){
+              var checkStatus = table.checkStatus('bwgzfkTable')
+                  ,checkData = checkStatus.data; //得到选中的数据
+
+              if(checkData.length === 0){
+                  return layer.msg('请选择数据');
+              }
+
+              layer.confirm('确定删除吗？', function(index) {
+                  //执行 Ajax 后重载
+                  var str = "";
+                  for (var i = 0; i < checkData.length; i++) {
+                      if(i + 1 == checkData.length){
+                          str += checkData[i].id;
+                      }else{
+                          str += checkData[i].id + ",";
+                      }
+                  }
+
+                  $.ajax({
+                      url: '/bwgzfk/stu/bacthDeleteBwgzfk',
+                      type: 'POST',
+                      data: {
+                          "data" : str
+                      },
+                      success: function (res) {
+                          if (res.code == 100) {
+                              ajaxCode = 100;
+                          } else if (res.code == 200) {
+                              if (res.extend.mc_msg != null) {
+                                  layer.msg(res.extend.mc_msg, {time: 2000, icon: 5});
+                              } else {
+                                  ajaxCode = 200;
+                              }
+                          }
+                      },
+                      error: function () {
+                          layer.msg("删除失败，请重试!", {time: 1000, icon: 7});
+                      }
+                  })
+
+                  // table.reload('bjjsTable');
+                  // table.reload('bjjsTable');
+                  location.reload()
+                  layer.msg('已删除');
+              });
+          },
+
+          add: function(){
+              layer.open({
+                  type:  2                //利用iframe框架的弹出层
+                  ,title: '添加班委工作反馈'
+                  ,maxmin: true
+                  ,content: '/bwgzfk/toBwgzfkAdd'
+                  // ,area: ['860px', '520px']
+                  ,area: screen() < 1 ? ['90%', '450px'] : ['760px', '549px']
+                  ,btn: ['提交', '取消']
+                  ,yes: function(index, layero){
+                      var iframeWindow = window['layui-layer-iframe'+ index]
+                          ,submitID = 'submit'
+                          ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                      //监听提交
+                      iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                          var field = data.field; //获取提交的字段
+                          // console.log(field)
+                          //提交 Ajax 成功后，静态更新表格中的数据
+                          //$.ajax({});
+                          $.ajax({
+                              //几个参数需要注意一下
+                              type: "POST",               //方法类型
+                              url: "/bwgzfk/stu/addBwgzfk",       //url
+                              dataType: 'JSON',
+                              async: false,
+                              data: field,
+                              success: function (res) {
+                                  if (res.code === 200) {
+                                      layer.msg(res.msg,{time:1000,icon:5})
+                                  } else {
+                                      layer.msg('班级建设意见修改成功!', {icon: 6, time: 2000,end: function f() {
+                                              var index = parent.layer.getFrameIndex(window.name);
+                                              parent.layer.close(index)
+                                          }})
+                                  }
+                              },
+                              error:function (data) {
+                                  layer.msg("修改班级建设意见时发生错误，请重试...",{time:1000,icon:7})
+                              }
+                          });
+
+                          table.reload('bwgzfkTable'); //数据刷新
+                          table.reload('bwgzfkTable'); //数据刷新
+                          layer.close(index); //关闭弹层
+                      });
+                      submit.trigger('click');
+                  }
+              });
+          }
+      }
+
+      //判断浏览器大小方法
+      function screen() {
+          //获取当前窗口的宽度
+          var width = $(window).width();
+          if (width > 768) {
+              return 1;   //小屏幕
+          } else {
+              return 0;   //超小屏幕
+          }
+      }
+
+      /*  //监听头部工具栏事件
+        table.on("toolbar(bjjsTable)",function(obj){
+            switch(obj.event){
+                case 'add':
+                    openAddBjjs();
+                    break;
+                case 'delete':
+                    deleteBjjs();
+                    break;
+                case 'batchDelete':
+                    batchDeleteBjjs();
+                    break;
+            };
+        })
+
+        */
+
+      $('.layui-btn.layuiadmin-btn-admin').on('click', function(){
+          var type = $(this).data('type');
+          active[type] ? active[type].call(this) : '';
+      });
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>填写班委满意度测评</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../../../layuiadmin/style/template.css" media="all">
+</head>
+<body style="background-color: #fff">
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div>
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 5px;">
+                    <legend>班委满意度测评填报窗口</legend>
+                </fieldset>
+                <form class="layui-form layui-form-pane" method="post" id="form">
+                    <input type="hidden" name="evaProjectID" th:value="${projectID}">
+                    <fieldset class="layui-elem-field">
+                        <legend>1.你对本班的凝聚力满意吗？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation1" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                <input type="radio" name="evaluation1" lay-verify="otherReq" value="满意" title="满意">
+                                <input type="radio" name="evaluation1" lay-verify="otherReq" value="一般" title="一般">
+                                <input type="radio" name="evaluation1" lay-verify="otherReq" value="不满意" title="不满意">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>2.在班上出现意见分歧时，你对班干部的处理方式以及效果满意吗？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation2" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                <input type="radio" name="evaluation2" lay-verify="otherReq" value="满意" title="满意">
+                                <input type="radio" name="evaluation2" lay-verify="otherReq" value="一般" title="一般">
+                                <input type="radio" name="evaluation2" lay-verify="otherReq" value="不满意" title="不满意">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>3.你对班会的费用的用途是否了解？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation3" lay-verify="otherReq" value="是" title="是">
+                                <input type="radio" name="evaluation3" lay-verify="otherReq" value="否" title="否">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>4.你对班干开展工作给予的态度是？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation4" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                <input type="radio" name="evaluation4" lay-verify="otherReq" value="满意" title="满意">
+                                <input type="radio" name="evaluation4" lay-verify="otherReq" value="一般" title="一般">
+                                <input type="radio" name="evaluation4" lay-verify="otherReq" value="不满意" title="不满意">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>5.你对班委对班会的使用是否满意？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation5" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                <input type="radio" name="evaluation5" lay-verify="otherReq" value="满意" title="满意">
+                                <input type="radio" name="evaluation5" lay-verify="otherReq" value="一般" title="一般">
+                                <input type="radio" name="evaluation5" lay-verify="otherReq" value="不满意" title="不满意">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>6.你对班委对待工作的积极性满意吗？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation6" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                <input type="radio" name="evaluation6" lay-verify="otherReq" value="满意" title="满意">
+                                <input type="radio" name="evaluation6" lay-verify="otherReq" value="一般" title="一般">
+                                <input type="radio" name="evaluation6" lay-verify="otherReq" value="不满意" title="不满意">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>7.在及时需要同学参与的事务上，班委会？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation7" lay-verify="otherReq" value="及时发布通知，并积极动员学生" title="及时发布通知，并积极动员学生">
+                                <input type="radio" name="evaluation7" lay-verify="otherReq" value="及时发布通知" title="及时发布通知">
+                                <input type="radio" name="evaluation7" lay-verify="otherReq" value="有时会在期限快到的时候发布通知" title="有时会在期限快到的时候发布通知">
+                                <input type="radio" name="evaluation7" lay-verify="otherReq" value="经常会在期限快到的时候发布通知" title="经常会在期限快到的时候发布通知">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>8.参加班级活动，有同学不到，你认为？【多选题】</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="checkbox" name="evaluation8s[]" lay-verify="otherReq" value="情有可原，可以理解" title="情有可原，可以理解">
+                                <input type="checkbox" name="evaluation8s[]" lay-verify="otherReq" value="他们不重视班级活动，缺乏责任心" title="他们不重视班级活动，缺乏责任心">
+                                <input type="checkbox" name="evaluation8s[]" lay-verify="otherReq" value="班干部组织能力不强" title="班干部组织能力不强">
+                                <input type="checkbox" name="evaluation8s[]" lay-verify="otherReq" value="其他" title="其他">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>9.你觉得班上上课的出勤率跟班干部的责任心关系大吗？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation9" lay-verify="otherReq" value="关系很大" title="关系很大">
+                                <input type="radio" name="evaluation9" lay-verify="otherReq" value="有一点关系" title="有一点关系">
+                                <input type="radio" name="evaluation9" lay-verify="otherReq" value="没关系" title="没关系">
+                                <input type="radio" name="evaluation9" lay-verify="otherReq" value="完全没关系" title="完全没关系">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>10.你认为本班的上课纪律情况怎么样？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation10" lay-verify="otherReq" value="非常好" title="非常好">
+                                <input type="radio" name="evaluation10" lay-verify="otherReq" value="好" title="好">
+                                <input type="radio" name="evaluation10" lay-verify="otherReq" value="不好" title="不好">
+                                <input type="radio" name="evaluation10" lay-verify="otherReq" value="非常不好" title="非常不好">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>11.你认为班干部的工作太多怎么样？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation11" lay-verify="otherReq" value="非常好" title="非常好">
+                                <input type="radio" name="evaluation11" lay-verify="otherReq" value="好" title="好">
+                                <input type="radio" name="evaluation11" lay-verify="otherReq" value="不好" title="不好">
+                                <input type="radio" name="evaluation11" lay-verify="otherReq" value="非常不好" title="非常不好">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>12.班干部对自己的本职工作负责吗？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation12" lay-verify="otherReq" value="非常负责" title="非常负责">
+                                <input type="radio" name="evaluation12" lay-verify="otherReq" value="负责" title="负责">
+                                <input type="radio" name="evaluation12" lay-verify="otherReq" value="不负责" title="不负责">
+                                <input type="radio" name="evaluation12" lay-verify="otherReq" value="非常不负责" title="非常不负责">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>13.你对班干部传达信息的效率满意吗？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation13" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                <input type="radio" name="evaluation13" lay-verify="otherReq" value="满意" title="满意">
+                                <input type="radio" name="evaluation13" lay-verify="otherReq" value="一般" title="一般">
+                                <input type="radio" name="evaluation13" lay-verify="otherReq" value="不满意" title="不满意">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>14.你对这一学期以来班级工作的开展很整体情况感觉是？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation14" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                <input type="radio" name="evaluation14" lay-verify="otherReq" value="满意" title="满意">
+                                <input type="radio" name="evaluation14" lay-verify="otherReq" value="一般" title="一般">
+                                <input type="radio" name="evaluation14" lay-verify="otherReq" value="不满意" title="不满意">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>15.你认为我们班在信息传达方面存在什么问题？【多选题】？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="checkbox" name="evaluation15s[]" lay-verify="otherReq" value="信息表达不明，看不懂" title="信息表达不明，看不懂">
+                                <input type="checkbox" name="evaluation15s[]" lay-verify="otherReq" value="信息过于冗长" title="信息过于冗长">
+                                <input type="checkbox" name="evaluation15s[]" lay-verify="otherReq" value="信息停滞" title="信息停滞">
+                                <input type="checkbox" name="evaluation15s[]" lay-verify="otherReq" value="信息传达错误" title="信息传达错误">
+                                <input type="checkbox" name="evaluation15s[]" lay-verify="otherReq" value="其他" title="其他">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>16.你对这学年以来班级工作的开展和进行哪几方面不满意？【多选题】</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="checkbox" name="evaluation16s[]" lay-verify="otherReq" value="班务工作" title="班务工作">
+                                <input type="checkbox" name="evaluation16s[]" lay-verify="otherReq" value="团支部工作" title="团支部工作">
+                                <input type="checkbox" name="evaluation16s[]" lay-verify="otherReq" value="班委工作" title="班委工作">
+                                <input type="checkbox" name="evaluation16s[]" lay-verify="otherReq" value="财政支出" title="财政支出">
+                                <input type="checkbox" name="evaluation16s[]" lay-verify="otherReq" value="文娱活动" title="文娱活动">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>17.班委中你最满意谁的工作？【需说明原因】</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-block" style="margin-left: 0">
+                                <textarea placeholder="请输入内容" name="evaluation17" lay-verify="required" class="layui-textarea" ></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>18.班委中你认为谁的工作需要改进？【需说明原因】</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-block" style="margin-left: 0">
+                                <textarea placeholder="请输入内容" name="evaluation18" lay-verify="required" class="layui-textarea" ></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="layui-elem-field">
+                        <legend>19.你对班委每个人的工作方法有什么意见或建议？</legend>
+                        <div class="layui-field-box">
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>团支书</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Tzs1" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                        <input type="radio" name="evaluation19Tzs1" lay-verify="otherReq" value="满意" title="满意">
+                                        <input type="radio" name="evaluation19Tzs1" lay-verify="otherReq" value="一般" title="一般">
+                                        <input type="radio" name="evaluation19Tzs1" lay-verify="otherReq" value="不满意" title="不满意">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Tzs2" lay-verify="required" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>班长</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Bz1" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                        <input type="radio" name="evaluation19Bz1" lay-verify="otherReq" value="满意" title="满意">
+                                        <input type="radio" name="evaluation19Bz1" lay-verify="otherReq" value="一般" title="一般">
+                                        <input type="radio" name="evaluation19Bz1" lay-verify="otherReq" value="不满意" title="不满意">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Bz2" lay-verify="required" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>组织委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Zz1" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                        <input type="radio" name="evaluation19Zz1" lay-verify="otherReq" value="满意" title="满意">
+                                        <input type="radio" name="evaluation19Zz1" lay-verify="otherReq" value="一般" title="一般">
+                                        <input type="radio" name="evaluation19Zz1" lay-verify="otherReq" value="不满意" title="不满意">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Zz2" lay-verify="required" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>宣传委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Xc1" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                        <input type="radio" name="evaluation19Xc1" lay-verify="otherReq" value="满意" title="满意">
+                                        <input type="radio" name="evaluation19Xc1" lay-verify="otherReq" value="一般" title="一般">
+                                        <input type="radio" name="evaluation19Xc1" lay-verify="otherReq" value="不满意" title="不满意">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Xc2" lay-verify="required" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>权益委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Qy1" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                        <input type="radio" name="evaluation19Qy1" lay-verify="otherReq" value="满意" title="满意">
+                                        <input type="radio" name="evaluation19Qy1" lay-verify="otherReq" value="一般" title="一般">
+                                        <input type="radio" name="evaluation19Qy1" lay-verify="otherReq" value="不满意" title="不满意">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Qy2" lay-verify="required" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>学习委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Xx1" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                        <input type="radio" name="evaluation19Xx1" lay-verify="otherReq" value="满意" title="满意">
+                                        <input type="radio" name="evaluation19Xx1" lay-verify="otherReq" value="一般" title="一般">
+                                        <input type="radio" name="evaluation19Xx1" lay-verify="otherReq" value="不满意" title="不满意">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Xx2" lay-verify="required" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>生活委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Sh1" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                        <input type="radio" name="evaluation19Sh1" lay-verify="otherReq" value="满意" title="满意">
+                                        <input type="radio" name="evaluation19Sh1" lay-verify="otherReq" value="一般" title="一般">
+                                        <input type="radio" name="evaluation19Sh1" lay-verify="otherReq" value="不满意" title="不满意">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Sh2" lay-verify="required" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>科创委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Kc1" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                        <input type="radio" name="evaluation19Kc1" lay-verify="otherReq" value="满意" title="满意">
+                                        <input type="radio" name="evaluation19Kc1" lay-verify="otherReq" value="一般" title="一般">
+                                        <input type="radio" name="evaluation19Kc1" lay-verify="otherReq" value="不满意" title="不满意">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Kc2" lay-verify="required" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>心理委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Xl1" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                        <input type="radio" name="evaluation19Xl1" lay-verify="otherReq" value="满意" title="满意">
+                                        <input type="radio" name="evaluation19Xl1" lay-verify="otherReq" value="一般" title="一般">
+                                        <input type="radio" name="evaluation19Xl1" lay-verify="otherReq" value="不满意" title="不满意">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Xl2" lay-verify="required" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>文艺委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block" >
+                                        <input type="radio" name="evaluation19Wy1" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                        <input type="radio" name="evaluation19Wy1" lay-verify="otherReq" value="满意" title="满意">
+                                        <input type="radio" name="evaluation19Wy1" lay-verify="otherReq" value="一般" title="一般">
+                                        <input type="radio" name="evaluation19Wy1" lay-verify="otherReq" value="不满意" title="不满意">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Wy2" lay-verify="required" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>体育委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Ty1" lay-verify="otherReq" value="非常满意" title="非常满意">
+                                        <input type="radio" name="evaluation19Ty1" lay-verify="otherReq" value="满意" title="满意">
+                                        <input type="radio" name="evaluation19Ty1" lay-verify="otherReq" value="一般" title="一般">
+                                        <input type="radio" name="evaluation19Ty1" lay-verify="otherReq" value="不满意" title="不满意">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19_ty2" lay-verify="required" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                        </div>
+                    </fieldset>
+
+                    <div class="layui-form-item" pane="">
+                        <label class="layui-form-label"><b>匿名提交</b></label>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" checked="" name="evaMark" lay-skin="switch" lay-text="开启|关闭">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">[默认开启匿名提交意见，可手动选择关闭匿名提交意见]</div>
+                    </div>
+                    <div class="layui-form-item  layui-hide" style="padding-left: 235px">
+                        <div class="layui-input-block">
+                            <button type="button" id="submit" lay-filter="submit" lay-submit="" class="layui-btn">提 交</button>
+                            <button type="reset" class="layui-btn layui-btn-warm">重 置</button>
+                        </div>
+                    </div>
+
+
+                    <!--<div class="layui-form-item layui-hide" style="padding-left: 235px" >
+                        <button type="button" id="submit" lay-filter="submit" lay-submit class="layui-btn">提 交</button>
+                    </div>
+                    <div class="layui-form-item" style="padding-left: 200px" >
+                        <div class="layui-input-block">
+                            <button type="reset" class="layui-btn layui-btn-warm">重新填写</button>
+                        </div>
+                    </div>-->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="../../../../layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index','form', 'upload','layer'],function () {
+            var $ = layui.$
+            ,form = layui.form
+            ,upload = layui.upload
+            ,layer =  layui.layer
+
+            //异步添加用户信息
+           /* layui.use('layer',function () {
+                //利用ajax提交表单数据
+                $('#submit').click(function () {
+                    $.ajax({
+                        //几个参数需要注意一下
+                        type: "POST",               //方法类型
+                        url: "/bwmydcp/stu/addBwmydcpData",       //url
+                        dataType: 'JSON',
+                        async: false,
+                        data: $('#form').serialize(),
+                        success: function (res) {
+                            if (res.code === 200) {
+                                layer.msg(res.msg,{time:1000,icon:5})
+                            } else {
+                                layer.msg('班委满意度测评提交成功!', {icon: 6, time: 2000,end: function f() {
+                                        var index = parent.layer.getFrameIndex(window.name);
+                                        parent.layer.close(index)
+                                    }})
+                            }
+                        },
+                        error:function (data) {
+                            layer.msg("提交班委满意度测评时发生错误，请重试...",{time:1000,icon:7})
+                        }
+                    });
+                })
+            })*/
+
+//自定义验证规则
+           /* form.verify({
+                otherReq: function(value,item){
+                    var $ = layui.$;
+                    var verifyName=$(item).attr('name')
+                        , verifyType=$(item).attr('type')
+                        ,formElem=$(item).parents('.layui-form')//获取当前所在的form元素，如果存在的话
+                        ,verifyElem=formElem.find('input[name='+verifyName+']')//获取需要校验的元素
+                        ,isTrue= verifyElem.is(':checked')//是否命中校验
+                        ,focusElem = verifyElem.next().find('i.layui-icon');//焦点元素
+                        if(!isTrue || !value){
+                        //定位焦点
+                        focusElem.css(verifyType=='radio'?{"color":"#FF5722"}:{"border-color":"#FF5722"});
+                        //对非输入框设置焦点
+                        focusElem.first().attr("tabIndex","1").css("outline","0").blur(function() {
+                            focusElem.css(verifyType=='radio'?{"color":""}:{"border-color":""});
+                        }).focus();
+                        return '必填项不能为空';
+                    }
+                }
+            });*/
+        });
+    </script>
+</body>
+</html>

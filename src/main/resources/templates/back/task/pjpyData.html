@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>班级建设意见</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/template.css" media="all">
+</head>
+<body>
+
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card" style="padding-top: 5px">
+          <!-- 搜索条件开始 -->
+          <fieldset class="layui-elem-field layui-field-title">
+            <legend>评奖评优-查询条件</legend>
+          </fieldset>
+          <div class="layui-form">
+              <div class="layui-form-item">
+                  <div class="layui-inline">
+                      <label class="layui-form-label">测评人:</label>
+                      <div class="layui-input-block">
+                          <input type="text" name="stuName" autocomplete="off" class="layui-input">
+                      </div>
+                  </div>
+<!--                  <div class="layui-inline">-->
+<!--                      <label class="layui-form-label">测评项目:</label>-->
+<!--                      <div class="layui-input-block">-->
+<!--                          <input type="text" name="evaProject" autocomplete="off" class="layui-input">-->
+<!--                      </div>-->
+<!--                  </div>-->
+                  <div class="layui-inline">
+                      <label class="layui-form-label">测评项目:</label>
+                      <div class="layui-input-block">
+                          <select name="evaProject" >
+                              <option value="">不限</option>
+                              <option th:each="project:${zhcpDataProject}" th:value="${project}">[[${project}]]</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="layui-inline">
+                      <label class="layui-form-label">测评状态:</label>
+                      <div class="layui-input-block">
+                          <select name="evaStatus">
+                              <option value="">不限</option>
+                              <option value="未完成">未完成</option>
+                              <option value="待审核">待审核</option>
+                              <option value="已审核">已审核</option>
+                              <option value="已完成">已完成</option>
+                              <option value="已逾期">已逾期</option>
+                          </select>
+                      </div>
+                  </div>
+                  <!--<div class="layui-inline">
+                      <label class="layui-form-label">:</label>
+                      <div class="layui-input-block">
+                          <select name="evaMark">
+                              <option value="">不限</option>
+                              <option value="未完成">未完成</option>
+                              <option value="已完成">已完成</option>
+                          </select>
+                      </div>
+                  </div>-->
+              </div>
+              <div class="layui-form-item">
+                  <div class="layui-input-block">
+                      <button class="layui-btn layuiadmin-btn-admin layui-btn-normal layui-btn-sm layui-icon layui-icon-search" lay-submit lay-filter="bwmydcp-search">查询</button>
+                      <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" id="bjjs-reset" onclick="">重置</button>
+                  </div>
+              </div>
+          </div>
+          <!-- 搜索条件结束 -->
+
+
+          <div class="layui-card-body">
+            <table class="layui-hide" id="bwmydcpTable" lay-filter="bwmydcp"></table>
+<!--            <blockquote class="layui-elem-quote">备注信息：待拓展（可填写相关班级建设意见的填写指导等）</blockquote>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display: none" id="bwgzfkToolBar">
+<!--    <a th:href="@{/bwmydcp/stu/addBwmydcpList}"><button class="layui-btn ">ceshi</button></a>-->
+<!--    <button class="layui-btn layuiadmin-btn-admin" data-type="add">测评项目发布入口</button>-->
+    <button class="layui-btn layuiadmin-btn-admin" data-type="batchDelete">批量删除</button>
+  </div>
+  <div id="bwmydcpBar" style="display: none;">
+      {{# if(d.evaStatus == '待审核'){ }}
+      <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">测评</a>
+      {{#  } }}
+      {{# if(d.evaStatus == '已审核' || d.evaStatus == '已完成'){ }}
+      <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+      {{#  } }}
+      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </div>
+
+  <div id="statusBar" style="display: none;">
+      {{# if(d.evaStatus == '未完成'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-danger">未完成</button>
+      {{#  } }}
+      {{# if(d.evaStatus == '待审核'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-primary">待审核</button>
+      {{#  } }}
+      {{# if(d.evaStatus == '已审核'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-normal">已审核</button>
+      {{#  } }}
+      {{# if(d.evaStatus == '已完成'){ }}
+      <button class="layui-btn layui-btn-xs">已完成</button>
+      {{#  } }}
+      {{# if(d.evaStatus == '已逾期'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-warm">已逾期</button>
+      {{#  } }}
+  </div>
+
+  <script src="../../layuiadmin/layui/layui.js"></script>
+  <script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'jquery', 'table', 'form', 'layer', 'laydate'], function(){
+    var $ = layui.$
+    ,table = layui.table
+    ,form = layui.form
+    ,layer = layui.layer
+    ,laydate = layui.laydate;
+
+    //方法级渲染
+    table.render({
+      elem: '#bwmydcpTable'
+      ,id: 'bwmydcpTable'
+      ,url: '/zhcp/admin/queryZhcpData'
+      ,title: '班委满意度测评数据列表'
+      ,toolbar: '#bwgzfkToolBar'
+      ,cellMinWidth:200
+      ,page: true
+      ,limit: 10
+      ,height: 'full-221'
+      ,cols: [
+              [
+        {checkbox: true, fixed: true}
+        ,{type:'numbers', field:'no',title: '序号', width:70, fixed: 'left',align:"center"}
+        ,{field:'evaProject', title: '测评项目'}
+        ,{field:'stuName',title: '测评人', width:150,align:'center'}
+        ,{field:'evaTime', title: '测评时间', width:220, sort: true}
+        // ,{field:'reviewName',title: '审核人姓名', width:100,align:'center'}
+        // ,{field:'reviewCommittee',title: '审核人职务', width:100,align:'center'}
+        // ,{field:'reviewTime', title: '审核时间', width:150, sort: true}
+        // ,{field:'remarks', title: '备注', width:220}
+        // ,{field:'deadline', title: '截止时间', width:150, sort: true}
+        // ,{field:'bwmydcpData.idd', title: '号', width:50}   // 无法输出，但是请求头中可以找到该数据
+        ,{field:'status', toolbar:'#statusBar',title: '测评状态', width:130,align:'center'}
+        ,{title: '操作', toolbar:'#bwmydcpBar', width:200, align:'center'}
+        ]
+      ]
+      ,parseData: function (res) {
+            return {
+                "code": 0,
+                "msg": res.msg,
+                "data": res.payload.content,
+                "count": res.payload.total
+            }
+            // console.log(bwmydcpData)
+        }
+
+    });
+
+      //监听行工具事件
+      table.on('tool(bwmydcp)', function(obj) {
+
+          var data = obj.data;
+          console.log(data)
+          var id = data.id;
+
+          if (obj.event === 'del') {
+              layer.confirm('真的要删除这一行么', function (index) {
+                  $.ajax({
+                      url: '/zhcp/admin/deleteZhcpData',
+                      dataType: 'text',
+                      data: {id: id},
+                      success: function (res) {
+                          if (res.code == 200) {
+                              layer.msg(res.msg,{time:1000,icon:5})
+                          }else{
+                              layer.msg('删除成功', {
+                                  time: 1000, icon: 6
+                              })
+                              location.reload()
+                          }
+                      },
+                      error:function (data) {
+                          layer.msg("删除班委满意度测评数据时发生错误，请重试...",{time:1000,icon:7})
+                          return false;
+                      }
+                  })
+                  obj.del();
+                  layer.close(index);
+              });
+
+          } else if (obj.event === 'edit') {
+              //编辑教师信息
+              layer.open({
+                  type: 2,
+                  title: '综合测评数据【班级测评】',
+                  maxmin: true,
+                  // area: ['860px', '520px'],
+                  shadeClose: true, //点击遮罩关闭
+                  content: '/zhcp/admin/toZhcpDataEdit/' + id,
+                  area: screen() < 1 ? ['90%', '450px'] : ['760px', '600px']
+                  ,btn: ['提交','取消']
+                  ,yes: function(index, layero){
+                      var iframeWindow = window['layui-layer-iframe'+ index]
+                          ,submitID = 'submit'
+                          ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                      //监听提交
+                      iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                          var field = data.field; //获取提交的字段
+                          // console.log(field)
+                          //提交 Ajax 成功后，静态更新表格中的数据
+                          //$.ajax({});
+                          $.ajax({
+                              //几个参数需要注意一下
+                              type: "POST",               //方法类型
+                              url: "/zhcp/admin/addZhcpDataReview",       //url
+                              dataType: 'JSON',
+                              async: false,
+                              data: field,
+                              success: function (res) {
+                                  if (res.code === 200) {
+                                      layer.msg(res.msg,{time:1000,icon:5})
+                                  } else {
+                                      layer.msg('班委满意度测评数据修改成功!', {icon: 6, time: 2000,end: function f() {
+                                              var index = parent.layer.getFrameIndex(window.name);
+                                              parent.layer.close(index)
+                                          }})
+                                  }
+                              },
+                              error:function (data) {
+                                  layer.msg("修改班委满意度测评项目时发生错误，请重试...",{time:1000,icon:7})
+                              }
+                          });
+
+                          table.reload('bwmydcpTable'); //数据刷新
+                          table.reload('bwmydcpTable'); //数据刷新
+                          layer.close(index); //关闭弹层
+                      });
+                      submit.trigger('click');
+                  }
+              })
+          }else if (obj.event === 'detail') {
+              //编辑教师信息
+              layer.open({
+                  type: 2,
+                  title: '查看班委满意度测评数据',
+                  maxmin: true,
+                  // area: ['860px', '520px'],
+                  shadeClose: true, //点击遮罩关闭
+                  content: '/zhcp/admin/toZhcpDataDetail/' + id,
+                  area: screen() < 1 ? ['90%', '450px'] : ['760px', '600px']
+                  ,btn: ['取消']
+              })
+          }
+      })
+
+
+
+    //监听搜索
+      form.on('submit(bwmydcp-search)', function(data){
+          var field = data.field;
+          //执行重载
+          table.reload('bwmydcpTable', {
+              method: 'post'
+              ,page: {
+                  curr : 1 //重新从第一页开始
+              }
+              ,where: {
+                  stuName : field.stuName
+                  ,evaProject : field.evaProject
+                  ,evaStatus : field.evaStatus
+              }
+          });
+      });
+
+
+      var active = {
+          batchDelete: function(){
+              var checkStatus = table.checkStatus('bwmydcpTable')
+                  ,checkData = checkStatus.data; //得到选中的数据
+
+              if(checkData.length === 0){
+                  return layer.msg('请选择数据');
+              }
+
+              layer.confirm('确定删除吗？', function(index) {
+                  //执行 Ajax 后重载
+                  var str = "";
+                  for (var i = 0; i < checkData.length; i++) {
+                      if(i + 1 == checkData.length){
+                          str += checkData[i].id;
+                      }else{
+                          str += checkData[i].id + ",";
+                      }
+                  }
+
+                  $.ajax({
+                      url: '/zhcp/admin/deleteZhcpData',
+                      type: 'POST',
+                      data: {
+                          "data" : str
+                      },
+                      success: function (res) {
+                          if (res.code == 100) {
+                              ajaxCode = 100;
+                          } else if (res.code == 200) {
+                              if (res.extend.mc_msg != null) {
+                                  layer.msg(res.extend.mc_msg, {time: 2000, icon: 5});
+                              } else {
+                                  ajaxCode = 200;
+                              }
+                          }
+                      },
+                      error: function () {
+                          layer.msg("删除失败，请重试!", {time: 1000, icon: 7});
+                      }
+                  })
+
+                  // table.reload('bjjsTable');
+                  // table.reload('bjjsTable');
+                  location.reload()
+                  layer.msg('已删除');
+              });
+          },
+
+      }
+
+
+      //判断浏览器大小方法
+      function screen() {
+          //获取当前窗口的宽度
+          var width = $(window).width();
+          if (width > 768) {
+              return 1;   //小屏幕
+          } else {
+              return 0;   //超小屏幕
+          }
+      }
+
+      $('.layui-btn.layuiadmin-btn-admin').on('click', function(){
+          var type = $(this).data('type');
+          active[type] ? active[type].call(this) : '';
+      });
+  });
+  </script>
+</body>
+</html>

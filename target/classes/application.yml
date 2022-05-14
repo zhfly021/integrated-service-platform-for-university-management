@@ -1,0 +1,56 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/gxbjgl?serverTimezone=GMT%2b8&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=50
+  servlet:
+    multipart:
+      #设置单个文件大小
+      max-file-size: 10MB
+      #设置单次请求文件的总大小
+      max-request-size: 100MB
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: utf-8
+    mode: HTML
+    servlet:
+      content-type: text/html; charset=utf-8
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: 33566183@qq.com
+    password: dmuvkgzugrghbhgi
+    protocol: smtp
+    from: 33566183@qq.com
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.socketFactory.port: 465
+      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+      mail.smtp.socketFactory.fallback: false
+
+
+
+server:
+  port: 8080
+#整合mybatis
+mybatis:
+  configuration:
+    jdbc-type-for-null: null
+  type-aliases-package: com.zhfly021.entity
+  mapper-locations: classpath:/mapper/*.xml
+  config-location: classpath:/mybatis/mybatis-config.xml
+
+
+path:
+  savePath: /opt/project/spring_boot/gxbjgl

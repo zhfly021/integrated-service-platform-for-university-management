@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhfly021.mapper.BjjsMapper">
+    <select id="queryBystuNo" resultType="com.zhfly021.entity.Bjjs">
+        select * from bjjs where 1=1 and sendNo = #{sendNo}
+        <if test="letterTitle != null"> and letterTitle like CONCAT('%',#{letterTitle},'%') </if>
+        <if test="status != null"> and status = #{status} </if>
+    </select>
+    <select id="queryBjjs" resultType="com.zhfly021.entity.Bjjs">
+        select * from bjjs where 1=1 and sendClass = #{sendClass}
+        <if test="letterTitle != null"> and letterTitle like CONCAT('%',#{letterTitle},'%') </if>
+        <if test="status != null"> and status = #{status} </if>
+    </select>
+
+    <insert id="addBjjs" parameterType="com.zhfly021.entity.Bjjs">
+        insert into bjjs(sendNo,sender,sendClass,letterTitle,sendTime,letter,responser,responseTime,responseContent,status,evaluate,mark,evaluateContent)
+         values(#{sendNo},#{sender},#{sendClass},#{letterTitle},#{sendTime},#{letter},#{responser},#{responseTime},#{responseContent},#{status},#{evaluate},#{mark},#{evaluateContent})
+    </insert>
+
+    <delete id="deleteBjjs" parameterType="Integer">
+        delete from bjjs where id = #{id}
+    </delete>
+    
+    <delete id="batchDeleteBjjs" parameterType="Integer">
+        delete from bjjs where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="queryById" parameterType="Integer" resultType="com.zhfly021.entity.Bjjs">
+        select * from bjjs where id = #{id}
+    </select>
+    <update id="updateBjjs" parameterType="com.zhfly021.entity.Bjjs">
+        update bjjs set letterTitle = #{letterTitle}, letter = #{letter}, sendTime = #{sendTime},mark = #{mark} where id = #{id} ;
+    </update>
+
+    <update id="evaluateBjjs" parameterType="com.zhfly021.entity.Bjjs">
+        update bjjs set evaluateContent = #{evaluateContent}, status = #{status}, evaluate = #{evaluate} where id = #{id} ;
+    </update>
+
+    <update id="responseBjjs" parameterType="com.zhfly021.entity.Bjjs">
+        update bjjs set responser = #{responser}, responseTime = #{responseTime}, responseContent = #{responseContent}, status = #{status} where id = #{id} ;
+    </update>
+
+
+</mapper>

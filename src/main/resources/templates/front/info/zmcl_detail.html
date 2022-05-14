@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>证明材料</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/style.css" media="all">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" media="all">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+    <style>
+
+        .layui-elem-field{
+            margin-left: 70px;
+            margin-bottom: 20px;
+        }
+
+    </style>
+
+    <script src="../../../../layuiadmin/layui/layui.js"></script>
+    <script src="../../js/lib.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $(function(){
+            if('[[${evidenceInfo.getStatus()}]]' == '待审核'){
+                bsStep(2);
+            }else if('[[${evidenceInfo.getStatus()}]]' == '已完成') {
+                bsStep(3);
+            }
+        });
+    </script>
+
+</head>
+
+<body style="margin-top: 20px;">
+
+    <div class="layui-fluid" id="LAY-app-message-detail">
+        <div class="layui-card layuiAdmin-msg-detail">
+            <div class="layui-card" style="padding-top: 3px">
+
+                <div class="container" style="margin-top: 30px;margin-bottom: 50px">
+                    <ul class="nav nav-pills nav-justified step step-arrow">
+                        <li>
+                            <a>填写中</a>
+                        </li>
+                        <li>
+                            <a>待审核</a>
+                        </li>
+                        <li>
+                            <a>审核通过</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <fieldset class="layui-elem-field layui-field-title" style="padding-top: 5px">
+                    <legend>证明材料查看页面</legend>
+                </fieldset>
+
+                <form class="layui-form layui-form-pane" action="" style="margin: 10px auto!important;">
+
+                    <fieldset class="layui-elem-field" style="width: 89%;">
+                        <legend>个人信息</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-form-item">
+                                <div class="layui-form">
+                                    <table class="layui-table">
+                                        <thead>
+                                            <tr>
+                                                <th width="8%"  style="text-align: center">序号</th>
+                                                <th>文件名</th>
+                                                <th  width="20%" style="text-align: center">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="i,index:${perFile}" th:id="del+${index.count}" th:if="${i.getKey()} ne 未上传文件">
+                                                <th  style="text-align: center" th:text="${index.count}"></th>
+                                                <th th:text="${i.getKey()}"></th>
+                                                <th th:id="perFile+${index.count}" th:text="${i.getValue()}" style="display: none"></th>
+                                                <th width="20%" style="text-align: center" >
+                                                    <a class="layui-btn layui-btn-normal layui-btn-xs" th:onclick="|dowloadFile(${index.count},'perFile')|">下载</a>
+                                                </th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="layui-elem-field" style="width: 89%;">
+                        <legend>教育背景</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-form-item">
+                                <div class="layui-form">
+                                    <table class="layui-table">
+                                        <thead>
+                                            <tr>
+                                                <th width="8%"  style="text-align: center">序号</th>
+                                                <th>文件名</th>
+                                                <th  width="20%" style="text-align: center">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="i,index:${eduFile}" th:id="del+${index.count}" th:if="${i.getKey()} ne 未上传文件">
+                                                <th  style="text-align: center" th:text="${index.count}"></th>
+                                                <th th:text="${i.getKey()}"></th>
+                                                <th th:id="eduFile+${index.count}" th:text="${i.getValue()}" style="display: none"></th>
+                                                <th width="20%" style="text-align: center" >
+                                                    <a class="layui-btn layui-btn-normal layui-btn-xs" th:onclick="|dowloadFile(${index.count},'eduFile')|">下载</a>
+                                                </th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="layui-elem-field" style="width: 89%;">
+                        <legend>工作经验</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-form-item">
+                                <div class="layui-form">
+                                    <table class="layui-table">
+                                        <thead>
+                                            <tr>
+                                                <th width="8%"  style="text-align: center">序号</th>
+                                                <th>文件名</th>
+                                                <th  width="20%" style="text-align: center">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="i,index:${workFile}" th:id="del+${index.count}" th:if="${i.getKey()} ne 未上传文件">
+                                                <th  style="text-align: center" th:text="${index.count}"></th>
+                                                <th th:text="${i.getKey()}"></th>
+                                                <th th:id="workFile+${index.count}" th:text="${i.getValue()}" style="display: none"></th>
+                                                <th width="20%" style="text-align: center" >
+                                                    <a class="layui-btn layui-btn-normal layui-btn-xs" th:onclick="|dowloadFile(${index.count},'workFile')|">下载</a>
+                                                </th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="layui-elem-field" style="width: 89%;">
+                        <legend>荣誉证书</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-form-item">
+                                <div class="layui-form">
+                                    <table class="layui-table">
+                                        <thead>
+                                            <tr>
+                                                <th width="8%"  style="text-align: center">序号</th>
+                                                <th>文件名</th>
+                                                <th  width="20%" style="text-align: center">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="i,index:${honorFile}" th:id="del+${index.count}" th:if="${i.getKey()} ne 未上传文件">
+                                                <th  style="text-align: center" th:text="${index.count}"></th>
+                                                <th th:text="${i.getKey()}"></th>
+                                                <th th:id="honorFile+${index.count}" th:text="${i.getValue()}" style="display: none"></th>
+                                                <th width="20%" style="text-align: center" >
+                                                    <a class="layui-btn layui-btn-normal layui-btn-xs" th:onclick="|dowloadFile(${index.count},'honorFile')|">下载</a>
+                                                </th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="layui-elem-field" style="width: 89%;">
+                        <legend>自我评价</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-form-item">
+                                <table class="layui-table">
+                                    <thead>
+                                        <tr>
+                                            <th width="8%"  style="text-align: center">序号</th>
+                                            <th>文件名</th>
+                                            <th  width="20%" style="text-align: center">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="i,index:${egoFile}" th:id="del+${index.count}" th:if="${i.getKey()} ne 未上传文件">
+                                            <th  style="text-align: center" th:text="${index.count}"></th>
+                                            <th th:text="${i.getKey()}"></th>
+                                            <th th:id="egoFile+${index.count}" th:text="${i.getValue()}" style="display: none"></th>
+                                            <th width="20%" style="text-align: center" >
+                                                <a class="layui-btn layui-btn-normal layui-btn-xs" th:onclick="|dowloadFile(${index.count},'egoFile')|">下载</a>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="layui-elem-field" style="width: 89%;">
+                        <legend>提交说明</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label"></label>
+                                <div class="layui-input-block">
+                                    <textarea placeholder="无内容" readonly class="layui-textarea" th:text="${evidenceInfo.submitMarks}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="layui-btn-container" style="width: 23%;padding-left: 36%">
+                        <button type="submit" lay-submit="edit" lay-filter="edit" style="width: 200px" class="layui-btn layui-btn-lg layui-btn-fluid" >一&nbsp;&nbsp;键&nbsp;&nbsp;下&nbsp;&nbsp;载</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../layuiadmin/layui/layui.js"></script>
+
+
+    <script>
+        // 文件的下载
+        function dowloadFile(index, prefix) {
+            var id = prefix+ index;
+            var path = document.getElementById(id).innerText
+            window.open(path)
+        }
+    </script>
+
+    <script type="text/javascript">
+        layui.use(['layer', 'form'], function() {
+
+            var form = layui.form;
+
+            form.on('submit(edit)', function(data) {
+                //提交 Ajax 成功后，静态更新表格中的数据
+                // $.ajax({});
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST",               //方法类型
+                    url: "/zip/stuDownLoadZipFile",       //url
+                    dataType: 'JSON',
+                    // data: field,
+                    success: function (res) {
+                        console.log(res)
+                        if (res.code === 200) {
+                            layer.msg(res.msg,{time:1000,icon:5})
+                        } else {
+                            layer.msg('下载成功!', {icon: 6, time: 2000})
+                            window.open(res.msg);
+                        }
+                    },
+                    error:function () {
+                        layer.msg("下载失败，请重试...",{time:1000,icon:7})
+                    }
+                });
+
+                //return false 可以阻止 表单提交(刷新页面)
+                return false;
+            });
+        })
+    </script>
+</body>
+
+</html>

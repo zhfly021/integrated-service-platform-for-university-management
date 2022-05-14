@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhfly021.mapper.XxwhMapperZdd">
+
+    <!--  通过学号来查找用户的简历信息  -->
+    <select id="queryById" parameterType="String" resultType="com.zhfly021.entity.Resume">
+        select * from resume where stuNo = #{stuNo};
+    </select>
+
+    <!--  查找用户的简历信息  -->
+    <select id="queryResume" resultType="com.zhfly021.entity.Resume">
+        select * from resume;
+    </select>
+
+    <!--  通过学号来查看简历的状态  -->
+    <select id="queryByState" parameterType="String" resultType="com.zhfly021.entity.Resume">
+        select state from resume where stuNo = #{stuNo};
+    </select>
+
+    <!--  通过学号来查看简历的状态  -->
+    <select id="queryByIdEvidence" parameterType="String" resultType="com.zhfly021.entity.Evidence">
+        select * from evidence where stuNo = #{stuNo};
+    </select>
+
+
+    <!--  插入简历的信息  -->
+    <insert id="holdXxwh" parameterType="com.zhfly021.entity.Resume">
+        insert into resume(stuNo,stuName,stuClass,stuFaculty,status,resumeId,age,nation,startDate,endDate,educationSchool,educationBackground,workTime1,workTime2,workTime3,workCompany1,workCompany2,workCompany3,workExperience1,workExperience2,workExperience3,honor,selfAssessment,submitInstructions,sex,submitTime,phone)
+         values(#{stuNo},#{stuName},#{stuClass},#{stuFaculty},#{status},#{resumeId},#{age},#{nation},#{startDate},#{endDate},#{educationSchool},#{educationBackground},#{workTime1},#{workTime2},#{workTime3},#{workCompany1},#{workCompany2},#{workCompany3},#{workExperience1},#{workExperience2},#{workExperience3},#{honor},#{selfAssessment},#{submitInstructions},#{sex},#{submitTime},#{phone});
+    </insert>
+
+    <!--  插入证明材料的信息  -->
+    <insert id="insertEvidenceXxwh" parameterType="com.zhfly021.entity.Resume">
+        insert into evidence(stuNo,stuName,stuClass,stuFaculty,status,informationID)
+        values (#{stuNo},#{stuName},#{stuClass},#{stuFaculty},#{status},#{informationID});
+    </insert>
+
+    <!--修改简历信息-->
+    <update id="updateResume" parameterType="com.zhfly021.entity.Resume">
+        update resume
+        <set>
+            <if test="verifier != null">verifier=#{verifier},</if>
+            <if test="verifyTime != null">verifyTime=#{verifyTime},</if>
+            <if test="verifyMarks != null">verifyMarks=#{verifyMarks},</if>
+            <if test="stuName != null">stuName=#{stuName},</if>
+            <if test="stuClass != null">stuClass=#{stuClass},</if>
+            <if test="stuFaculty != null">stuFaculty=#{stuFaculty},</if>
+            <if test="status != null">status=#{status},</if>
+            <if test="age != null">age=#{age},</if>
+            <if test="sex != null">sex=#{sex},</if>
+            <if test="phone != null">phone=#{phone},</if>
+            <if test="nation != null">nation=#{nation},</if>
+            <if test="startDate != null">startDate=#{startDate},</if>
+            <if test="endDate != null">endDate=#{endDate},</if>
+            <if test="educationSchool != null">educationSchool=#{educationSchool},</if>
+            <if test="educationBackground != null">educationBackground=#{educationBackground},</if>
+            <if test="workTime1 != null">workTime1=#{workTime1},</if>
+            <if test="workTime2 != null">workTime2=#{workTime2},</if>
+            <if test="workTime3 != null">workTime3=#{workTime3},</if>
+            <if test="workCompany1 != null">workCompany1=#{workCompany1},</if>
+            <if test="workCompany2 != null">workCompany2=#{workCompany2},</if>
+            <if test="workCompany3 != null">workCompany3=#{workCompany3},</if>
+            <if test="workExperience1 != null">workExperience1=#{workExperience1},</if>
+            <if test="workExperience2 != null">workExperience2=#{workExperience2},</if>
+            <if test="workExperience3 != null">workExperience3=#{workExperience3},</if>
+            <if test="honor != null">honor=#{honor},</if>
+            <if test="submitTime != null">submitTime=#{submitTime},</if>
+            <if test="selfAssessment != null">selfAssessment=#{selfAssessment},</if>
+            <if test="submitInstructions != null">submitInstructions=#{submitInstructions}</if>
+        </set>
+        where stuNo=#{stuNo};
+    </update>
+
+    <!--修改简历信息-->
+    <update id="updateStatus" parameterType="com.zhfly021.entity.Resume">
+        update resume
+        <set>
+            <if test="status != null">status=#{status}</if>
+        </set>
+        where stuNo=#{stuNo};
+    </update>
+
+    <!--修改简历信息-->
+    <update id="updateEvidenceStatus" parameterType="String">
+        update evidence set status=#{status} where stuNo=#{stuNo};
+    </update>
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhfly021.mapper.BjtzMapper">
+    <select id="query" resultType="com.zhfly021.entity.Bjtz">
+        select * from bjtz order by releaseTime DESC limit 23;
+    </select>
+
+    <select id="queryByClass" resultType="com.zhfly021.entity.Bjtz">
+        select * from bjtz where publisherClass = #{stuClass} order by releaseTime DESC limit 23;
+    </select>
+
+
+    <insert id="addBjtz" parameterType="com.zhfly021.entity.Bjtz">
+        insert into bjtz(releaseTime, releaseTimestamp, publisherNo, publisher, publisherCommittee, publisherClass, content, images)
+          values(#{releaseTime}, #{releaseTimestamp}, #{publisherNo}, #{publisher}, #{publisherCommittee}, #{publisherClass}, #{content},#{images})
+    </insert>
+
+    <select id="queryBjtz" resultType="com.zhfly021.entity.Bjtz">
+        select * from bjtz where 1=1 and publisherClass = #{publisherClass}
+        <if test="publisher != null"> and publisher like CONCAT('%',#{publisher},'%') </if>
+        <if test="publisherCommittee != null"> and publisherCommittee = #{publisherCommittee} </if>
+        <if test="releaseTimestamp != null"> and releaseTimestamp between #{stamp1} and #{stamp2} </if>
+        order by releaseTimestamp DESC
+    </select>
+
+    <select id="queryBjtzById" parameterType="Integer" resultType="com.zhfly021.entity.Bjtz">
+        select * from bjtz where id = #{id}
+    </select>
+    <update id="updateBjtzById" parameterType="com.zhfly021.entity.Bjjs">
+        update bjtz set releaseTime = #{releaseTime}, releaseTimestamp = #{releaseTimestamp}, publisherNo = #{publisherNo}, publisher = #{publisher},
+          publisherCommittee = #{publisherCommittee}, publisherClass = #{publisherClass}, content = #{content}, images = #{images} where id = #{id} ;
+    </update>
+
+    <delete id="deleteBjtz" parameterType="Integer">
+        delete from bjtz where id = #{id}
+    </delete>
+
+    <delete id="batchDeleteBjtz" parameterType="Integer">
+        delete from bjtz where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>填写班委满意度测评</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../../../layuiadmin/style/template.css" media="all">
+</head>
+<body style="background-color: #fff">
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div>
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 5px;">
+                    <legend>综合测评填报窗口</legend>
+                </fieldset>
+                <form class="layui-form layui-form-pane" method="post" id="form">
+                    <input type="hidden" name="id" th:value="${dataId}">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">文化课名次</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cultural" lay-verify="required" autocomplete="off" placeholder="请输入文化课名次" class="layui-input" th:value="${zhcpData.cultural}">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="layui-form">
+                        <h1 style="text-align: center">皖西学院学生素质综合测评表</h1>
+                        <br>
+                        <div class="layui-row">
+                            <div class="layui-col-xs4">
+                                <div class="">班级：[[${zhcpStuClass}]]</div>
+                            </div>
+                            <div class="layui-col-xs3 layui-col-xs-offset1">
+                                <div class="">姓名：[[${zhcpStuName}]]</div>
+                            </div>
+                            <div class="layui-col-xs3 layui-col-xs-offset1">
+                                <div class="">测评时间：[[${zhcpTime}]]</div>
+                            </div>
+                        </div>
+                        <table class="layui-table">
+                            <colgroup>
+                                <col>
+                                <col>
+                                <col>
+                                <col width="170">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th style="font-weight: bold;">类别</th>
+                                <th style="font-weight: bold;">项目</th>
+                                <th style="font-weight: bold;">评分内容及标准</th>
+                                <th style="font-weight: bold;">自我测评</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- 德育素质考核 -->
+                            <tr>
+                                <th rowspan="21" style="font-weight: bold;">德育素质考核（满分100分）</th>
+                            </tr>
+                            <tr>
+                                <td>基本分</td>
+                                <td>60分</td>
+                                <td>
+                                    <input type="text" name="moralInit" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralInit}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="9">加分要素</td>
+                                <td>政治上积极要求进步，参加党校、团校学习并取得较好成绩者加3分。</td>
+                                <td>
+                                    <input type="text" name="moralAdd1" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input"  th:value="${zhcpData.moralAdd1}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>积极参加政治学习、主题班会和党团组织活动者加3分。</td>
+                                <td rowspan="2">
+                                    <input type="text" name="moralAdd2" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralAdd2}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>学习态度端正，学习成绩进步明显，排名上升超过5个名次加2分，超过10个名次加3分，依次类推，加满5分止；保持前5名者加2分。</td>
+                            </tr>
+                            <tr>
+                                <td>遵守社会公德和公共秩序，讲文明、讲礼貌，举止文雅、仪表端庄，尊重师长、团结同学者加4分。</td>
+                                <td>
+                                    <input type="text" name="moralAdd3" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralAdd3}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>有拾金不昧、见义勇为等先进事迹者加5分。</td>
+                                <td>
+                                    <input type="text" name="moralAdd4" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralAdd4}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>获“校文明寝室”称号的室员加5分。“党员示范寝室”达标者、“五星寝室”、“四星寝室”、“三星寝室”室员分别加5、5、4、3分(不重复加分)。</td>
+                                <td>
+                                    <input type="text" name="moralAdd5" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralAdd5}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>勤俭节约，不酗酒、不抽烟者加3分。</td>
+                                <td>
+                                    <input type="text" name="moralAdd6" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralAdd6}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>一学年无病事假（公假除外）者加3分。</td>
+                                <td>
+                                    <input type="text" name="moralAdd7" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralAdd7}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>学院其他加分项目</td>
+                                <td>
+                                    <input type="text" name="moralAdd8" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralAdd8}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="9">减分要素</td>
+                                <td>不积极参加政治学习、主题班会和党团活动者，迟到或早退一次扣1分，缺席一次扣3分。</td>
+                                <td>
+                                    <input type="text" name="moralMinus1" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralMinus1}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>无故不参加校、学院、班组织的集体活动者每次分别扣3、2、1分。</td>
+                                <td>
+                                    <input type="text" name="moralMinus2" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralMinus2}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>学习不努力，学习成绩下降，下降超过5个名次扣2分，超过10个名次扣3分，依次类推，扣满5分止，停留在后5名的扣2分。</td>
+                                <td>
+                                    <input type="text" name="moralMinus3" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralMinus3}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>旷课者每节扣3分，迟到早退者每节扣1分。</td>
+                                <td>
+                                    <input type="text" name="moralMinus4" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralMinus4}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>违反宿舍管理纪律（如违规用电、夜不归宿、晚归、留宿外人、影响他人休息等），每次扣2分；擅自在校外租房居住者扣10分。</td>
+                                <td>
+                                    <input type="text" name="moralMinus5" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralMinus5}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>所在寝室因各种原因被通报批评，第一次其室员每人扣1分，第二次每人扣2分，第三次每人扣4分，依次类推。</td>
+                                <td>
+                                    <input type="text" name="moralMinus6" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralMinus6}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>行为举止不文明（男女之间勾肩搭背、穿拖鞋背心等出入公共场所、在教室乱刻乱画等）者每次扣3分。</td>
+                                <td>
+                                    <input type="text" name="moralMinus7" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralMinus7}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>受通报批评者扣5分，受警告、严重警告、记过、留校察看等纪律处分者分别扣10分、15分、25分、30分。</td>
+                                <td>
+                                    <input type="text" name="moralMinus8" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralMinus8}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>学院其他减分项目</td>
+                                <td>
+                                    <input type="text" name="moralMinus9" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.moralMinus9}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" style="font-weight: bold;">德育素质得分</th>
+                                <td>
+                                    <input type="text" placeholder="无需填写,自动计算" autocomplete="off" class="layui-input" readonly  th:value="${zhcpData.moralSum}">
+                                </td>
+                            </tr>
+
+                            <!-- 智育素质考核 -->
+                            <tr>
+                                <th rowspan="4" style="font-weight: bold;">智育素质考核</th>
+                            </tr>
+                            <tr>
+                                <td>学年制</td>
+                                <td>智育素质积分=考试课平均成绩×70%+考查课平均成绩×30%</td>
+                                <td>
+                                    <input type="text" name="intellectualYear" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.intellectualYear}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>学分制</td>
+                                <td>智育素质积分=【∑（必修课成绩×学分）+0.5×∑（选修课成绩×学分）】/（∑必修课学分+0.5×∑选修课学分）</td>
+                                <td>
+                                    <input type="text" name="intellectualCredit" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.intellectualCredit}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" style="font-weight: bold;">智育素质得分</th>
+                                <td>
+                                    <input type="text" placeholder="无需填写,自动计算" autocomplete="off" class="layui-input" readonly th:value="${zhcpData.intellectualSum}">
+                                </td>
+                            </tr>
+
+                            <!-- 体育素质考核 -->
+                            <tr>
+                                <th rowspan="11" style="font-weight: bold;">体育素质考核（满分100分）</th>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">基本分</td>
+                                <td>A（有体育课）=体育课成绩（体育免修者按70分计）</td>
+                                <td rowspan="2">
+                                    <input type="text" name="physicalInit" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.physicalInit}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>B（无体育课）= 70</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4">加分要素</td>
+                                <td>在体育比赛中获得名次者（包括集体项目成员），按以下规定加分：第一名20A分，第二名14A分，第三名10A分，第四名8A分，第五名6A分，第六名4A分。A为比赛等级，国家级A=1.5，省级A＝1.0，片级 A＝0.75％；校级比赛A＝0.5。</td>
+                                <td>
+                                    <input type="text" name="physicalAdd1" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.physicalAdd1}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>在体育比赛中，打破国家、省级和校级体育记录者每人每次分别加40、20和10分。</td>
+                                <td>
+                                    <input type="text" name="physicalAdd2" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.physicalAdd2}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>一学年早操全勤者加10分。</td>
+                                <td>
+                                    <input type="text" name="physicalAdd3" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.physicalAdd3}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>学院其他加分项目</td>
+                                <td>
+                                    <input type="text" name="physicalAdd4" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.physicalAdd4}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">减分要素</td>
+                                <td>早操旷操一次扣1分，迟到早退一次扣0.5分。</td>
+                                <td>
+                                    <input type="text" name="physicalMinus1" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.physicalMinus1}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>校运动会期间未经请假擅自离校者，每天扣10分。</td>
+                                <td>
+                                    <input type="text" name="physicalMinus2" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.physicalMinus2}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>学院其他减分项目</td>
+                                <td>
+                                    <input type="text" name="physicalMinus3" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.physicalMinus3}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" style="font-weight: bold;">体育素质得分</th>
+                                <td>
+                                    <input type="text" placeholder="无需填写,自动计算" autocomplete="off" class="layui-input" readonly th:value="${zhcpData.physicalSum}">
+                                </td>
+                            </tr>
+
+                            <!-- 能力素质考核 -->
+                            <tr>
+                                <th rowspan="14" style="font-weight: bold;">能力素质考核（满分100分）</th>
+                            </tr>
+                            <tr>
+                                <td>基本分</td>
+                                <td>60分</td>
+                                <td>
+                                    <input type="text" name="competenceInit" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.competenceInit}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="8">加分要素</td>
+                                <td>积极参加校、学院、班组织的各种活动者，每次加1.5、1.0、0.5分（总分不超过20分，超出者以20分计）；代表学校参加国家、省、市各项活动者分别加4、3、2分。</td>
+                                <td rowspan="2">
+                                    <input type="text" name="competenceAdd1" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.competenceAdd1}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>在各类学科竞赛、课外学术科技作品竞赛、文娱比赛中获奖者，按下列标准加分：国家级一等奖加30分；国家级三等奖以上，省级一等奖加20分；省级其他等级奖项，校级、市级一等奖者加10分；校级、市级三等奖以上者加5分。</td>
+                            </tr>
+                            <tr>
+                                <td>在公开出版刊物上发表学术论文或科技作品的（包括科技创作、文学艺术创作、发明获奖），每篇（件）加20A分。A为刊物（授奖）级别，国家级A=1.5，省级A=1.0，市级A=0.50。同件作品以高限算，不累计加分。作品第一作者按实际得分计，第二作者按得分的50%计，第三作者及其以后作者按得分的25%计。</td>
+                                <td>
+                                    <input type="text" name="competenceAdd2" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.competenceAdd2}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>在公开发行的非学术刊物上发表的一般性文章，按国家级、省级、校（市）级每篇分别加20、10、5分（不重复加分）。</td>
+                                <td>
+                                    <input type="text" name="competenceAdd3" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.competenceAdd3}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>在本学年度担任以下学生干部职务满1年，且尽职尽责，由其主管部门出具证明给予加分：校院团总支、学生会、社团联合会副部长以上（含副部长，下同），学生社团副会长以上，宿管委楼长以上，学生党支部书记、班级班长、团支部书记等学生干部加8分；校院团总支、学生会、社团联合会、学生党支部干事（委员），宿管委层长，班级班委、团支部委员、寝室长等学生干部加4分。
+                                    身兼多职者，按最高职务计分，学生干部因特殊原因任职满一学期不满一学年者，按其职务等级分数的50%计算。</td>
+                                <td>
+                                    <input type="text" name="competenceAdd4" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.competenceAdd4}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>获国家、省级、校级表彰的学生分别加10、5、2分。</td>
+                                <td>
+                                    <input type="text" name="competenceAdd5" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.competenceAdd5}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>获专利者，每项加10分。</td>
+                                <td>
+                                    <input type="text" name="competenceAdd6" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.competenceAdd6}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>学院其他加分项目</td>
+                                <td>
+                                    <input type="text" name="competenceAdd7" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.competenceAdd7}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">减分要素</td>
+                                <td>学生干部工作不积极，不能按时完成组织上交给任务者扣2～4分；由于不负责任造成重大事故者扣4～10分</td>
+                                <td>
+                                    <input type="text" name="competenceMinus1" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.competenceMinus1}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>无故不参加社会活动、社会实践者扣5分；弄虚作假，抄袭、编造论文（调查报告）者扣4分；不交论文（调查报告）者扣3分，论文（调查报告）不合格者扣2分。</td>
+                                <td>
+                                    <input type="text" name="competenceMinus2" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.competenceMinus2}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>学院其他减分项目</td>
+                                <td>
+                                    <input type="text" name="competenceMinus3" lay-verify="required" placeholder="请结合实际填写" autocomplete="off" class="layui-input" th:value="${zhcpData.competenceMinus3}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" style="font-weight: bold;">能力素质得分</th>
+                                <td>
+                                    <input type="text" placeholder="无需填写,自动计算" autocomplete="off" class="layui-input" readonly  th:value="${zhcpData.competenceSum}">
+                                </td>
+                            </tr>
+
+                            <!-- 综合测评积分 -->
+                            <tr>
+                                <th style="font-weight: bold;">综合测评积分</th>
+                                <td colspan="2">
+                                    <p>一、二年级公式：德育素质得分×30%+智育素质得分×50%+体育素质得分×10%+能力素质得分×10%</p>
+                                    <p>三、四年级公式：德育素质得分×30%+智育素质得分×40%+体育素质得分×10%+能力素质得分×20%</p>
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="无需填写,自动计算" autocomplete="off" class="layui-input" readonly  th:value="${zhcpData.summary}">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">提交说明</label>
+                        <div class="layui-input-block" contenteditable="true">
+                            <textarea placeholder="请输入内容" name="evaMarks" lay-verify="required" class="layui-textarea">[[${zhcpData.evaMarks}]]</textarea>
+                        </div>
+                    </div>
+
+
+
+                    <div class="layui-form-item layui-hide" style="padding-left: 235px" >
+                        <div class="layui-input-block">
+                            <button type="button" id="submit" lay-filter="submit" lay-submit class="layui-btn">提 交</button>
+                            <button type="reset" class="layui-btn layui-btn-warm">重 置</button>
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="padding-left: 200px" >
+                        <div class="layui-input-block">
+                            <button type="reset" class="layui-btn layui-btn-warm">重新填写</button>
+                        </div>
+                    </div>
+                    <!--<div class="layui-form-item layui-hide" style="padding-left: 235px" >
+                        <button type="button" id="submit" lay-filter="submit" lay-submit class="layui-btn">提 交</button>
+                    </div>
+                    <div class="layui-form-item" style="padding-left: 200px" >
+                        <div class="layui-input-block">
+                            <button type="reset" class="layui-btn layui-btn-warm">重新填写</button>
+                        </div>
+                    </div>-->
+                </form>
+            </div>
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                <legend>综合测评操作记录</legend>
+            </fieldset>
+            <ul class="layui-timeline">
+                <li class="layui-timeline-item"  th:if="${zhcpDataReviewOfInit.evaTime} != null">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">[[${zhcpDataReviewOfInit.evaTime}]]</h3>
+                        <p><b>学生提交综合测评自我测评数据</b></p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item" th:if="${zhcpDataReviewOfInit.reviewTime} != null">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">[[${zhcpDataReviewOfInit.reviewTime}]]</h3>
+                        <p><b>班级测评信息</b></p>
+                        <ul>
+                            <li>审核人：[[${zhcpDataReviewOfInit.reviewName}]]</li>
+                            <li>审核人职务：[[${zhcpDataReviewOfInit.reviewCommittee}]]</li>
+                            <li>审核备注：[[${zhcpDataReviewOfInit.reviewRemarks}]]</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="layui-timeline-item" th:if="${zhcpDataReviewOfInit.reviewsSubmit} != null">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">[[${zhcpDataReviewOfInit.reviewsSubmit}]]</h3>
+                        <p><b>复核申请信息</b></p>
+                        <ul>
+                            <li>申请原因：[[${zhcpDataReviewOfInit.reviewsReason}]]</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="layui-timeline-item" th:if="${zhcpDataReviewOfInit.reviewsTime} != null">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">[[${zhcpDataReviewOfInit.reviewsTime}]]</h3>
+                        <p><b>复核信息</b></p>
+                        <ul>
+                            <li>复核人：[[${zhcpDataReviewOfInit.reviewsName}]]</li>
+                            <li>复核人职务：[[${zhcpDataReviewOfInit.reviewsCommittee}]]</li>
+                            <li>复核备注：[[${zhcpDataReviewOfInit.reviewsRemarks}]]</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="layui-timeline-item" th:if="${zhcpDataReviewOfInit.confirmTime} != null">
+                    <i class="layui-icon layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">[[${zhcpDataReviewOfInit.confirmTime}]]</h3>
+                        <p><b>你已确认综测数据无误</b></p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item" th:if="${zhcpDataReviewOfInit.evaStatus} != '已完成'">
+                    <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-timeline-axis"></i>
+                    <div class="layui-timeline-content layui-text">
+                        <div class="layui-timeline-title">future</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="../../../../layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index','form', 'upload','layer'],function () {
+            var $ = layui.$
+            ,form = layui.form
+            ,upload = layui.upload
+            ,layer =  layui.layer
+
+            // //异步添加用户信息
+            // layui.use('layer',function () {
+            //     //利用ajax提交表单数据
+            //     $('#submit').click(function () {
+            //         $.ajax({
+            //             //几个参数需要注意一下
+            //             type: "POST",               //方法类型
+            //             url: "/bwmydcp/stu/addBwmydcpData",       //url
+            //             dataType: 'JSON',
+            //             async: false,
+            //             data: $('#form').serialize(),
+            //             success: function (res) {
+            //                 if (res.code === 200) {
+            //                     layer.msg(res.msg,{time:1000,icon:5})
+            //                 } else {
+            //                     layer.msg('班委满意度测评提交成功!', {icon: 6, time: 2000,end: function f() {
+            //                             var index = parent.layer.getFrameIndex(window.name);
+            //                             parent.layer.close(index)
+            //                         }})
+            //                 }
+            //             },
+            //             error:function (data) {
+            //                 layer.msg("提交班委满意度测评时发生错误，请重试...",{time:1000,icon:7})
+            //             }
+            //         });
+            //     })
+            // })
+
+//自定义验证规则
+//             form.verify({
+//                 otherReq: function(value,item){
+//                     var $ = layui.$;
+//                     var verifyName=$(item).attr('name')
+//                         , verifyType=$(item).attr('type')
+//                         ,formElem=$(item).parents('.layui-form')//获取当前所在的form元素，如果存在的话
+//                         ,verifyElem=formElem.find('input[name='+verifyName+']')//获取需要校验的元素
+//                         ,isTrue= verifyElem.is(':checked')//是否命中校验
+//                         ,focusElem = verifyElem.next().find('i.layui-icon');//焦点元素
+//                         if(!isTrue || !value){
+//                         //定位焦点
+//                         focusElem.css(verifyType=='radio'?{"color":"#FF5722"}:{"border-color":"#FF5722"});
+//                         //对非输入框设置焦点
+//                         focusElem.first().attr("tabIndex","1").css("outline","0").blur(function() {
+//                             focusElem.css(verifyType=='radio'?{"color":""}:{"border-color":""});
+//                         }).focus();
+//                         return '必填项不能为空';
+//                     }
+//                 }
+//             });
+
+            /*form.verify({
+                otherReq1: [
+                    /^[\S]{6,12}$/
+                    ,'数字，且不能出现空格'
+                ]
+                ,otherReq2: [
+                    /^[\S]{6,12}$/
+                    ,'密码必须6到12位，且不能出现空格'
+                ]
+            });*/
+        });
+    </script>
+</body>
+</html>

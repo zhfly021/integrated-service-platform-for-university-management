@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhfly021.mapper.StudentMapper">
+    <select id="queryByUsername" parameterType="String" resultType="com.zhfly021.entity.Student">
+        select * from student where stuNo = #{username};
+    </select>
+    <update id="modifyPassword" parameterType="String">
+        update student set password = #{password} where stuNo = #{stuNo} ;
+    </update>
+    <select id="queryByStuClass" parameterType="String" resultType="com.zhfly021.entity.Student">
+        select * from student where stuClass = #{stuClass};
+    </select>
+    <select id="queryCommittee" parameterType="String" resultType="com.zhfly021.entity.Student">
+        select * from student where stuClass = #{stuClass} and committee != null ;
+    </select>
+    <select id="queryCategory" parameterType="String" resultType="com.zhfly021.entity.Student">
+        select * from student where stuClass = #{stuClass} and category = #{category} order by position ;
+    </select>
+    <select id="queryQsz" parameterType="String" resultType="com.zhfly021.entity.Student">
+        select * from student where stuClass = #{stuClass} and shepherd = 1 order by dormitory ;
+    </select>
+
+    <select id="queryStuForAdmin" resultType="com.zhfly021.entity.Student">
+        select * from student where 1=1
+        <if test="stuNo != null"> and stuNo like CONCAT('%',#{stuNo},'%') </if>
+        <if test="stuName != null"> and stuName like CONCAT('%',#{stuName},'%') </if>
+        <if test="stuClass != null"> and stuClass like CONCAT('%',#{stuClass},'%') </if>
+        <if test="dormitory != null"> and dormitory like CONCAT('%',#{dormitory},'%') </if>
+        <if test="committee != null"> and committee = #{committee} </if>
+        <if test="shepherd != null"> and shepherd = #{shepherd} </if>
+        <if test="sex != null"> and sex = #{sex} </if>
+        <if test="faculty != null"> and faculty = #{faculty} </if>
+        ;
+    </select>
+
+
+    <select id="queryStuOfAddAdmin" resultType="com.zhfly021.entity.Student">
+        select * from student where stuNo = #{stuNo}
+          <if test="stuClass != null"> and stuClass = #{stuClass} </if>
+          <if test="faculty != null"> and faculty = #{faculty} </if>
+    </select>
+
+    <select id="queryStuForTeacher" resultType="com.zhfly021.entity.Student">
+        select * from student where stuClass in
+         <foreach collection="employers" item="employer" open="(" separator="," close=")">
+             #{employer}
+         </foreach>
+    </select>
+    <select id="queryStuForCommittee" resultType="com.zhfly021.entity.Student">
+        select * from student where 1 = 1
+        <if test="stuNo != null"> and stuNo like CONCAT('%',#{stuNo},'%') </if>
+        <if test="stuName != null"> and stuName like CONCAT('%',#{stuName},'%') </if>
+        <if test="dormitory != null"> and dormitory like CONCAT('%',#{dormitory},'%') </if>
+        <if test="committee != null"> and committee = #{committee} </if>
+        <if test="shepherd != null"> and shepherd = #{shepherd} </if>
+        <if test="sex != null"> and sex = #{sex} </if>
+        <if test="stuClass != null"> and stuClass like CONCAT('%',#{stuClass},'%') </if>
+    </select>
+
+
+    <insert id="addStuOfAdmin" parameterType="com.zhfly021.entity.Student">
+        insert into student(stuNo, stuName, password, sex, photo, faculty, series, profession, stuClass, stuID, dormitory,shepherd, committee,position,category,tel,email,qq)
+          values(#{stuNo}, #{stuName}, #{stuID},#{sex}, #{photo}, #{faculty}, #{series}, #{profession}, #{stuClass}, #{stuID}, #{dormitory},#{shepherd}, #{committee},#{position},#{category},#{tel},#{email},#{qq})
+    </insert>
+
+    <select id="queryStuById" resultType="com.zhfly021.entity.Student">
+        select * from student where id = #{id};
+    </select>
+    <update id="updateStuByIdOfAdmin" parameterType="com.zhfly021.entity.Student">
+        update student set stuNo = #{stuNo}, stuName = #{stuName}, sex = #{sex}, photo = #{photo},
+        faculty = #{faculty}, series = #{series}, profession = #{profession}, stuClass = #{stuClass},
+        stuID = #{stuID}, dormitory = #{dormitory},shepherd = #{shepherd}, committee = #{committee},
+        position = #{position},category = #{category},tel = #{tel}, email = #{email}, qq = #{qq}
+        <if test="password != null"> , password = #{password} </if>
+        where  id = #{id}
+    </update>
+
+    <update id="updateInfo" parameterType="com.zhfly021.entity.Student">
+        update student set sex = #{sex}, photo = #{photo},tel = #{tel}, email = #{email}, qq = #{qq}
+           where  stuNo = #{stuNo}
+    </update>
+
+    <update id="updateStuInfo" parameterType="com.zhfly021.entity.Student">
+        update student set sex = #{sex}, photo = #{photo},tel = #{tel}, email = #{email}, qq = #{qq}
+           where  stuNo = #{stuNo}
+    </update>
+
+
+
+    <delete id="delStuById" parameterType="Integer">
+        delete from student where id = #{id}
+    </delete>
+
+    <delete id="batchDelStu" parameterType="Integer">
+        delete from student where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updatePic">
+        update student set photo = #{photo} where stuNo = stuNo
+    </update>
+
+    <select id="countStudent" resultType="int">
+        SELECT count(*) FROM student WHERE 1 = 1
+        <if test="faculty != null"> and faculty = #{faculty}  </if>
+        <if test="stuClass != null"> and stuClass = #{stuClass}  </if>
+    </select>
+
+</mapper>

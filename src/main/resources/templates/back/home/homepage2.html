@@ -1,0 +1,320 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layuiAdmin 主页示例模板二</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+  <!-- 引入 echarts.js -->
+  <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">
+            班级建设意见
+            <span class="layui-badge layui-bg-green layuiadmin-badge">年</span>
+          </div>
+          <div class="layui-card-body layuiadmin-card-list">
+
+            <p class="layuiadmin-big-font">[[${{yearBjjs}}]]</p>
+            <p>
+              总计
+              <span class="layuiadmin-span-color">[[${{allBjjs}}]] <i class="layui-inline layui-icon layui-icon-list"></i></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">
+            班级建设意见
+            <span class="layui-badge layui-bg-orange layuiadmin-badge">月</span>
+          </div>
+          <div class="layui-card-body layuiadmin-card-list">
+
+            <p class="layuiadmin-big-font">[[${{monthBjjs}}]]</p>
+            <p>&nbsp;</p>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">
+            班委工作反馈
+            <span class="layui-badge layui-bg-green layuiadmin-badge">年</span>
+          </div>
+          <div class="layui-card-body layuiadmin-card-list">
+
+            <p class="layuiadmin-big-font">[[${{yearBwgz}}]]</p>
+            <p>
+              总计
+              <span class="layuiadmin-span-color">[[${{allBwgz}}]] <i class="layui-inline layui-icon layui-icon-list"></i></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-sm6 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">
+            班委工作反馈
+            <span class="layui-badge layui-bg-orange layuiadmin-badge">月</span>
+          </div>
+          <div class="layui-card-body layuiadmin-card-list">
+
+            <p class="layuiadmin-big-font">[[${{monthBwgz}}]]</p>
+            <p>&nbsp;</p>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-sm12">
+        <div class="layui-card">
+          <div class="layui-card-header">
+            反馈量
+          </div>
+          <div class="layui-card-body">
+            <div class="layui-row">
+              <div class="layui-col-sm8">
+                <div class="layui-carousel layadmin-carousel layadmin-dataview" id="test1" >
+                  <div carousel-item>
+                    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+                    <div id="line" style="height: 300px"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="layui-col-sm4">
+                <div class="layuiadmin-card-list">
+                  <p class="layuiadmin-normal-font">班级建设意见</p>
+                  <span id="bjjsIncrease">同上月增长</span>
+                  <div class="layui-progress layui-progress-big" lay-showpercent="yes" lay-filter="demo1">
+                    <div class="layui-progress-bar demo1" lay-percent="0%"></div>
+                  </div>
+                </div>
+                <div class="layuiadmin-card-list">
+                  <p class="layuiadmin-normal-font">班级工作反馈</p>
+                  <span id="bwgzIncrease">同上月增长</span>
+                  <div class="layui-progress layui-progress-big" lay-showPercent="yes" lay-filter="demo2">
+                    <div class="layui-progress-bar demo2" lay-percent="0%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+      </div>
+    </div>
+  </div>
+  
+  <script src="../../layuiadmin/layui/layui.js"></script>
+
+  <script>
+    layui.use('element', function () {
+      var $ = layui.jquery
+              ,element = layui.element;
+
+      //设置tu的宽度
+      var o = document.getElementById("test1");
+      var width= o.clientWidth||o.offsetWidth;
+      var echart =$("#line");
+      console.log(width)
+      echart.css("width",width+"px");
+
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('line'));
+      //数据加载完之前先显示一段简单的loading动画
+      myChart.showLoading();
+      $.ajax({
+        type : "get",
+        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+        url : "/back/home/line",    //请求发送到dataActiont处
+        dataType : "json",        //返回数据形式为json
+        success : function(result) {
+          //请求成功时执行该函数内容，result即为服务器返回的json对象
+          if (0 == result.code) {
+            myChart.hideLoading();    //隐藏加载动画
+            var bjjsList = result.bjjsList
+            var bwgzList  = result.bwgzList
+            var monthList  = result.monthList
+            //增长率
+            var demo01 = (bjjsList[bjjsList.length-1] - bjjsList[bjjsList.length-2])/bjjsList[bjjsList.length-2] * 100
+            var demo02 = (bwgzList[bwgzList.length-1] - bwgzList[bwgzList.length-2])/bwgzList[bwgzList.length-2] * 100
+            //根据正负更改文字及数值
+            if (demo01 < 0 ){
+              $('#bjjsIncrease').text('同上月降低')
+              demo01 = demo01 - 2* demo01;
+            }
+            if (demo02 < 0 ){
+              $('#bwgzIncrease').text('同上月降低')
+              demo02 = demo02 - 2* demo02;
+            }
+            demo01 = demo01.toFixed(2);
+            demo02 = demo02.toFixed(2);
+
+            //动态显示进度条
+            $('.demo1').attr('lay-percent',demo01+'%');
+            element.init();
+            element.progress('demo1', demo01+'%')
+            $('.demo2').attr('lay-percent',demo02+'%');
+            element.init();
+            element.progress('demo2', demo02+'%')
+
+          }
+          myChart.setOption({
+            title: {
+              text: '反馈量',
+            },
+            xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              data: monthList
+            },
+            yAxis: {
+              type: 'value'
+            },
+            tooltip: {
+              trigger: 'axis'
+            },
+            grid: {
+              left: '5%',
+              right: '5%',
+              bottom: '0%',
+              top: '18%',
+              containLabel: true
+            },
+            legend: {
+              data: ['班级建设意见', '班委建设意见']
+            },
+            toolbox: {
+              show: true,
+              feature: {
+                // dataZoom: {
+                //   yAxisIndex: 'none'
+                // },
+                // dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                // restore: {},
+                saveAsImage: {}
+              }
+            },
+            series: [{
+              name: '班级建设意见',
+              data: bjjsList,
+              type: 'line'
+            },
+              {
+                name: '班委建设意见',
+                data: bwgzList,
+                type: 'line'
+              }]
+          });
+        },
+        error : function() {
+          myChart.hideLoading();
+        }
+      })//end ajax
+
+    })
+  </script>
+
+  <script type="text/javascript">
+    // //设置tu的宽度
+    // var o = document.getElementById("test1");
+    // var width= o.clientWidth||o.offsetWidth;
+    // var echart =$("#line");
+    // console.log(width)
+    // echart.css("width",width+"px");
+    //
+    // // 基于准备好的dom，初始化echarts实例
+    // var myChart = echarts.init(document.getElementById('line'));
+    // //数据加载完之前先显示一段简单的loading动画
+    // myChart.showLoading();
+    // $.ajax({
+    //   type : "get",
+    //   async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+    //   url : "/back/home/line",    //请求发送到dataActiont处
+    //   dataType : "json",        //返回数据形式为json
+    //   success : function(result) {
+    //     //请求成功时执行该函数内容，result即为服务器返回的json对象
+    //     if (0 == result.code) {
+    //       myChart.hideLoading();    //隐藏加载动画
+    //       var bjjsList = result.bjjsList
+    //       var bwgzList  = result.bwgzList
+    //       var monthList  = result.monthList
+    //
+    //     }
+    //     myChart.setOption({
+    //       title: {
+    //         text: '反馈量',
+    //       },
+    //       xAxis: {
+    //         type: 'category',
+    //         boundaryGap: false,
+    //         data: monthList
+    //       },
+    //       yAxis: {
+    //         type: 'value'
+    //       },
+    //       tooltip: {
+    //         trigger: 'axis'
+    //       },
+    //       grid: {
+    //         left: '5%',
+    //         right: '5%',
+    //         bottom: '0%',
+    //         top: '18%',
+    //         containLabel: true
+    //       },
+    //       legend: {
+    //         data: ['班级建设意见', '班委建设意见']
+    //       },
+    //       toolbox: {
+    //         show: true,
+    //         feature: {
+    //           dataZoom: {
+    //             yAxisIndex: 'none'
+    //           },
+    //           dataView: {readOnly: false},
+    //           magicType: {type: ['line', 'bar']},
+    //           restore: {},
+    //           saveAsImage: {}
+    //         }
+    //       },
+    //       series: [{
+    //         name: '班级建设意见',
+    //         data: bjjsList,
+    //         type: 'line'
+    //       },
+    //         {
+    //           name: '班委建设意见',
+    //           data: bwgzList,
+    //           type: 'line'
+    //         }]
+    //     });
+    //   },
+    //   error : function() {
+    //     myChart.hideLoading();
+    //   }
+    // })//end ajax
+  </script>
+
+  <script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'sample']);
+  </script>
+</body>
+</html>

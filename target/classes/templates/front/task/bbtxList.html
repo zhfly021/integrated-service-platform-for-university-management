@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>报表填写</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/template.css" media="all">
+</head>
+<body>
+
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card" style="padding-top: 5px">
+          <!-- 搜索条件开始 -->
+          <fieldset class="layui-elem-field layui-field-title">
+            <legend>报表填写-查询条件</legend>
+          </fieldset>
+          <div class="layui-form">
+              <div class="layui-form-item">
+                  <div class="layui-inline">
+                      <label class="layui-form-label">填报项目:</label>
+                      <div class="layui-input-block">
+                          <input type="text" name="project" placeholder="请输入" autocomplete="off" class="layui-input">
+                      </div>
+                  </div>
+                  <div class="layui-inline">
+                      <label class="layui-form-label">测评状态:</label>
+                      <div class="layui-input-block">
+                          <select name="status" id="status">
+                              <option value="">不限</option>
+                              <option value="已开始">已开始</option>
+                              <option value="已结束">已结束</option>
+                          </select>
+                      </div>
+                  </div>
+              </div>
+              <div class="layui-form-item">
+                  <div class="layui-input-block">
+                      <button class="layui-btn layuiadmin-btn-admin layui-btn-normal layui-btn-sm layui-icon layui-icon-search" lay-submit lay-filter="bwmydcp-search">查询</button>
+                      <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" id="bjjs-reset" onclick="">重置</button>
+                  </div>
+              </div>
+          </div>
+          <!-- 搜索条件结束 -->
+
+
+          <div class="layui-card-body">
+            <table class="layui-hide" id="bwmydcpTable" lay-filter="bwmydcp"></table>
+<!--            <blockquote class="layui-elem-quote">备注信息：待拓展（可填写相关班级建设意见的填写指导等）</blockquote>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display: none" id="bwgzfkToolBar">
+<!--    <a th:href="@{/bwmydcp/stu/addBwmydcpList}"><button class="layui-btn ">ceshi</button></a>-->
+<!--    <button class="layui-btn layuiadmin-btn-admin" data-type="add">任务发布</button>-->
+<!--    <button class="layui-btn layuiadmin-btn-admin" data-type="batchDelete">批量删除</button>-->
+  </div>
+  <div id="bwmydcpBar" style="display: none;">
+<!--      <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>-->
+<!--      <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>-->
+<!--      <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+      <a class="layui-btn layui-btn-normal layui-btn-xs " lay-event="download">下载</a>
+      <input type="text" class="layui-input" name="download" id="download" >
+  </div>
+
+  <div id="statusBar" style="display: none;">
+      {{# if(d.status == '已开始'){ }}
+      <button class="layui-btn layui-btn-xs">已开始</button>
+      {{#  } }}
+      {{# if(d.status == '已结束'){ }}
+      <button class="layui-btn layui-btn-xs layui-btn-danger">已结束</button>
+      {{#  } }}
+  </div>
+
+  <script src="../../layuiadmin/layui/layui.js"></script>
+  <script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'jquery', 'table', 'form', 'layer', 'laydate'], function(){
+    var $ = layui.$
+    ,table = layui.table
+    ,form = layui.form
+    ,layer = layui.layer
+    ,laydate = layui.laydate;
+
+    //方法级渲染
+    table.render({
+      elem: '#bwmydcpTable'
+      ,id: 'bwmydcpTable'
+      ,url: '/bbtx/stu/queryBbtxList'
+      ,title: '报表填写任务列表'
+      ,toolbar: '#bwgzfkToolBar'
+      ,cellMinWidth:200
+      ,page: true
+      ,limit: 10
+      ,height: 'full-221'
+      ,cols: [
+              [
+        {checkbox: true, fixed: true}
+        ,{type:'numbers', field:'no',title: '序号', width:70, fixed: 'left',align:"center"}
+        ,{field:'project', title: '填报项目'}
+        ,{field:'claim', title: '全员填报', width:100,align:'center'}
+        ,{field:'releaser',title: '发布人', width:100,align:'center'}
+        ,{field:'releaseTime', title: '发布时间', width:150, sort: true}
+        ,{field:'remarks', title: '填报要求【备注】', width:220}
+        ,{field:'deadline', title: '截止时间', width:150, sort: true}
+        ,{field:'status', toolbar:'#statusBar',title: '测评状态', width:100,align:'center'}
+        ,{title: '附件', toolbar:'#bwmydcpBar', width:100, align:'center'}
+        ]
+      ]
+      ,parseData: function (res) {
+            return {
+                "code": 0,
+                "msg": res.msg,
+                "data": res.payload.content,
+                "count": res.payload.total
+            }
+            // console.log(bwmydcpData)
+        }
+
+    });
+
+      //监听行工具事件
+      table.on('tool(bwmydcp)', function(obj) {
+
+          var data = obj.data;
+          var id = data.id;
+
+
+          // 下载多个文件
+          if (obj.event === 'download') {
+              //修改报表数据
+              layer.open({
+                  type: 2,
+                  title: '修改报表数据',
+                  maxmin: true,
+                  // area: ['860px', '520px'],
+                  shadeClose: true, //点击遮罩关闭
+
+                  content: '/bbtx/stu/toDownloadBbtxList/'+id,  //获取下载列表-url
+
+                  area: screen() < 1 ? ['90%', '450px'] : ['760px', '600px']
+                  // ,btn: ['提交', '取消']
+                  ,yes: function(index, layero){
+                      var iframeWindow = window['layui-layer-iframe'+ index]
+                          ,submitID = 'submit'
+                          ,submit = layero.find('iframe').contents().find('#'+ submitID);
+
+                      //监听提交
+                      iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                          var field = data.field; //获取提交的字段
+                          // console.log(field)
+                          //提交 Ajax 成功后，静态更新表格中的数据
+                          //$.ajax({});
+                          $.ajax({
+                              //几个参数需要注意一下
+                              type: "POST",               //方法类型
+                              url: "",       //下载单个文件-url
+                              dataType: 'JSON',
+                              async: false,
+                              data: field,
+                              success: function (res) {
+                                  if (res.code === 200) {
+                                      layer.msg(res.msg,{time:1000,icon:5})
+                                  } else {
+                                      layer.msg('综合测评任务提交成功!', {icon: 6, time: 2000,end: function f() {
+                                              var index = parent.layer.getFrameIndex(window.name);
+                                              parent.layer.close(index)
+                                          }})
+                                  }
+                              },
+                              error:function (data) {
+                                  layer.msg("提交综合测评任务时发生错误，请重试...",{time:1000,icon:7})
+                              }
+                          });
+
+                          table.reload('bwmydcpTable'); //数据刷新
+                          table.reload('bwmydcpTable'); //数据刷新
+                          layer.close(index); //关闭弹层
+                      });
+                      submit.trigger('click');
+                  }
+              })
+          }
+      })
+
+
+    var $ = layui.$, active = {
+      reload: function(){
+        var demoReload = $('#test-table-demoReload');
+
+        //执行重载
+        table.reload('bwmydcpTable', {
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+          ,where: {
+            key: {
+              id: demoReload.val()
+            }
+          }
+        });
+      }
+    };
+
+    //监听搜索
+      form.on('submit(bwmydcp-search)', function(data){
+          var field = data.field;
+          // var project = $('input[name="project"]');
+          // var status = $('#status option:selected');
+          //执行重载
+          table.reload('bwmydcpTable', {
+              method: 'post'
+              ,page: {
+                  curr : 1 //重新从第一页开始
+              }
+              ,where: {
+                  project : field.project
+                  ,status : field.status
+                  // ,page: 1
+                  // ,limit: 10
+              }
+          });
+
+      });
+
+      // function resetBwgzfk() {
+      //       $("#bjjs-reset").on('click',function () {
+      //           $('input[name="feedback"]').reset();
+      //           $('input[name="letterTitle"]').reset();
+      //           $('input[name="status"]').reset();
+      //       })
+      // }
+
+
+
+
+
+      //判断浏览器大小方法
+      function screen() {
+          //获取当前窗口的宽度
+          var width = $(window).width();
+          if (width > 768) {
+              return 1;   //小屏幕
+          } else {
+              return 0;   //超小屏幕
+          }
+      }
+
+      $('.layui-btn.layuiadmin-btn-admin').on('click', function(){
+          var type = $(this).data('type');
+          active[type] ? active[type].call(this) : '';
+      });
+  });
+  </script>
+</body>
+</html>

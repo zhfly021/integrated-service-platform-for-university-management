@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>班委满意度测评详情</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../../../layuiadmin/style/template.css" media="all">
+</head>
+<body style="background-color: #fff">
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div>
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 5px;">
+                    <legend>班委满意度测评详情</legend>
+                </fieldset>
+                <form class="layui-form layui-form-pane" method="post" id="form">
+                    <fieldset class="layui-elem-field">
+                        <legend>1.你对本班的凝聚力满意吗？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation1" disabled="" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation1}=='非常满意'">
+                                <input type="radio" name="evaluation1" disabled="" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation1}=='满意'">
+                                <input type="radio" name="evaluation1" disabled="" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation1}=='一般'">
+                                <input type="radio" name="evaluation1" disabled="" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation1}=='不满意'">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>2.在班上出现意见分歧时，你对班干部的处理方式以及效果满意吗？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation2" disabled="" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation2}=='非常满意'">
+                                <input type="radio" name="evaluation2" disabled="" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation2}=='满意'">
+                                <input type="radio" name="evaluation2" disabled="" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation2}=='一般'">
+                                <input type="radio" name="evaluation2" disabled="" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation2}=='不满意'">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>3.你对班会的费用的用途是否了解？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation3" disabled="" value="是" title="是" th:checked="${bwmydcpDataInfo.evaluation3}=='是'">
+                                <input type="radio" name="evaluation3" disabled="" value="否" title="否" th:checked="${bwmydcpDataInfo.evaluation3}=='否'">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>4.你对班干开展工作给予的态度是？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation4" disabled="" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation4}=='非常满意'">
+                                <input type="radio" name="evaluation4" disabled="" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation4}=='满意'">
+                                <input type="radio" name="evaluation4" disabled="" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation4}=='一般'">
+                                <input type="radio" name="evaluation4" disabled="" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation4}=='不满意'">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>5.你对班委对班会的使用是否满意？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation5" disabled="" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation5}=='非常满意'">
+                                <input type="radio" name="evaluation5" disabled="" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation5}=='满意'">
+                                <input type="radio" name="evaluation5" disabled="" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation5}=='一般'">
+                                <input type="radio" name="evaluation5" disabled="" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation5}=='不满意'">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>6.你对班委对待工作的积极性满意吗？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation6" disabled="" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation6}=='非常满意'">
+                                <input type="radio" name="evaluation6" disabled="" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation6}=='满意'">
+                                <input type="radio" name="evaluation6" disabled="" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation6}=='一般'">
+                                <input type="radio" name="evaluation6" disabled="" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation6}=='不满意'">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>7.在及时需要同学参与的事务上，班委会？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation7" disabled="" value="及时发布通知，并积极动员学生" title="及时发布通知，并积极动员学生" th:checked="${bwmydcpDataInfo.evaluation7}=='及时发布通知，并积极动员学生'">
+                                <input type="radio" name="evaluation7" disabled="" value="及时发布通知" title="及时发布通知" th:checked="${bwmydcpDataInfo.evaluation7}=='及时发布通知'">
+                                <input type="radio" name="evaluation7" disabled="" value="有时会在期限快到的时候发布通知" title="有时会在期限快到的时候发布通知" th:checked="${bwmydcpDataInfo.evaluation7}=='有时会在期限快到的时候发布通知'">
+                                <input type="radio" name="evaluation7" disabled="" value="经常会在期限快到的时候发布通知" title="经常会在期限快到的时候发布通知" th:checked="${bwmydcpDataInfo.evaluation7}=='经常会在期限快到的时候发布通知'">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>8.参加班级活动，有同学不到，你认为？【多选题】</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="checkbox" name="evaluation8" disabled="" value="情有可原，可以理解" title="情有可原，可以理解" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation8,'情有可原，可以理解')}">
+                                <input type="checkbox" name="evaluation8" disabled="" value="他们不重视班级活动，缺乏责任心" title="他们不重视班级活动，缺乏责任心" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation8,'他们不重视班级活动，缺乏责任心')}">
+                                <input type="checkbox" name="evaluation8" disabled="" value="班干部组织能力不强" title="班干部组织能力不强" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation8,'班干部组织能力不强')}">
+                                <input type="checkbox" name="evaluation8" disabled="" value="其他" title="其他" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation8,'其他')}">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>9.你觉得班上上课的出勤率跟班干部的责任心关系大吗？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation9" disabled="" value="关系很大" title="关系很大" th:checked="${bwmydcpDataInfo.evaluation9}=='关系很大'">
+                                <input type="radio" name="evaluation9" disabled="" value="有一点关系" title="有一点关系" th:checked="${bwmydcpDataInfo.evaluation9}=='有一点关系'">
+                                <input type="radio" name="evaluation9" disabled="" value="没关系" title="没关系" th:checked="${bwmydcpDataInfo.evaluation9}=='没关系'">
+                                <input type="radio" name="evaluation9" disabled="" value="完全没关系" title="完全没关系" th:checked="${bwmydcpDataInfo.evaluation9}=='完全没关系'">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>10.你认为本班的上课纪律情况怎么样？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation10" disabled="" value="非常好" title="非常好" th:checked="${bwmydcpDataInfo.evaluation10}=='非常好'">
+                                <input type="radio" name="evaluation10" disabled="" value="好" title="好" th:checked="${bwmydcpDataInfo.evaluation10}=='好'">
+                                <input type="radio" name="evaluation10" disabled="" value="不好" title="不好" th:checked="${bwmydcpDataInfo.evaluation10}=='不好'">
+                                <input type="radio" name="evaluation10" disabled="" value="非常不好" title="非常不好" th:checked="${bwmydcpDataInfo.evaluation10}=='非常不好'">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>11.你认为班干部的工作太多怎么样？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation11" disabled="" value="非常好" title="非常好" th:checked="${bwmydcpDataInfo.evaluation11}=='非常好'">
+                                <input type="radio" name="evaluation11" disabled="" value="好" title="好" th:checked="${bwmydcpDataInfo.evaluation11}=='好'">
+                                <input type="radio" name="evaluation11" disabled="" value="不好" title="不好" th:checked="${bwmydcpDataInfo.evaluation11}=='不好'">
+                                <input type="radio" name="evaluation11" disabled="" value="非常不好" title="非常不好" th:checked="${bwmydcpDataInfo.evaluation11}=='非常不好'">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>12.班干部对自己的本职工作负责吗？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation12" disabled="" value="非常负责" title="非常负责" th:checked="${bwmydcpDataInfo.evaluation12}=='非常负责'">
+                                <input type="radio" name="evaluation12" disabled="" value="负责" title="负责" th:checked="${bwmydcpDataInfo.evaluation12}=='负责'">
+                                <input type="radio" name="evaluation12" disabled="" value="不负责" title="不负责" th:checked="${bwmydcpDataInfo.evaluation12}=='不负责'">
+                                <input type="radio" name="evaluation12" disabled="" value="非常不负责" title="非常不负责" th:checked="${bwmydcpDataInfo.evaluation12}=='非常不负责'">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>13.你对班干部传达信息的效率满意吗？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation13" disabled="" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation13}=='非常满意'">
+                                <input type="radio" name="evaluation13" disabled="" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation13}=='满意'">
+                                <input type="radio" name="evaluation13" disabled="" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation13}=='一般'">
+                                <input type="radio" name="evaluation13" disabled="" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation13}=='不满意'">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>14.你对这一学期以来班级工作的开展很整体情况感觉是？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="radio" name="evaluation14" disabled="" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation14}=='非常满意'">
+                                <input type="radio" name="evaluation14" disabled="" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation14}=='满意'">
+                                <input type="radio" name="evaluation14" disabled="" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation14}=='一般'">
+                                <input type="radio" name="evaluation14" disabled="" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation14}=='不满意'">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>15.你认为我们班在信息传达方面存在什么问题？【多选题】？</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="checkbox" name="evaluation15" disabled="" value="信息表达不明，看不懂" title="信息表达不明，看不懂" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation15,'信息表达不明，看不懂')}">
+                                <input type="checkbox" name="evaluation15" disabled="" value="信息过于冗长" title="信息过于冗长" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation15,'信息过于冗长')}">
+                                <input type="checkbox" name="evaluation15" disabled="" value="信息停滞" title="信息停滞" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation15,'信息停滞')}">
+                                <input type="checkbox" name="evaluation15" disabled="" value="信息传达错误" title="信息传达错误" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation15,'信息传达错误')}">
+                                <input type="checkbox" name="evaluation15" disabled="" value="其他" title="其他" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation15,'其他')}">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>16.你对这学年以来班级工作的开展和进行哪几方面不满意？【多选题】</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-inline">
+                                <input type="checkbox" name="evaluation16" disabled="" value="班务工作" title="班务工作" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation16,'班务工作')}">
+                                <input type="checkbox" name="evaluation16" disabled="" value="团支部工作" title="团支部工作" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation16,'团支部工作')}">
+                                <input type="checkbox" name="evaluation16" disabled="" value="班委工作" title="班委工作" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation16,'班委工作')}">
+                                <input type="checkbox" name="evaluation16" disabled="" value="财政支出" title="财政支出" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation16,'财政支出')}">
+                                <input type="checkbox" name="evaluation16" disabled="" value="文娱活动" title="文娱活动" th:checked="${#strings.contains(bwmydcpDataInfo.evaluation16,'文娱活动')}">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>17.班委中你最满意谁的工作？【需说明原因】</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-block" style="margin-left: 0">
+                                <textarea placeholder="请输入内容" name="evaluation17" readonly lay-verify="required" class="layui-textarea" >[[${bwmydcpDataInfo.evaluation17}]]</textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="layui-elem-field">
+                        <legend>18.班委中你认为谁的工作需要改进？【需说明原因】</legend>
+                        <div class="layui-field-box">
+                            <div class="layui-input-block" style="margin-left: 0">
+                                <textarea placeholder="请输入内容" name="evaluation18" readonly lay-verify="required" class="layui-textarea" >[[${bwmydcpDataInfo.evaluation18}]]</textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="layui-elem-field">
+                        <legend>19.你对班委每个人的工作方法有什么意见或建议？</legend>
+                        <div class="layui-field-box">
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>团支书</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Tzs1" disabled="" lay-verify="required" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation19Tzs1}=='非常满意'">
+                                        <input type="radio" name="evaluation19Tzs1" disabled="" lay-verify="required" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation19Tzs1}=='满意'">
+                                        <input type="radio" name="evaluation19Tzs1" disabled="" lay-verify="required" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation19Tzs1}=='一般'">
+                                        <input type="radio" name="evaluation19Tzs1" disabled="" lay-verify="required" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation19Tzs1}=='不满意'">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Tzs2" readonly lay-verify="required" class="layui-textarea">[[${bwmydcpDataInfo.evaluation19Tzs2}]]</textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>班长</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Bz1" disabled="" lay-verify="required" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation19Bz1}=='非常满意'">
+                                        <input type="radio" name="evaluation19Bz1" disabled="" lay-verify="required" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation19Bz1}=='满意'">
+                                        <input type="radio" name="evaluation19Bz1" disabled="" lay-verify="required" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation19Bz1}=='一般'">
+                                        <input type="radio" name="evaluation19Bz1" disabled="" lay-verify="required" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation19Bz1}=='不满意'">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Bz2" readonly lay-verify="required" class="layui-textarea">[[${bwmydcpDataInfo.evaluation19Bz2}]]</textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>组织委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Zz1" disabled="" lay-verify="required" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation19Zz1}=='非常满意'">
+                                        <input type="radio" name="evaluation19Zz1" disabled="" lay-verify="required" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation19Zz1}=='满意'">
+                                        <input type="radio" name="evaluation19Zz1" disabled="" lay-verify="required" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation19Zz1}=='一般'">
+                                        <input type="radio" name="evaluation19Zz1" disabled="" lay-verify="required" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation19Zz1}=='不满意'">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Zz2" readonly lay-verify="required" class="layui-textarea">[[${bwmydcpDataInfo.evaluation19Zz2}]]</textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>宣传委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Xc1" disabled="" lay-verify="required" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation19Xc1}=='非常满意'">
+                                        <input type="radio" name="evaluation19Xc1" disabled="" lay-verify="required" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation19Xc1}=='满意'">
+                                        <input type="radio" name="evaluation19Xc1" disabled="" lay-verify="required" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation19Xc1}=='一般'">
+                                        <input type="radio" name="evaluation19Xc1" disabled="" lay-verify="required" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation19Xc1}=='不满意'">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Xc2" readonly lay-verify="required" class="layui-textarea">[[${bwmydcpDataInfo.evaluation19Xc2}]]</textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>权益委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Qy1" disabled="" lay-verify="required" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation19Qy1}=='非常满意'">
+                                        <input type="radio" name="evaluation19Qy1" disabled="" lay-verify="required" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation19Qy1}=='满意'">
+                                        <input type="radio" name="evaluation19Qy1" disabled="" lay-verify="required" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation19Qy1}=='一般'">
+                                        <input type="radio" name="evaluation19Qy1" disabled="" lay-verify="required" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation19Qy1}=='不满意'">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Qy2" readonly lay-verify="required" class="layui-textarea">[[${bwmydcpDataInfo.evaluation19Qy2}]]</textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>学习委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Xx1" disabled="" lay-verify="required" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation19Xx1}=='非常满意'">
+                                        <input type="radio" name="evaluation19Xx1" disabled="" lay-verify="required" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation19Xx1}=='满意'">
+                                        <input type="radio" name="evaluation19Xx1" disabled="" lay-verify="required" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation19Xx1}=='一般'">
+                                        <input type="radio" name="evaluation19Xx1" disabled="" lay-verify="required" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation19Xx1}=='不满意'">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Xx2" readonly lay-verify="required" class="layui-textarea">[[${bwmydcpDataInfo.evaluation19Xx2}]]</textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>生活委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Sh1" disabled="" lay-verify="required" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation19Sh1}=='非常满意'">
+                                        <input type="radio" name="evaluation19Sh1" disabled="" lay-verify="required" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation19Sh1}=='满意'">
+                                        <input type="radio" name="evaluation19Sh1" disabled="" lay-verify="required" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation19Sh1}=='一般'">
+                                        <input type="radio" name="evaluation19Sh1" disabled="" lay-verify="required" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation19Sh1}=='不满意'">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Sh2" readonly lay-verify="required" class="layui-textarea">[[${bwmydcpDataInfo.evaluation19Sh2}]]</textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>科创委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Kc1" disabled="" lay-verify="required" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation19Kc1}=='非常满意'">
+                                        <input type="radio" name="evaluation19Kc1" disabled="" lay-verify="required" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation19Kc1}=='满意'">
+                                        <input type="radio" name="evaluation19Kc1" disabled="" lay-verify="required" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation19Kc1}=='一般'">
+                                        <input type="radio" name="evaluation19Kc1" disabled="" lay-verify="required" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation19Kc1}=='不满意'">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Kc2" readonly lay-verify="required" class="layui-textarea">[[${bwmydcpDataInfo.evaluation19Kc2}]]</textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>心理委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Xl1" disabled="" lay-verify="required" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation19Xl1}=='非常满意'">
+                                        <input type="radio" name="evaluation19Xl1" disabled="" lay-verify="required" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation19Xl1}=='满意'">
+                                        <input type="radio" name="evaluation19Xl1" disabled="" lay-verify="required" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation19Xl1}=='一般'">
+                                        <input type="radio" name="evaluation19Xl1" disabled="" lay-verify="required" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation19Xl1}=='不满意'">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Xl2" readonly lay-verify="required" class="layui-textarea">[[${bwmydcpDataInfo.evaluation19Xl2}]]</textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>文艺委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Wy1" disabled="" lay-verify="required" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation19Wy1}=='非常满意'">
+                                        <input type="radio" name="evaluation19Wy1" disabled="" lay-verify="required" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation19Wy1}=='满意'">
+                                        <input type="radio" name="evaluation19Wy1" disabled="" lay-verify="required" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation19Wy1}=='一般'">
+                                        <input type="radio" name="evaluation19Wy1" disabled="" lay-verify="required" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation19Wy1}=='不满意'">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Wy2" readonly lay-verify="required" class="layui-textarea">[[${bwmydcpDataInfo.evaluation19Wy2}]]</textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>体育委员</legend>
+                            </fieldset>
+                            <blockquote class="layui-elem-quote layui-quote-nm">
+                                <div class="layui-form-item" pane="">
+                                    <label class="layui-form-label">满意度</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="evaluation19Ty1" disabled="" lay-verify="required" value="非常满意" title="非常满意" th:checked="${bwmydcpDataInfo.evaluation19Ty1}=='非常满意'">
+                                        <input type="radio" name="evaluation19Ty1" disabled="" lay-verify="required" value="满意" title="满意" th:checked="${bwmydcpDataInfo.evaluation19Ty1}=='满意'">
+                                        <input type="radio" name="evaluation19Ty1" disabled="" lay-verify="required" value="一般" title="一般" th:checked="${bwmydcpDataInfo.evaluation19Ty1}=='一般'">
+                                        <input type="radio" name="evaluation19Ty1" disabled="" lay-verify="required" value="不满意" title="不满意" th:checked="${bwmydcpDataInfo.evaluation19Ty1}=='不满意'">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">意见</label>
+                                    <div class="layui-input-block" contenteditable="true">
+                                        <textarea placeholder="请输入内容" name="evaluation19Ty2" readonly lay-verify="required" class="layui-textarea">[[${bwmydcpDataInfo.evaluation19Ty2}]]</textarea>
+                                    </div>
+                                </div>
+                            </blockquote>
+                        </div>
+                    </fieldset>
+
+                    <div class="layui-form-item" pane="">
+                        <label class="layui-form-label"><b>匿名提交</b></label>
+                        <div class="layui-input-inline" th:switch="${bwmydcpDataInfo.evaMark}">
+                            <input type="checkbox" th:case="匿名" disabled="" checked="" name="evaMark" lay-skin="switch" lay-text="开启|关闭">
+                            <input type="checkbox" th:case="实名" disabled="" name="evaMark" lay-skin="switch" lay-text="开启|关闭">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">[默认开启匿名提交意见，可手动选择关闭匿名提交意见]</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="../../../../layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index','form', 'upload','layer'],function () {
+            var $ = layui.$
+            ,form = layui.form
+            ,upload = layui.upload
+            ,layer =  layui.layer;
+        });
+    </script>
+</body>
+</html>

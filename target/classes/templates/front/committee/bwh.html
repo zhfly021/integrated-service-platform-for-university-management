@@ -1,0 +1,69 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>班委会</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/template.css" media="all">
+</head>
+<body>
+
+
+<div class="layui-fluid layadmin-maillist-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md4 layui-col-sm6" th:each="bwh:${bwh}">
+      <div class="layadmin-contact-box" > 
+          <div class="layui-col-md4 layui-col-sm6">
+            <a href="javascript:;">
+              <div class="layadmin-text-center">
+                <img width="100" height="100" src="../../img/me.JPG" th:src="${bwh.photo}">
+                <div class="layadmin-maillist-img layadmin-font-blod" th:text="${bwh.stuName}">照片</div>
+              </div>
+            </a>
+          </div>
+        
+        <div class="layui-col-md8 layadmin-padding-left20 layui-col-sm6">
+          <a href="javascript:;">
+            <h3 class="layadmin-title">
+              <strong th:text="${bwh.committee}">学习委员</strong>
+            </h3>
+            <p class="layadmin-textimg">
+              <i class="layui-icon layui-icon-location"></i>
+              [[${bwh.dormitory}]]
+            </p>
+          </a>
+          <div class="layadmin-address">
+            <a href="javascript:;">
+              <strong>联系方式</strong>
+              <br>
+              E-mail: [[${bwh.email}]]
+              <br>
+              QQ: [[${bwh.qq}]]
+              <br>
+              <addr title="phone">Tel:</addr>
+              [[${bwh.tel}]]
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="../../layuiadmin/layui/layui.js"></script>
+  <script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index']);
+  </script>
+</body>
+</html>

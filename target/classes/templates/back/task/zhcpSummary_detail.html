@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>班委满意度测评详情</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../../../layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../../../layuiadmin/style/template.css" media="all">
+</head>
+<body style="background-color: #fff">
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div>
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 5px;">
+                    <legend>综合测评汇总表</legend>
+                </fieldset>
+                <div class="layui-form-item layui-layout-right" style="margin-top: 5px;margin-right: 8px">
+                    <div class="layui-input-block">
+                        <button  class="layui-btn layui-btn-normal" onclick="javascript:printHTML()">下载汇总表</button>
+                    </div>
+                </div>
+
+                <!--startprint-->
+
+                <form class="layui-form layui-form-pane" method="post" id="form">
+                    <h1 style="text-align: center">皖 西 学 院 学 生 素 质 综 合 测 评 汇 总 表</h1>
+                    <br>
+                    <p style="text-align: center"><u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[${faculty}]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>学院<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[[${stuClass}]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>班级</p>
+
+
+                    <table class="layui-table">
+                        <colgroup>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th style="font-weight: bold;">姓名</th>
+                            <th style="font-weight: bold;">德育素质得分</th>
+                            <th style="font-weight: bold;">智育素质得分</th>
+                            <th style="font-weight: bold;">体育素质得分</th>
+                            <th style="font-weight: bold;">能力素质得分</th>
+                            <th style="font-weight: bold;">综合素质得分</th>
+                            <th style="font-weight: bold;">文化课名次</th>
+                            <th style="font-weight: bold;">综合测评名次</th>
+                            <th style="font-weight: bold;">备注</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="zhcpSummary:${zhcpSummaries}">
+                            <td th:text="${zhcpSummary.stuName}"></td>
+                            <td th:text="${zhcpSummary.moral}"></td>
+                            <td th:text="${zhcpSummary.intellectual}"></td>
+                            <td th:text="${zhcpSummary.physical}"></td>
+                            <td th:text="${zhcpSummary.competence}"></td>
+                            <td th:text="${zhcpSummary.summary}"></td>
+                            <td th:text="${zhcpSummary.cultural}"></td>
+                            <td th:text="${zhcpSummary.comprehensive}"></td>
+                            <td th:text="${zhcpSummary.remarks}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+
+                <!--endprint-->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script src="../../../../layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../../../layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['index','form', 'upload','layer'],function () {
+            var $ = layui.$
+            ,form = layui.form
+            ,upload = layui.upload
+            ,layer =  layui.layer;
+        });
+    </script>
+
+    <script type="text/javascript">
+        /**打印页面*/
+        function printHTML(_this) {
+            // 获取当前页的html代码
+            var bdhtml = window.document.body.innerHTML;
+            //设置打印开始区域
+            var startStr = '<!--startprint-->';
+            // 设置打印结束区域
+            var endStr = '<!--endprint-->';
+            //从标记里获取需要打印的页面
+            var printHtml = bdhtml.substring(bdhtml.indexOf(startStr) + startStr.length, bdhtml.indexOf(endStr));
+            //隐藏不必要的按钮和样式
+            // 通过id获取需要打印的页面
+            // var printHtml = document.getElementById('print_html').innerHTML;
+            // 需要打印的页面
+            window.document.body.innerHTML = printHtml;
+            if(!!window.ActiveXObject || "ActiveXObject" in window) { //是否ie
+                remove_ie_header_and_footer();
+            }
+            //调用打印
+            window.print();
+            // 还原界面
+            window.document.body.innerHTML = bdhtml;
+            window.location.reload();
+        }
+        //去掉页眉、页脚
+        function remove_ie_header_and_footer() {
+            var hkey_path;
+            hkey_path = "HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\PageSetup\\";
+            try {
+                var RegWsh = new ActiveXObject("WScript.Shell");
+                RegWsh.RegWrite(hkey_path + "header", "");
+                RegWsh.RegWrite(hkey_path + "footer", "");
+            } catch(e) {
+
+            }
+        }
+    </script>
+</body>
+</html>

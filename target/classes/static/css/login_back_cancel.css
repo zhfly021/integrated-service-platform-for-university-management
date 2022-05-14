@@ -1,0 +1,321 @@
+body {
+	margin: 0 auto;
+	overflow: hidden;
+	background-color: #1E1E1E;
+}
+html,body,form{
+	height: 100%;
+}
+*{
+	box-sizing: border-box;
+}
+.login-box {
+	margin: 0 auto;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	position: relative;
+}
+
+
+.layui-form-danger+.layui-form-select .layui-input, .layui-form-danger:focus {
+    border-color: transparent !important;
+}
+.login-box .canvaszz {
+	width: 100%;
+	height: 100%;
+	background-size: 100% 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 3;
+	filter: alpha(opacity=40);
+	-moz-opacity: 0.4;
+	-khtml-opacity: 0.4;
+	opacity: 0.4;
+	background-color: #232323;
+}
+
+.login_tit {
+	color: #fff;
+	text-align: center;
+	margin-bottom: 50px;
+
+}
+
+.tit-bg {
+	position: absolute;
+	top: 50%;
+	display: inline-block;
+	width: 50px;
+	height: 2px;
+	/*background: url(../img/login-tit.png)*/
+}
+
+.tit-bg.left {
+	left: 0;
+	transform: rotate(180deg)
+}
+
+.tit-bg.right {
+	right: 0
+}
+
+.login_tit>div {
+	position: relative;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.login_tit>p {
+	font-size: 18px;
+	font-family: "arial";
+	margin: 10px 0;
+}
+
+.login-box .signup {
+	margin-top: 40px;
+	text-align: center
+}
+
+.login-box .signup .gv {
+	text-decoration: none;
+	background: url(../img/nav_gv.png) repeat 0px 0px;
+	width: 130px;
+	height: 43px;
+	display: inline-block;
+	text-align: center;
+	line-height: 43px;
+	cursor: pointer;
+	margin: 8px 20px 8px 20px;
+	font: 18px/43px 'microsoft yahei';
+	color: #dff3ff;
+	border: none;
+}
+
+.login-box .signup .gv span {
+	display: none;
+
+}
+
+.login-box .signup .gv:hover {
+	background: url(../img/nav_gv.png) repeat 0px -43px;
+	color: #fff;
+	-webkit-box-shadow: 0 0 6px #1d7eb8;
+	transition-duration: 0.5s;
+}
+
+.login-box .topcn {
+	width: 980px;
+	top: 200px;
+	left: 50%;
+	margin-left: -490px;
+	position: absolute;
+	z-index: 20;
+
+}
+
+/*登录界面*/
+.input-content {
+	position: fixed;
+	z-index: 9999;
+	padding:30px;
+	width: 450px;
+	transform: translate(-50%,-50%);
+	-moz-transform: translate(-50%,-50%);
+	-webkit-transform: translate(-50%,-50%);
+	top: 50%;
+	left: 50%;
+}
+
+.input-content .p {
+	margin: 30px 0;
+	height: 44px;
+	position: relative;
+	border: 1px solid #2fa8f1;
+}
+.input-content div.p{
+	border: 1px solid transparent;
+}
+.layui-input:hover, .layui-textarea:hover,
+.layui-input:focus, .layui-textarea:focus {
+    border-color: transparent !important;
+}
+.input-content .p .login_txtbx {
+	font-size: 14px;
+	line-height: 26px;
+	height: 42px;
+	text-indent: 2em;
+	border: 1px solid transparent;
+	background: rgba(0, 0, 0, .1);
+	color: white;
+}
+
+.login_txtbx::-webkit-input-placeholder {
+	color: rgba(255, 255, 255, .5);
+}
+
+.login_txtbx:-moz-placeholder {
+	/* Mozilla Firefox 4 to 18 */
+	color: rgba(255, 255, 255, .5);
+}
+/*
+
+.login_txtbx::-moz-placeholder {
+	Mozilla Firefox 19+color: rgba(255, 255, 255, .5);
+}
+*/
+
+.login_txtbx:-ms-input-placeholder {
+	/* Internet Explorer 10+ */
+	color: rgba(255, 255, 255, .5);
+}
+
+.input-content p.p:hover {
+	-webkit-box-shadow: 0 0 6px #2fa8f1;
+	transition-duration: 0.5s;
+}
+
+.input-content .p.user_icon:before {
+	content: "u";
+}
+
+.input-content .p.pwd_icon:before {
+	content: "p";
+}
+
+.input-content .p.opwd_icon:before {
+	content: "o";
+}
+
+.input-content .p.npwd_icon:before {
+	content: "n";
+}
+
+.input-content .p.rpwd_icon:before {
+	content: "r";
+}
+
+.input-content .p.val_icon:before {
+	content: "n";
+}
+
+.input-content .p:before {
+	font-family: 'adminthemesregular';
+	position: absolute;
+	top: 0;
+	left: 14px;
+	height: 42px;
+	line-height: 40px;
+	font-size: 20px;
+	color: #fff;
+}
+
+.input-content .p .checkcode {
+	
+	height: 44px;
+	overflow: hidden;
+}
+
+.input-content .p .checkcode input {
+	float: left;
+	width: 200px;
+	height: 44px;
+	line-height: 44px;
+	border: 1px solid #1d7eb8;
+	padding: 3px;
+	color: white;
+	outline: none;
+	text-indent: 3em;
+	background-color: transparent;
+}
+
+.input-content .p .checkcode .J_codeimg {
+	float: right;
+	width: 130px;
+	height: 42px;
+	z-index: 0;
+	background: rgba(28, 122, 178, .3);
+}
+
+.input-content .p .ver_btn {
+	color: #f4f4f4;
+	height: 42px;
+	line-height: 42px;
+	margin: 0;
+	z-index: 1;
+	position: relative;
+	float: right;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.passwordTit {
+	position: relative;
+	padding: 10px;
+	font-size: 12px;
+	color: #fff;
+	line-height: 18px;
+	margin-bottom: -20px;
+}
+
+.passwordTit .border {
+	position: absolute;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 1px solid #1d7eb8
+}
+
+.border.left {
+	left: 0;
+	top: 0;
+	border-right: none;
+	border-bottom: none
+}
+
+.border.right {
+	right: 0;
+	bottom: 0;
+	border-left: none;
+	border-top: none
+}
+
+@media  screen and (max-width: 500px){
+	.input-content{
+		width: 90%;
+		padding: 0;
+	}
+	.login_tit{
+		width: 100%;
+	}
+	.login-box .signup .gv{
+		margin: 8px 10px;
+	}
+	.login_tit{
+		margin-bottom: 50px;
+	}
+}
+@media  screen and (max-width: 375px){
+	.input-content .p .checkcode input{
+		width: 160px;
+	}
+	.input-content .p{
+		margin: 20px 0;
+	}
+}
+@media  screen and (max-width: 325px){
+	.input-content .p .checkcode input{
+		width: 130px;
+	}
+	.input-content .p .ver_btn{
+		font-size: 12px;
+	}
+	
+	.login-box .signup .gv {
+	    margin: 8px 3px;
+	}
+	
+}

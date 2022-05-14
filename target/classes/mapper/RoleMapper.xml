@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhfly021.mapper.RoleMapper">
+    <select id="queryPermissionId" resultType="String">
+        select permissionId from role where id = #{id};
+    </select>
+
+    <select id="queryRole" resultType="com.zhfly021.entity.Role">
+        select * from role where 1=1
+        <if test="roleName != null"> and roleName = #{roleName} </if>
+    </select>
+
+    <select id="queryRoleName" resultType="String">
+        select roleName from role
+    </select>
+
+    <select id="queryRoleNameOfSuper" resultType="String">
+        select roleName from role where roleName != '超级管理员'
+    </select>
+    <select id="queryRoleNameOfFaculty" resultType="String">
+        select roleName from role where roleName != '超级管理员' and roleName != '院级管理员'
+    </select>
+    <select id="queryRoleNameOfTeaAndStu" resultType="String">
+        select roleName from role where roleName != '超级管理员' and roleName != '院级管理员' and roleName != '辅导员'
+    </select>
+
+    <insert id="addRole" parameterType="com.zhfly021.entity.Role">
+        insert into role(roleName,permissionId,description)
+         values(#{roleName},#{permissionId},#{description})
+    </insert>
+
+    <select id="queryRoleById" parameterType="Integer" resultType="com.zhfly021.entity.Role">
+        select * from role where id = #{id}
+    </select>
+
+    <select id="queryRoleIdByName" resultType="Integer">
+        select id from role where roleName = #{roleName}
+    </select>
+
+    <update id="updateRole" parameterType="com.zhfly021.entity.Role">
+        update role set roleName = #{roleName}, permissionId = #{permissionId}, description = #{description}  where id = #{id} ;
+    </update>
+
+    <delete id="delRole" parameterType="Integer">
+        delete from role where id = #{id}
+    </delete>
+
+    <delete id="batchDelRole" parameterType="Integer">
+        delete from role where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+
+</mapper>

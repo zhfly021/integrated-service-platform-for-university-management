@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhfly021.mapper.BwmydcpMapper">
+    
+    <resultMap id="BwmydcpListData" type="com.zhfly021.entity.BwmydcpListAndData">
+        <id property="id" column="id"></id>
+        <result property="releaseTime" column="releaseTime"></result>
+        <result property="publisher" column="publisher"></result>
+        <result property="publisherNo" column="publisherNo"></result>
+        <result property="publisherClass" column="publisherClass"></result>
+        <result property="publisherCommittee" column="publisherCommittee"></result>
+        <result property="project" column="project"></result>
+        <result property="projectID" column="projectID"></result>
+        <result property="remarks" column="remarks"></result>
+        <result property="deadline" column="deadline"></result>
+        <result property="status" column="status"></result>
+        <association property="bwmydcpData" javaType="com.zhfly021.entity.BwmydcpData">
+<!--            <id property="idd" column="idd"></id>-->
+<!--            <result property="stuNo" column="stuNo"></result>-->
+<!--            <result property="stuName" column="stuName"></result>-->
+<!--            <result property="stuClass" column="stuClass"></result>-->
+<!--            <result property="evaProject" column="evaProject"></result>-->
+<!--            <result property="evaProjectID" column="evaProjectID"></result>-->
+<!--            <result property="evaTime" column="evaTime"></result>-->
+            <result property="evaStatus" column="evaStatus"></result>
+<!--            <result property="evaMark" column="evaMark"></result>-->
+<!--            <result property="evaluation1" column="evaluation1"></result>-->
+<!--            <result property="evaluation2" column="evaluation2"></result>-->
+<!--            <result property="evaluation3" column="evaluation3"></result>-->
+<!--            <result property="evaluation4" column="evaluation4"></result>-->
+<!--            <result property="evaluation5" column="evaluation5"></result>-->
+<!--            <result property="evaluation6" column="evaluation6"></result>-->
+<!--            <result property="evaluation7" column="evaluation7"></result>-->
+<!--            <result property="evaluation8" column="evaluation8"></result>-->
+<!--            <result property="evaluation9" column="evaluation9"></result>-->
+<!--            <result property="evaluation10" column="evaluation10"></result>-->
+<!--            <result property="evaluation11" column="evaluation11"></result>-->
+<!--            <result property="evaluation12" column="evaluation12"></result>-->
+<!--            <result property="evaluation13" column="evaluation13"></result>-->
+<!--            <result property="evaluation14" column="evaluation14"></result>-->
+<!--            <result property="evaluation15" column="evaluation15"></result>-->
+<!--            <result property="evaluation16" column="evaluation16"></result>-->
+<!--            <result property="evaluation17" column="evaluation17"></result>-->
+<!--            <result property="evaluation18" column="evaluation18"></result>-->
+<!--            <result property="evaluation19Tzs1" column="evaluation19Tzs1"></result>-->
+<!--            <result property="evaluation19Bz1" column="evaluation19Bz1"></result>-->
+<!--            <result property="evaluation19Zz1" column="evaluation19Zz1"></result>-->
+<!--            <result property="evaluation19Xc1" column="evaluation19Xc1"></result>-->
+<!--            <result property="evaluation19Qy1" column="evaluation19Qy1"></result>-->
+<!--            <result property="evaluation19Xx1" column="evaluation19Xx1"></result>-->
+<!--            <result property="evaluation19Sh1" column="evaluation19Sh1"></result>-->
+<!--            <result property="evaluation19Kc1" column="evaluation19Kc1"></result>-->
+<!--            <result property="evaluation19Xl1" column="evaluation19Xl1"></result>-->
+<!--            <result property="evaluation19Wy1" column="evaluation19Wy1"></result>-->
+<!--            <result property="evaluation19Ty1" column="evaluation19Ty1"></result>-->
+<!--            <result property="evaluation19Tzs2" column="evaluation19Tzs2"></result>-->
+<!--            <result property="evaluation19Bz2" column="evaluation19Bz2"></result>-->
+<!--            <result property="evaluation19Zz2" column="evaluation19Zz2"></result>-->
+<!--            <result property="evaluation19Xc2" column="evaluation19Xc2"></result>-->
+<!--            <result property="evaluation19Qy2" column="evaluation19Qy2"></result>-->
+<!--            <result property="evaluation19Xx2" column="evaluation19Xx2"></result>-->
+<!--            <result property="evaluation19Sh2" column="evaluation19Sh2"></result>-->
+<!--            <result property="evaluation19Kc2" column="evaluation19Kc2"></result>-->
+<!--            <result property="evaluation19Xl2" column="evaluation19Xl2"></result>-->
+<!--            <result property="evaluation19Wy2" column="evaluation19Wy2"></result>-->
+<!--            <result property="evaluation19Ty2" column="evaluation19Ty2"></result>-->
+        </association>
+    </resultMap>
+
+    <insert id="addBwmydcpList" parameterType="com.zhfly021.entity.BwmydcpList">
+        insert into bwmydcpList(releaseTime,publisher,publisherNo,publisherClass,publisherCommittee,project,projectID,remarks,deadline,status)
+          values(#{releaseTime},#{publisher},#{publisherNo},#{publisherClass},#{publisherCommittee},#{project},#{projectID},#{remarks},#{deadline},#{status})
+    </insert>
+
+
+
+<!--    <select id="queryByStuClass" resultMap="BwmydcpListData">-->
+<!--        select * from (select * from bwmydcpList-->
+<!--          left join bwmydcpData on bwmydcpList.projectID = bwmydcpData.evaProjectID)t1-->
+<!--          where 1=1 and t1.stuNo = #{stuNo}-->
+<!--        <if test="project != null"> and t1.project like CONCAT('%',#{project},'%') </if>-->
+<!--        <if test="status != null"> and t1.evaStatus = #{status}) </if>-->
+<!--    </select>-->
+
+    <select id="queryByStuClass" resultMap="BwmydcpListData">
+        select l.*,d.idd,d.evaStatus from bwmydcpList l
+          left join bwmydcpData d on l.projectID = d.evaProjectID
+          where 1=1 and d.stuNo = #{stuNo}
+        <if test="project != null"> and l.project like CONCAT('%',#{project},'%') </if>
+        <if test="status != null"> and d.evaStatus = #{status}</if>
+    </select>
+
+
+
+    <select id="queryStatus" resultType="String">
+        select evaStatus from  bwmydcpData where evaProjectID = #{projectID} and stuNo = #{stuNo}
+    </select>
+
+
+    <select id="queryOne" resultType="com.zhfly021.entity.BwmydcpData">
+        select * from  bwmydcpData where evaProjectID = #{projectID} and stuNo = #{stuNo}
+    </select>
+
+    <select id="queryProjectIdByID" resultType="String">
+        select projectID from bwmydcpList where id = #{id}
+    </select>
+
+    <update id="addBwmydcpData" parameterType="com.zhfly021.entity.BwmydcpData">
+        update bwmydcpData set evaTime = #{evaTime},evaMark = #{evaMark},evaStatus = #{evaStatus},
+        evaluation1 = #{evaluation1},evaluation2 = #{evaluation2},evaluation3 = #{evaluation3},evaluation4 = #{evaluation4},evaluation5 = #{evaluation5},evaluation6 = #{evaluation6},evaluation7 = #{evaluation7},evaluation8 = #{evaluation8},evaluation9 = #{evaluation9},evaluation10 = #{evaluation10},
+        evaluation11 = #{evaluation11},evaluation12 = #{evaluation12},evaluation13 = #{evaluation13},evaluation14 = #{evaluation14},evaluation15 = #{evaluation15},evaluation16 = #{evaluation16},evaluation17 = #{evaluation17},evaluation18 = #{evaluation18},
+        evaluation19_tzs1 = #{evaluation19Tzs1},evaluation19_bz1 = #{evaluation19Bz1},evaluation19_zz1 = #{evaluation19Zz1},evaluation19_xc1 = #{evaluation19Xc1},evaluation19_qy1=#{evaluation19Qy1},
+        evaluation19_xx1 = #{evaluation19Xx1},evaluation19_sh1 = #{evaluation19Sh1},evaluation19_kc1 = #{evaluation19Kc1},evaluation19_xl1 = #{evaluation19Xl1},evaluation19_wy1 = #{evaluation19Wy1},evaluation19_ty1 = #{evaluation19Ty1},
+        evaluation19_tzs2 = #{evaluation19Tzs2},evaluation19_bz2 = #{evaluation19Bz2},evaluation19_zz2 = #{evaluation19Zz2},evaluation19_xc2 = #{evaluation19Xc2},evaluation19_qy2 = #{evaluation19Qy2},
+        evaluation19_xx2 = #{evaluation19Xx2},evaluation19_sh2 = #{evaluation19Sh2},evaluation19_kc2 = #{evaluation19Kc2},evaluation19_xl2 = #{evaluation19Xl2},evaluation19_wy2 = #{evaluation19Qy2},evaluation19_ty2 = #{evaluation19Ty2}
+          where stuNO = #{stuNo} and evaProjectID = #{evaProjectID}
+    </update>
+
+
+    <insert id="updateBwmydcpDataByInit" parameterType="com.zhfly021.entity.BwmydcpData">
+        insert into bwmydcpData(stuNo,stuName,stuClass,evaProject,evaProjectID,evaStatus)
+         values(#{stuNo},#{stuName},#{stuClass},#{evaProject},#{evaProjectID},#{evaStatus})
+    </insert>
+
+    <update id="updateStatusOfYYQ" parameterType="Integer">
+        update bwmydcpData set evaStatus = '已逾期' where idd = #{id};
+    </update>
+
+
+
+    <select id="queryBwmydcpList" resultType="com.zhfly021.entity.BwmydcpList">
+        select * from bwmydcpList  where 1=1 and publisherClass = #{publisherClass}
+        <if test="project != null"> and project like CONCAT('%',#{project},'%') </if>
+        <if test="status != null"> and status = #{status}</if>
+    </select>
+
+    <update id="updateListStatusOfYYQ" parameterType="String">
+        update bwmydcpList set status = '已结束' where projectID = #{projectID};
+    </update>
+    <update id="updateDataStatusOfYYQ" parameterType="String">
+        update bwmydcpData set evaStatus = '已逾期' where evaProjectID = #{evaProjectID};
+    </update>
+
+    <select id="queryBwmydcpListOfOne" resultType="com.zhfly021.entity.BwmydcpList">
+        select * from bwmydcpList  where id = #{id}
+    </select>
+    <update id="updateBwmydcpList" parameterType="com.zhfly021.entity.BwmydcpList">
+        update bwmydcpList set project = #{project}, deadline = #{deadline}, remarks = #{remarks}, status = #{status} where id = #{id};
+    </update>
+
+    <delete id="deleteBwmydcpList" parameterType="Integer">
+        delete from bwmydcpList where id = #{id}
+    </delete>
+
+    <delete id="batchDelBwmydcpList" parameterType="Integer">
+        delete from bwmydcpList where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="delBwmydcpData" parameterType="String">
+        delete from bwmydcpData where evaProjectID = #{evaProjectID} and stuClass = #{stuClass};
+    </delete>
+
+
+
+
+
+    <select id="queryBwmydcpData" resultType="com.zhfly021.entity.BwmydcpData">
+        select * from bwmydcpData  where 1=1 and stuClass = #{stuClass}
+        <if test="stuName != null"> and stuName like CONCAT('%',#{stuName},'%') </if>
+        <if test="evaProject != null"> and evaProject = #{evaProject} </if>
+        <if test="evaStatus != null"> and evaStatus = #{evaStatus}</if>
+    </select>
+
+    <delete id="delBwmydcpDataById" parameterType="Integer">
+        delete from bwmydcpData where idd = #{idd}
+    </delete>
+
+    <delete id="batchDelBwmydcpDataById" parameterType="Integer">
+        delete from bwmydcpData where idd in
+        <foreach collection="idds" item="idd" open="(" separator="," close=")">
+            #{idd}
+        </foreach>
+    </delete>
+
+    <select id="queryEvaProjectByStuClass" resultType="String">
+        select any_value(evaProject) from bwmydcpData where stuClass = #{stuClass} group by evaProjectID
+    </select>
+
+    <select id="queryBwmydcpDataById" resultType="com.zhfly021.entity.BwmydcpData">
+        select * from bwmydcpData where idd = #{idd}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>班级通知</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../static/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../static/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+  <div class="layui-container">
+    <h6><a href="../task/task_zhcp.html"><button class="btn btn-success">返回</button></a></h6>
+				<table class="table table-bordered">
+					<thead>
+					  <tr>
+						<th scope="col">类别</th>
+						<th scope="col">项目</th>
+						<th scope="col">评分内容及标准</th>
+						<th scope="col">自我测评</th>
+					  </tr>
+					</thead>
+					<tbody>
+						<!-- 德育素质考核 -->
+						<tr>
+							<th rowspan="21">德育素质考核（满分100分）</th>
+						</tr>
+						<tr>
+							<td>基本分</td>
+							<td>60分</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td rowspan="9">加分要素</td>
+							<td>政治上积极要求进步，参加党校、团校学习并取得较好成绩者加3分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>积极参加政治学习、主题班会和党团组织活动者加3分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>学习态度端正，学习成绩进步明显，排名上升超过5个名次加2分，超过10个名次加3分，依次类推，加满5分止；保持前5名者加2分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>遵守社会公德和公共秩序，讲文明、讲礼貌，举止文雅、仪表端庄，尊重师长、团结同学者加4分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>有拾金不昧、见义勇为等先进事迹者加5分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>获“校文明寝室”称号的室员加5分。“党员示范寝室”达标者、“五星寝室”、“四星寝室”、“三星寝室”室员分别加5、5、4、3分(不重复加分)。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>勤俭节约，不酗酒、不抽烟者加3分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>一学年无病事假（公假除外）者加3分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>学院其他加分项目</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td rowspan="9">减分要素</td>
+							<td>不积极参加政治学习、主题班会和党团活动者，迟到或早退一次扣1分，缺席一次扣3分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>无故不参加校、学院、班组织的集体活动者每次分别扣3、2、1分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>学习不努力，学习成绩下降，下降超过5个名次扣2分，超过10个名次扣3分，依次类推，扣满5分止，停留在后5名的扣2分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>旷课者每节扣3分，迟到早退者每节扣1分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>违反宿舍管理纪律（如违规用电、夜不归宿、晚归、留宿外人、影响他人休息等），每次扣2分；擅自在校外租房居住者扣10分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>所在寝室因各种原因被通报批评，第一次其室员每人扣1分，第二次每人扣2分，第三次每人扣4分，依次类推。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>行为举止不文明（男女之间勾肩搭背、穿拖鞋背心等出入公共场所、在教室乱刻乱画等）者每次扣3分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>受通报批评者扣5分，受警告、严重警告、记过、留校察看等纪律处分者分别扣10分、15分、25分、30分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>学院其他减分项目</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<th colspan="2">德育素质得分</th>
+							<td><input readonly="readonly" class="table-active"></td>
+						</tr>
+
+						<!-- 智育素质考核 -->
+						<tr>
+							<th rowspan="4">智育素质考核</th>
+						</tr>
+						<tr>
+							<td>学年制</td>
+							<td>智育素质积分=考试课平均成绩×70%+考查课平均成绩×30%</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>学分制</td>
+							<td>智育素质积分=【∑（必修课成绩×学分）+0.5×∑（选修课成绩×学分）】/（∑必修课学分+0.5×∑选修课学分）</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<th colspan="2">智育素质得分</th>
+							<td><input readonly="readonly" class="table-active"></td>
+						</tr>
+
+						<!-- 体育素质考核 -->
+						<tr>
+							<th rowspan="11">体育素质考核（满分100分）</th>
+						</tr>
+						<tr>
+							<td rowspan="2">基本分</td>
+							<td>A（有体育课）=体育课成绩（体育免修者按70分计）</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>B（无体育课）= 70</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td rowspan="4">加分要素</td>
+							<td>在体育比赛中获得名次者（包括集体项目成员），按以下规定加分：第一名20A分，第二名14A分，第三名10A分，第四名8A分，第五名6A分，第六名4A分。A为比赛等级，国家级A=1.5，省级A＝1.0，片级 A＝0.75％；校级比赛A＝0.5。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>在体育比赛中，打破国家、省级和校级体育记录者每人每次分别加40、20和10分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>一学年早操全勤者加10分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>学院其他加分项目</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td rowspan="3">减分要素</td>
+							<td>早操旷操一次扣1分，迟到早退一次扣0.5分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>校运动会期间未经请假擅自离校者，每天扣10分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>学院其他减分项目</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<th colspan="2">智育素质得分</th>
+							<td><input readonly="readonly" class="table-active"></td>
+						</tr>
+
+						<!-- 能力素质考核 -->
+						<tr>
+							<th rowspan="14">能力素质考核（满分100分）</th>
+						</tr>
+						<tr>
+							<td>基本分</td>
+							<td>60分</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td rowspan="8">加分要素</td>
+							<td>积极参加校、学院、班组织的各种活动者，每次加1.5、1.0、0.5分（总分不超过20分，超出者以20分计）；代表学校参加国家、省、市各项活动者分别加4、3、2分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>在各类学科竞赛、课外学术科技作品竞赛、文娱比赛中获奖者，按下列标准加分：国家级一等奖加30分；国家级三等奖以上，省级一等奖加20分；省级其他等级奖项，校级、市级一等奖者加10分；校级、市级三等奖以上者加5分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>在公开出版刊物上发表学术论文或科技作品的（包括科技创作、文学艺术创作、发明获奖），每篇（件）加20A分。A为刊物（授奖）级别，国家级A=1.5，省级A=1.0，市级A=0.50。同件作品以高限算，不累计加分。作品第一作者按实际得分计，第二作者按得分的50%计，第三作者及其以后作者按得分的25%计。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>在公开发行的非学术刊物上发表的一般性文章，按国家级、省级、校（市）级每篇分别加20、10、5分（不重复加分）。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>在本学年度担任以下学生干部职务满1年，且尽职尽责，由其主管部门出具证明给予加分：校院团总支、学生会、社团联合会副部长以上（含副部长，下同），学生社团副会长以上，宿管委楼长以上，学生党支部书记、班级班长、团支部书记等学生干部加8分；校院团总支、学生会、社团联合会、学生党支部干事（委员），宿管委层长，班级班委、团支部委员、寝室长等学生干部加4分。
+								身兼多职者，按最高职务计分，学生干部因特殊原因任职满一学期不满一学年者，按其职务等级分数的50%计算。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>获国家、省级、校级表彰的学生分别加10、5、2分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>获专利者，每项加10分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>学院其他加分项目</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td rowspan="3">减分要素</td>
+							<td>学生干部工作不积极，不能按时完成组织上交给任务者扣2～4分；由于不负责任造成重大事故者扣4～10分</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>无故不参加社会活动、社会实践者扣5分；弄虚作假，抄袭、编造论文（调查报告）者扣4分；不交论文（调查报告）者扣3分，论文（调查报告）不合格者扣2分。</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<td>学院其他减分项目</td>
+							<td><input></td>
+						</tr>
+						<tr>
+							<th colspan="2">能力素质得分</th>
+							<td><input readonly="readonly" class="table-active"></td>
+						</tr>
+						
+						<!-- 综合测评积分 -->
+						<tr>
+							<th>综合测评积分</th>
+							<td colspan="2">
+								<p>一、二年级公式：德育素质得分×30%+智育素质得分×50%+体育素质得分×10%+能力素质得分×10%</p>
+								<p>三、四年级公式：德育素质得分×30%+智育素质得分×40%+体育素质得分×10%+能力素质得分×20%</p>
+							</td>
+							<td>
+								<button type="submit" class="btn btn-primary btn-block">提交</button>
+								<br>
+								<input readonly="readonly" class="table-active">
+							</td>
+						</tr>
+					</tbody>
+				  </table>
+  </div>
+  
+  
+
+  <script src="../../static/layuiadmin/layui/layui.js?t=1"></script>  
+  <script>
+  layui.config({
+    base: '../../static/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'console']);
+  </script>
+</body>
+</html>
+
